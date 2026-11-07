@@ -1,0 +1,15 @@
+<button type="button" class="app-button" [class.app-button--gold]="variant() === 'gold'"
+    [class.app-button--ghost]="variant() === 'ghost'" [class.app-button--primary]="variant() === 'primary'"
+    [disabled]="disabled()">
+    @if (icon(); as iconClass) {
+    @if (iconPos() !== 'right') {
+    <i class="app-button__icon {{ iconClass }}" aria-hidden="true"></i>
+    }
+    }
+    <span class="app-button__label">{{ label() }}</span>
+    @if (icon(); as iconClass) {
+    @if (iconPos() === 'right') {
+    <i class="app-button__icon {{ iconClass }}" aria-hidden="true"></i>
+    }
+    }
+</button>

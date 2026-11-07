@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- css.gg expand, matching Figma node 123:1388 (gg:expand) -->
+  <path
+    fill="#f7f2ec"
+    d="M13 3h8v8h-2V6.414l-5.293 5.293-1.414-1.414L17.586 5H13V3Z"
+  />
+  <path
+    fill="#f7f2ec"
+    d="M3 13v8h8v-2H6.414l5.293-5.293-1.414-1.414L5 17.586V13H3Z"
+  />
+</svg>

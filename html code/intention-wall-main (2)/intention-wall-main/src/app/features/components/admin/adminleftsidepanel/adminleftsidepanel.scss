@@ -1,0 +1,14 @@
+:host {
+    display: block;
+    height: 100%; // CHANGED
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%; // CHANGED
+    box-sizing: border-box; // CHANGED
+    background: #fff;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}

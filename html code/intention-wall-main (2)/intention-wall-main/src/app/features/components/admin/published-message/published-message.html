@@ -1,0 +1,196 @@
+<div class="app" [class.is-sidebar-collapsed]="collapsed">
+    <!-- SIDEBAR — keep identical on all 4 module pages except is-active. -->
+    <IntentionWall-adminleftsidepanel (toggleCollapsed)="isCollpased($event)"></IntentionWall-adminleftsidepanel>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+    <div class="app__main">
+        <header class="app__header">
+            <button type="button" class="app__menu-btn" id="app-menu-open" aria-label="Open menu" aria-expanded="false"
+                aria-controls="sidebar">
+                <span></span>
+            </button>
+            <h1 class="app__title">Published Messages</h1>
+        </header>
+        <main class="app__content">
+            <section class="queue">
+                <div class="queue__intro">
+                    <h1>Published Messages</h1>
+                    <p>Manage messages currently visible on the website wall.</p>
+                </div>
+
+                <!-- Filters wired in intention-review.js (prototype — no API). -->
+                <div class="queue__filters">
+                    <!-- <label class="filter filter--search">
+                        <span class="visually-hidden">Search message</span>
+                        <span class="filter-search">
+                            <span class="material-symbols-outlined filter-search__icon msi-md msi--muted"
+                                aria-hidden="true">search</span>
+                            <input type="search" class="filter-search__input" id="filter-search" name="search"
+                                placeholder="Search message..." autocomplete="off" (input)="onSearch($event)">
+                        </span>
+                    </label> -->
+                    <label class="filter">
+                        <span class="visually-hidden">Select Zone</span>
+                        <p-select [options]="zoneList()" optionLabel="Name" [(ngModel)]="messageFilter.selectZoneId"
+                            optionValue="Id" placeholder="Select Zone" [showClear]="false" class="filter-dropdown"
+                            (onChange)="onZoneChange($event)">
+                        </p-select>
+                    </label>
+                    <label class="filter filter--tradition">
+                        <span class="visually-hidden">Select Tradition</span>
+                        <p-select [options]="traditionList()" optionLabel="Name"
+                            [(ngModel)]="messageFilter.selectTraditionId" optionValue="Id"
+                            placeholder="Select Tradition" [showClear]="false" class="filter-dropdown"
+                            (onChange)="onTraditionChange($event)">
+                        </p-select>
+                    </label>
+                    <label class="filter">
+                        <span class="visually-hidden">Select Country</span>
+                        <p-select [options]="countriesList()" optionLabel="Name"
+                            [(ngModel)]="messageFilter.selectCountryId" optionValue="Id" placeholder="Select Country"
+                            [showClear]="false" class="filter-dropdown" (onChange)="onCountryChange($event)">
+                        </p-select>
+                    </label>
+                    <div class="filter filter--dates">
+                        <div class="date-filter">
+                            <button type="button" class="date-range-button" (click)="datePopover.toggle($event)">
+                                <i class="pi pi-calendar"></i>
+                                <span>{{ dateRangeLabel }}</span>
+                            </button>
+                            <p-popover #datePopover>
+                                <div class="date-filter-card">
+                                    <h3>Filter by date</h3>
+                                    <div class="date-field">
+                                        <label for="fromDate">From</label>
+                                        <p-datepicker inputId="fromDate" [(ngModel)]="dateFilter.selectedFromDate"
+                                            dateFormat="dd-mm-yy" placeholder="Select start date" [showIcon]="true"
+                                            [showButtonBar]="false">
+                                        </p-datepicker>
+                                    </div>
+                                    <div class="date-field">
+                                        <label for="toDate">To</label>
+                                        <p-datepicker inputId="toDate" [(ngModel)]="dateFilter.selectedToDate"
+                                            dateFormat="dd-mm-yy" placeholder="Select end date" [showIcon]="true"
+                                            [showButtonBar]="false">
+                                        </p-datepicker>
+                                    </div>
+                                    <div class="date-actions">
+
+                                        <button type="button" class="clear-button"
+                                            (click)="clearDateFilter()">Clear</button>
+                                        <button type="button" class="apply-button"
+                                            (click)="applyDateFilter(datePopover)">Apply</button>
+                                    </div>
+                                </div>
+                            </p-popover>
+                        </div>
+                    </div>
+                    <button type="button" class="filter__reset" id="filter-reset" (click)="ResetFilter(dt1)">
+                        <span class="material-symbols-outlined filter__reset-icon msi-md msi--muted"
+                            aria-hidden="true">restart_alt</span>
+                        Reset Filters
+                    </button>
+                </div>
+                <div class="queue-table-wrap">
+                    <div class="table-body-scroll">
+                        <p-table #dt1 [value]="paginatedMessages()" [tableStyle]="{ 'min-width': '980px' }">
+                            <ng-template #header>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Zone</th>
+                                    <th>Tradition</th>
+                                    <th>Country</th>
+                                    <th>Date Submitted</th>
+                                    <th><span class="visually-hidden">Action</span></th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template #body let-intention>
+                                <tr>
+                                    <td [attr.title]="intention.FirstName">{{ intention.FirstName }}</td>
+                                    <td [attr.title]="intention.ZoneName">{{ intention.ZoneName }}</td>
+                                    <td [attr.title]="intention.TradtionName">{{ intention.TradtionName }}</td>
+                                    <td [attr.title]="intention.CountryName">{{ intention.CountryName }}</td>
+                                    <td [attr.title]="intention.LastModeratedAt | date: 'dd MMM, yyyy'">
+                                        {{ intention.LastModeratedAt | date: 'dd MMM, yyyy' }}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn-view" (click)="messageReviewed(intention)"
+                                            data-row-id="pub-0">
+
+                                            <span class="material-symbols-outlined btn-view__icon msi-sm"
+                                                aria-hidden="true">
+                                                visibility
+                                            </span>
+
+                                            View
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template #emptymessage>
+                                <tr>
+                                    <td [attr.colspan]="6" class="empty-state">
+                                        <div class="empty-state__content">
+                                            <img class="empty-state__img" src="/images/empty-state.svg" alt="" width="208" height="208" />
+                                            <p class="empty-state__title">No published messages yet</p>
+                                            <p class="empty-state__text">Approved intentions will appear here once they are published to the wall.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <!-- CUSTOM PAGINATOR -->
+                    <div class="custom-pagination">
+                        <div class="page-navigation">
+
+                            @if (hasPreviousBatch) {
+                            <button type="button" class="batch-arrow tooltip-button"
+                                data-tooltip="Load previous records" aria-label="Previous batch"
+                                (click)="previousBatch()">
+                                ‹‹
+                            </button>
+                            }
+                            @else {
+                            <button type="button" class="page-arrow tooltip-button" data-tooltip="Previous page"
+                                [disabled]="messagePagination.pageNumber() === visibleStartPage"
+                                (click)="previousPage()">
+                                ‹
+                            </button>
+                            }
+
+                            @for (pageNo of visiblePages; track pageNo) {
+                            <button type="button" class="page-number"
+                                [class.active]="pageNo === messagePagination.pageNumber()"
+                                (click)="loadPageData(pageNo)">
+                                {{ pageNo }}
+                            </button>
+                            }
+
+                            @if (hasNextBatch) {
+                            <button class="batch-arrow tooltip-button" type="button" data-tooltip="Load next records"
+                                aria-label="Next batch" (click)="nextBatch()">
+                                ››
+                            </button>
+                            }
+                            @else {
+                            <button type="button" class="page-arrow tooltip-button" data-tooltip="Next page"
+                                [disabled]="visibleEndPage >= backendEndPage" (click)="nextPage()">
+                                ›
+                            </button>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+@if (isViewOpened()) {
+<div class="detail-backdrop" id="detail-backdrop" (click)="DetailPanelOpened(false)"></div>
+<IntentionWall-adminrightsidemessagepanel [message]="message" (isClosed)="DetailPanelOpened($event)"
+    (messageApproved)="onMessageApproved($event)"></IntentionWall-adminrightsidemessagepanel>
+}

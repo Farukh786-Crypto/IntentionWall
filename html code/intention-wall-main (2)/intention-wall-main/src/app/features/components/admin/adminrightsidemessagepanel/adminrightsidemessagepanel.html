@@ -1,0 +1,125 @@
+<aside class="detail-panel" id="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detail-panel-title"
+    [attr.aria-hidden]="!isDetailPanelOpen" [class.is-open]="isDetailPanelOpen">
+    <header class="detail-panel__header">
+        <h2 class="detail-panel__title" id="detail-panel-title">Message Details</h2>
+        <button type="button" class="detail-panel__close" id="detail-panel-close" (click)="closeDetailPanel()"
+            aria-label="Close message details">
+            <span class="material-symbols-outlined msi-md" aria-hidden="true">close</span>
+        </button>
+    </header>
+    <form [formGroup]="messageDetailsIntentionForm" novalidate>
+        <div class="detail-panel__body">
+
+            <section class="detail-section">
+                <div class="detail-section__heading">
+                    <span class="material-symbols-outlined msi-lg" aria-hidden="true">chat_bubble_outline</span>
+                    <h3>Message</h3>
+                </div>
+                <div class="detail-message" id="detail-message">{{messageDetailsIntentionForm.controls.message.value}}
+                </div>
+            </section>
+
+            <section class="detail-section">
+                <div class="detail-section__heading">
+                    <span class="material-symbols-outlined msi-lg" aria-hidden="true">person</span>
+                    <h3>Submission Information</h3>
+                </div>
+                <dl class="detail-meta">
+                    <div class="detail-meta__item">
+                        <dt>Submitted by</dt>
+                        <dd id="detail-submitted-by">{{messageDetailsIntentionForm.controls.submittedBy.value}}</dd>
+                    </div>
+                    <div class="detail-meta__item">
+                        <dt>Email</dt>
+                        <dd id="detail-email">{{messageDetailsIntentionForm.controls.email.value}}</dd>
+                    </div>
+                    <div class="detail-meta__item">
+                        <dt>Country</dt>
+                        <dd id="detail-country">{{messageDetailsIntentionForm.controls.country.value}}</dd>
+                    </div>
+                    <div class="detail-meta__item">
+                        <dt>Zone</dt>
+                        <dd id="detail-zone">{{messageDetailsIntentionForm.controls.zone.value}}</dd>
+                    </div>
+                    <div class="detail-meta__item">
+                        <dt>Date Submitted</dt>
+                        <dd id="detail-date">{{messageDetailsIntentionForm.controls.dateSubmitted.value}}</dd>
+                    </div>
+                    <div class="detail-meta__item">
+                        <dt>Tradition</dt>
+                        <dd id="detail-tradition">{{messageDetailsIntentionForm.controls.tradition.value}}</dd>
+                    </div>
+                </dl>
+            </section>
+
+        </div>
+        <footer class="detail-panel__footer">
+            <div class="detail-panel__comment">
+                <label class="detail-panel__comment-label" for="detail-comment">Comments(optional)</label>
+                <textarea class="detail-panel__comment-input" formControlName="reviewComment" id="detail-comment"
+                    name="comment" rows="3" maxlength="350" placeholder="E.g. Hate speech message" autocomplete="off"
+                    aria-describedby="detail-comment-counter"></textarea>
+                <div class="chars-left" id="detail-comment-counter" data-chars-left-for="detail-comment"
+                    aria-live="polite">{{350 - (messageDetailsIntentionForm.controls.reviewComment.value?.length || 0)}}
+                    characters left</div>
+            </div>
+            <div class="detail-panel__actions">
+                <button type="button" class="detail-panel__reject" id="detail-reject" (click)="onReject()">Reject
+                    Permanently</button>
+                @if(!this.publishMessageForm()){
+                <button type="button" class="detail-panel__accept" id="detail-accept"
+                    (click)="onAccept()">Accept</button>
+                }
+            </div>
+        </footer>
+    </form>
+</aside>
+
+@if (isAcceptModalOpen() || isRejectModalOpen()) {
+<div class="confirm-backdrop" id="confirm-backdrop"
+    (click)="isAcceptModalOpen() ? cancelAcceptModel() : cancelRejectModel()"></div>
+}
+
+<div class="confirm-modal" id="confirm-accept-modal" role="dialog" aria-modal="true"
+    aria-labelledby="confirm-accept-title" aria-hidden="true" [class.is-open]="isAcceptModalOpen()">
+    <div class="confirm-modal__body">
+        <div class="confirm-modal__intro">
+            <div class="confirm-modal__icon-wrap">
+                <span class="material-symbols-outlined msi-lg msi--success" aria-hidden="true">check_circle</span>
+            </div>
+            <h2 class="confirm-modal__title" id="confirm-accept-title">Accept Intention ?</h2>
+        </div>
+        <p class="confirm-modal__text">Are you sure you want to accept this Intention ?</p>
+    </div>
+    <div class="confirm-modal__actions">
+        <button type="button" class="confirm-modal__cancel" data-confirm-close
+            (click)="cancelAcceptModel()">Cancel</button>
+        <button type="button" class="confirm-modal__confirm confirm-modal__confirm--accept" id="confirm-accept-yes"
+            (click)="approveAcceptModel()">Confirm</button>
+    </div>
+</div>
+
+<div class="confirm-modal" id="confirm-reject-modal" role="dialog" aria-modal="true"
+    aria-labelledby="confirm-reject-title" aria-hidden="true" [class.is-open]="isRejectModalOpen()">
+    <div class="confirm-modal__body">
+        <div class="confirm-modal__intro">
+            <div class="confirm-modal__icon-wrap">
+                <span class="material-symbols-outlined msi-lg msi--danger" aria-hidden="true">error</span>
+            </div>
+            <h2 class="confirm-modal__title" id="confirm-reject-title">Reject Intention ?</h2>
+        </div>
+        <p class="confirm-modal__text confirm-modal__text--wide">
+            Are you sure you want to Reject this Intention ? Once marked as rejected it wont appear on the intention
+            review screen.
+        </p>
+    </div>
+    <div class="confirm-modal__actions">
+        <button type="button" class="confirm-modal__cancel" data-confirm-close
+            (click)="cancelRejectModel()">Cancel</button>
+
+        <button type="button" class="confirm-modal__confirm confirm-modal__confirm--reject" id="confirm-reject-yes"
+            (click)="arroveRejectModel()">Yes,
+            Reject</button>
+
+    </div>
+</div>

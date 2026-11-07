@@ -1,0 +1,714 @@
+<div class="app" [class.is-sidebar-collapsed]="collapsed">
+    <!-- SIDEBAR — keep identical on all 4 module pages except is-active. -->
+    <IntentionWall-adminleftsidepanel (toggleCollapsed)="isCollpased($event)"></IntentionWall-adminleftsidepanel>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+    <div class="app__main">
+        <header class="app__header">
+            <button type="button" class="app__menu-btn" id="app-menu-open" aria-label="Open menu" aria-expanded="false"
+                aria-controls="sidebar">
+                <span></span>
+            </button>
+            <h1 class="app__title">Settings</h1>
+        </header>
+        <main class="app__content">
+            <section class="settings">
+                <div class="settings__intro">
+                    <h1>Settings</h1>
+                    <p>Manage Application Settings and Configurations</p>
+                </div>
+                <div class="settings-tabs" role="tablist" aria-label="Settings sections">
+                    @for (management of managements(); track $index) {
+                    <button type="button" class="settings-tabs__btn" [class.is-active]="selectManagement == management"
+                        role="tab" id="tab-zones" (click)="selectManagementTab(management)" data-settings-tab="zones"
+                        aria-selected="true" aria-controls="panel-zones">{{management}}</button>
+                    }
+
+                </div>
+                <!-- Zone Management -->
+                <div class="settings-panel" id="panel-zones" data-settings-panel="zones" role="tabpanel"
+                    aria-labelledby="tab-zones" [hidden]="selectManagement !== Manage.zoneManage">
+                    <div class="settings-panel__header">
+                        <div>
+                            <h2>Zone Management</h2>
+                            <p>Manage Zones used for categorisation and location mapping.</p>
+                        </div>
+                        <button type="button" class="settings-panel__add" id="zone-add-btn" (click)="AddZone('Add')">
+                            <span class="material-symbols-outlined msi-md" aria-hidden="true">add_box</span>
+                            Add Zone
+                        </button>
+                    </div>
+                    <div class="settings-table-wrap">
+                        <div class="table-body-scroll">
+                            <p-table #dt1 [value]="zoneList()" class="settings-table zone-table"
+                                [tableStyle]="{ 'min-width': '960px' }">
+                                <ng-template #header>
+                                    <tr>
+                                        <th>Zone Name</th>
+                                        <th>Country</th>
+                                        <th>Tradition</th>
+                                        <th>Description</th>
+                                        <!-- <th>Status</th> -->
+                                        <th>Actions</th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template #body let-zone>
+                                    <tr>
+                                        @let zoneTradition = (zone.ZoneTradition ?? '').trim();
+                                        @let zoneDescription = (zone.Description ?? '').trim();
+                                        <td [attr.title]="zone.ZoneName">{{ zone.ZoneName }}</td>
+                                        <td>
+                                            @if (zone.ZoneCountryList?.length) {
+                                            <div class="zone-table__countries">
+                                                @for (country of zone.ZoneCountryList.slice(0, 2); track country.CountryId) {
+                                                <span class="zone-table__country-badge">
+                                                    <img class="zone-table__country-flag"
+                                                        [src]="'https://flagcdn.com/24x18/' + country?.CountryCode2.toLowerCase() + '.png'"
+                                                        [alt]="country.CountryName" width="24" height="18" />
+                                                    <span class="zone-table__country-label">{{ country.CountryName }}</span>
+                                                </span>
+                                                }
+                                                @if (zone.ZoneCountryList.length > 2) {
+                                                <span class="zone-table__country-badge zone-table__country-badge--more">
+                                                    <span class="zone-table__country-label">+{{ zone.ZoneCountryList.length - 2 }} More</span>
+                                                </span>
+                                                }
+                                            </div>
+                                            } @else {
+                                            —
+                                            }
+                                        </td>
+                                        <td [attr.title]="zoneTradition || null">
+                                            @if (zoneTradition) {
+                                            <span class="zone-table__desc">{{ zoneTradition.length > 20 ? (zoneTradition | slice:0:20) + '...' : zoneTradition }}</span>
+                                            } @else {
+                                            —
+                                            }
+                                        </td>
+                                        <td [attr.title]="zoneDescription || null">
+                                            @if (zoneDescription) {
+                                            <span class="zone-table__desc">{{ zoneDescription.length > 20 ? (zoneDescription | slice:0:20) + '...' : zoneDescription }}</span>
+                                            } @else {
+                                            —
+                                            }
+                                        </td>
+                                        <!-- <td>{{ zone.IsActive ? 'Active' : 'Inactive' }}</td> -->
+                                        <td>
+                                            <div class="settings-table__actions">
+                                                <button type="button" class="settings-table__icon-btn"
+                                                    [attr.aria-label]="'Edit ' + zone.ZoneName"
+                                                    [attr.data-edit-zone]="zone.ZoneId">
+                                                    <span class="material-symbols-outlined msi-sm" aria-hidden="true"
+                                                        (click)="AddZone('Edit',zone)">
+                                                        edit
+                                                    </span>
+                                                </button>
+                                                <button type="button"
+                                                    class="settings-table__icon-btn settings-table__icon-btn--delete"
+                                                    [attr.aria-label]="'Delete ' + zone.ZoneName"
+                                                    data-delete-entity="zone" [attr.data-delete-id]="zone.ZoneId"
+                                                    (click)="deleteZone(zone)">
+                                                    <span class="material-symbols-outlined msi-sm" aria-hidden="true">
+                                                        delete
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template #emptymessage>
+                                    <tr>
+                                        <td [attr.colspan]="5" class="empty-state">
+                                            <div class="empty-state__content">
+                                                <img class="empty-state__img" src="/images/empty-state.svg" alt="" width="208" height="208" />
+                                                <p class="empty-state__title">No zones configured</p>
+                                                <p class="empty-state__text">Create your first zone to organize intentions by location or region.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tradition Management -->
+                <div class="settings-panel" id="panel-traditions" data-settings-panel="traditions" role="tabpanel"
+                    aria-labelledby="tab-traditions" [hidden]="selectManagement !== Manage.traditionManage">
+                    <div class="settings-panel__header">
+                        <div>
+                            <h2>Tradition Management</h2>
+                            <p>Manage traditions displayed in the Intention submission form.</p>
+                        </div>
+                        <button type="button" class="settings-panel__add" id="tradition-add-btn"
+                            (click)="AddTradition('Add')">
+                            <span class="material-symbols-outlined msi-md" aria-hidden="true">add_box</span>
+                            Add Tradition
+                        </button>
+                    </div>
+                    <div class="settings-table-wrap">
+                        <div class="table-body-scroll">
+                            <p-table #dtTradition [value]="traditionList()" class="settings-table tradition-table"
+                                [tableStyle]="{ 'min-width': '920px' }">
+
+                                <ng-template #header>
+                                    <tr>
+                                        <th>Tradition Name</th>
+                                        <th>Description(Optional)</th>
+                                        <th>
+                                            <span class="settings-table__actions-label">Actions</span>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template #body let-tradition>
+                                    <tr>
+                                        <td [attr.title]="tradition.TraditionName">{{ tradition.TraditionName }}</td>
+                                        <td [attr.title]="tradition.Description || null">{{ tradition.Description || '—' }}</td>
+                                        <td>
+                                            <div class="settings-table__actions">
+
+                                                <!-- Edit -->
+                                                <button type="button" class="settings-table__icon-btn"
+                                                    [attr.aria-label]="'Edit ' + tradition.Name"
+                                                    [attr.data-edit-tradition]="tradition.Id"
+                                                    (click)="AddTradition('Edit',tradition)">
+
+                                                    <span class="material-symbols-outlined msi-sm" aria-hidden="true">
+                                                        edit
+                                                    </span>
+                                                </button>
+
+                                                <!-- Delete -->
+                                                <button type="button"
+                                                    class="settings-table__icon-btn settings-table__icon-btn--delete"
+                                                    [attr.aria-label]="'Delete ' + tradition.Name"
+                                                    [attr.data-delete-entity]="'tradition'"
+                                                    [attr.data-delete-id]="tradition.Id"
+                                                    (click)="deleteTradition(tradition)">
+
+                                                    <span class="material-symbols-outlined msi-sm" aria-hidden="true">
+                                                        delete
+                                                    </span>
+                                                </button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template #emptymessage>
+                                    <tr>
+                                        <td [attr.colspan]="3" class="empty-state">
+                                            <div class="empty-state__content">
+                                                <img class="empty-state__img" src="/images/empty-state.svg" alt="" width="208" height="208" />
+                                                <p class="empty-state__title">No traditions configured</p>
+                                                <p class="empty-state__text">Add traditions to help organize and categorize intentions on the wall.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Application Setting — Figma 327:5130 -->
+                <div class="settings-panel" id="panel-openai" data-settings-panel="openai" role="tabpanel"
+                    aria-labelledby="tab-openai" [hidden]="selectManagement !== Manage.configurationManage">
+                    @if (configurationSetting()) {
+                    <div class="settings-panel" id="panel-openai" data-settings-panel="openai" role="tabpanel"
+                        aria-labelledby="tab-openai" [hidden]="selectManagement !== Manage.configurationManage">
+
+                        <div class="settings-panel__header">
+                            <div>
+                                <h2>Application Setting Configuration</h2>
+                                <p>Configure the Application Setting Configurations.</p>
+                            </div>
+
+                            <button type="button" class="openai-config__save" id="openai-save-btn"
+                                (click)="saveConfiguration('Add')">
+                                <span class="material-symbols-outlined msi-md" aria-hidden="true">
+                                    save
+                                </span>
+                                Save Configuration
+                            </button>
+                        </div>
+
+                        <!-- Configuration table -->
+                        <div class="settings-table-wrap">
+
+                            <p-table [value]="applicationSetting()" class="settings-table configuration-table"
+                                [tableStyle]="{ 'min-width': '700px' }">
+                                <ng-template #header>
+                                    <tr>
+                                        <th>Configuration</th>
+                                        <th>Value</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template #body let-setting>
+                                    <tr>
+                                        <!-- Configuration name -->
+                                        <td>
+                                            {{ setting.Key }}
+                                        </td>
+                                        <!-- Configuration value -->
+                                        <td>
+                                            <input type="text" class="configuration-value-input" [value]="setting.Value"
+                                                disabled>
+                                        </td>
+                                        <!-- Edit -->
+                                        <td>
+                                            <div class="settings-table__actions">
+                                                <button type="button" class="settings-table__icon-btn"
+                                                    [attr.aria-label]="'Edit ' + setting.key"
+                                                    (click)="saveConfiguration('Edit',setting)">
+                                                    <span class="material-symbols-outlined msi-sm" aria-hidden="true">
+                                                        edit
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template #emptymessage>
+                                    <tr>
+                                        <td [attr.colspan]="3" class="empty-state">
+                                            <div class="empty-state__content">
+                                                <img class="empty-state__img" src="/images/empty-state.svg" alt="" width="208" height="208" />
+                                                <p class="empty-state__title">No configurations available</p>
+                                                <p class="empty-state__text">Application settings will appear here once they are configured.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+
+                        </div>
+
+                    </div>
+                    }
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+<!-- Zone add / edit modal — Figma 236:895 (create), 327:5419 (edit) -->
+
+<div class="settings-form-backdrop" [hidden]="!addZoneModelOpened()" (click)="cancelZoneModal()"
+    id="zone-form-backdrop"></div>
+<div class="settings-form-modal zone-form-modal zone-form-modal--create" [class.is-open]="addZoneModelOpened()"
+    id="zone-form-modal" role="dialog" aria-modal="true" aria-labelledby="zone-form-title">
+    <div class="zone-form-modal__inner">
+        <h2 class="zone-form-modal__title" id="zone-form-title">{{this.isZoneEdit()==true?'Edit':'Add New'}} Zone</h2>
+        <form class="zone-form" id="zone-form" [formGroup]="addzoneForm" novalidate>
+            <div class="zone-form__fields">
+                <label class="zone-form__field zone-form__field--full"
+                    [class.field--error]="hasAddZoneFormErrors('zonename')" data-zone-field="name">
+                    <span class="zone-form__label">Zone Name<span class="zone-form__required"
+                            aria-hidden="true">*</span></span>
+                    <input type="text" name="name" id="zone-name" formControlName="zonename"
+                        placeholder="E.g. Russia and Ukraine" autocomplete="off" aria-describedby="zone-name-error">
+                    <p class="field__error" id="zone-name-error" role="alert"></p>
+                </label>
+                @if(hasAddZoneFormErrors('zonename','required')){
+                <div class="intention-field__error">
+                    Zone Name cannot be empty.
+                </div>
+                }
+                <label class="zone-form__field zone-form__field--full"
+                    [class.field--error]="hasAddZoneFormErrors('zonename')" data-zone-field="description">
+                    <span class="zone-form__label">Description<span class="zone-form__required" aria-hidden="true">
+                            *</span></span>
+                    <span class="zone-form__textarea-wrap">
+                        <textarea class="zone-form__textarea" name="description" id="zone-description" rows="4"
+                            maxlength="350" formControlName="description"
+                            placeholder="E.g. One city that holds all three faiths at once - the Western..."
+                            autocomplete="off"
+                            aria-describedby="zone-description-error zone-description-counter"></textarea>
+                        <div class="zone-form__chars-left" id="zone-description-counter" aria-live="polite">{{350 -
+                            addzoneForm.controls.description.value.length}}
+                            characters left</div>
+                    </span>
+                    <p class="field__error" id="zone-description-error" role="alert"></p>
+                </label>
+                @if(hasAddZoneFormErrors('description','required')){
+                <div class="intention-field__error">
+                    Please enter a description.
+                </div>
+                }
+                @else if(hasAddZoneFormErrors('description','minlength'))
+                {
+                <div class="intention-field__error">
+                    description must be at least 3 characters.
+                </div>
+                }
+                @else if(hasAddZoneFormErrors('description','maxLength'))
+                {
+                <div class="intention-field__error">
+                    description must be at least 350 characters.
+                </div>
+                }
+
+                <!-- @if (isZoneEdit()) { -->
+                <!-- Status is required only for Edit -->
+                <div class="zone-form__field zone-form__field--full">
+                    <div class="zone-form__label-wrap">
+                        <span class="zone-form__label">Status</span>
+                        <span class="zone-form__hint">Enable or disable this zone.</span>
+                    </div>
+
+                    <div class="status-toggle">
+                        <span class="status-toggle__label" [class.is-active]="addzoneForm.controls.isActive.value">
+                            {{ addzoneForm.controls.isActive.value ? 'Active' : 'Inactive' }}
+                        </span>
+                        <button type="button" class="status-toggle__switch"
+                            [class.is-on]="addzoneForm.controls.isActive.value" role="switch"
+                            [attr.aria-checked]="addzoneForm.controls.isActive.value" aria-label="Toggle zone status"
+                            (click)="toggleZoneStatus()">
+
+                            <span class="status-toggle__thumb" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+                <!-- } -->
+                <div class="zone-form__field zone-form__field--full"
+                    [class.field--error]="hasAddZoneFormErrors('zonename','required')" data-zone-field="countries">
+                    <div class="zone-form__label-wrap">
+                        <span class="zone-form__label">Countries<span class="zone-form__required"
+                                aria-hidden="true">*</span></span>
+                        <span class="zone-form__hint">Select all countries involved in this zone.</span>
+                    </div>
+                    @if (selectedEditCountries().length>0) {
+                    <div class="zone-countries__badges">
+                        @for (country of selectedEditCountries(); track country.Id) {
+                        <span class="zone-countries__badge">
+                            <span class="zone-countries__badge-main">
+                                @if (country.CountryCode) {
+                                <img class="zone-countries__badge-flag"
+                                    [src]="'https://flagcdn.com/w40/' + country.CountryCode.toLowerCase() + '.png'"
+                                    [alt]="country.Name" width="20" height="15">
+                                }
+                                <span class="zone-countries__badge-label">
+                                    {{ country.Name }}
+                                </span>
+                            </span>
+                            <button type="button" class="zone-countries__badge-remove"
+                                [attr.aria-label]="'Remove ' + country.Name"
+                                (click)="removeSelectedCountry(country.Id)">
+
+                                <span class="material-symbols-outlined" aria-hidden="true">
+                                    close
+                                </span>
+                            </button>
+                        </span>
+                        }
+                    </div>
+                    }
+                    <div class="card flex justify-center">
+                        <p-multiselect [options]="countries()" formControlName="countries" optionLabel="Name"
+                            optionValue="Id" [filter]="true" [resetFilterOnHide]="true" filterBy="Name"
+                            [showClear]="true" [showToggleAll]="true" placeholder="Select Countries"
+                            class="w-full md:w-56" (onClear)="selectedEditCountries.set([])">
+
+                            <ng-template #item let-country>
+                                <div class="flex items-center gap-2">
+                                    @if (country.CountryCode) {
+                                    <img [src]="'https://flagcdn.com/24x18/' + country.CountryCode.toLowerCase() + '.png'"
+                                        [alt]="country.Name" style="width: 24px; height: 18px; object-fit: cover;" />
+                                    }
+                                    <div>{{ country.Name }}</div>
+
+                                </div>
+                            </ng-template>
+
+                            <!-- selecteditems for multiple selected countries -->
+                            <ng-template #selecteditems let-selectedCountries>
+                                @if (selectedCountries?.length) {
+                                <div class="flex items-center gap-1">
+                                    @for (country of selectedCountries; track country.Id) {
+                                    <span class="country-chip">
+                                        {{ country.Name }}
+                                    </span>
+                                    }
+                                </div>
+                                }
+                            </ng-template>
+                        </p-multiselect>
+                    </div>
+                    <p class="field__error" id="zone-countries-error" role="alert"></p>
+                </div>
+                @if(hasAddZoneFormErrors('countries','required'))
+                {
+                <div class="intention-field__error">
+                    Please select at least one country.
+                </div>
+                }
+
+                <!-- Tradition  -->
+                <div class="zone-form__field zone-form__field--full" data-zone-field="countries">
+                    <div class="zone-form__label-wrap">
+                        <span class="zone-form__label">Traditions</span>
+                        <span class="zone-form__hint">Select all traditions involved in this zone.</span>
+                    </div>
+                    @if (selectedEditTraditions().length>0) {
+                    <div class="zone-countries__badges">
+                        @for (tradition of selectedEditTraditions(); track tradition.Name) {
+                        <span class="zone-countries__badge">
+                            <span class="zone-countries__badge-main">
+                                <span class="zone-countries__badge-label">
+                                    {{ tradition.Name }}
+                                </span>
+                            </span>
+                            <button type="button" class="zone-countries__badge-remove"
+                                [attr.aria-label]="'Remove ' + tradition.Name"
+                                (click)="removeSelectedTradition(tradition.Name)">
+
+                                <span class="material-symbols-outlined" aria-hidden="true">
+                                    close
+                                </span>
+                            </button>
+                        </span>
+                        }
+                    </div>
+                    }
+                    <div class="card flex justify-center">
+                        <p-multiselect [options]="traditionForZone()" formControlName="tradition" optionLabel="Name"
+                            optionValue="Name" [filter]="true" [resetFilterOnHide]="true" filterBy="Name"
+                            [showClear]="true" [showToggleAll]="true" placeholder="Select Tradition"
+                            class="w-full md:w-56 tradition-multiselect" (onClear)="selectedEditTraditions.set([])">
+
+                            <ng-template #item let-tradition>
+                                <div class="flex items-center gap-2">
+                                    <div>{{ tradition.Name }}</div>
+
+                                </div>
+                            </ng-template>
+
+                            <!-- selecteditems for multiple selected countries -->
+                            <ng-template #selecteditems let-selectedTraditions>
+                                @if (selectedTraditions?.length) {
+                                <div class="flex items-center gap-1">
+                                    @for (tradition of selectedTraditions; track tradition.Id) {
+                                    <span class="country-chip">
+                                        {{ tradition.Name }}
+                                    </span>
+                                    }
+                                </div>
+                                }
+                            </ng-template>
+                        </p-multiselect>
+                    </div>
+                    <p class="field__error" id="zone-countries-error" role="alert"></p>
+                </div>
+            </div>
+            <div class="zone-form__actions">
+                <button type="button" class="zone-form__cancel" data-zone-form-close
+                    (click)="cancelZoneModal()">Cancel</button>
+                <button type="submit" class="zone-form__submit" id="zone-form-submit"
+                    (click)="submitZone()">{{this.isZoneEdit()==true?'Edit':'Add'}}
+                    Zone</button>
+            </div>
+        </form>
+    </div>
+</div>
+@if(deleteZoneModalOpened()){
+<!-- Delete confirmation — Figma 327:5381 -->
+<div class="confirm-backdrop" [class.is-open]="deleteZoneModalOpened()" id="confirm-backdrop"></div>
+<div class="confirm-modal zone-delete-modal" [class.is-open]="deleteZoneModalOpened()" id="confirm-delete-modal"
+    role="alertdialog" aria-modal="true" aria-labelledby="confirm-delete-title" aria-describedby="confirm-delete-text">
+    <div class="confirm-modal__body">
+        <div class="confirm-modal__intro">
+            <div class="confirm-modal__icon-wrap zone-delete-modal__icon-wrap">
+                <span class="material-symbols-outlined msi-md zone-delete-modal__icon" aria-hidden="true">error</span>
+            </div>
+            <h2 class="confirm-modal__title" id="confirm-delete-title">Delete Zone?
+            </h2>
+        </div>
+        <p class="confirm-modal__text zone-delete-modal__text" id="confirm-delete-text">Are you sure you want to delete
+            this zone? This action cannot be undone.</p>
+    </div>
+    <div class="confirm-modal__actions zone-delete-modal__actions">
+        <button type="button" class="confirm-modal__cancel zone-delete-modal__cancel" data-confirm-close
+            (click)="cancelDeleteModalZone()">Cancel</button>
+        <button type="button" class="confirm-modal__confirm confirm-modal__confirm--reject zone-delete-modal__confirm"
+            id="confirm-delete-yes" (click)="deleteModalZone()">Yes, Delete</button>
+    </div>
+</div>
+}
+
+<!-- Tradition add / edit modal — Figma 327:5464 (create), 327:5449 (edit) -->
+<div class="settings-form-backdrop" [hidden]="!addTraditionModelOpened()" (click)="cancelTraditionModal()"
+    id="tradition-form-backdrop"></div>
+<div class="settings-form-modal tradition-form-modal tradition-form-modal--create" id="tradition-form-modal"
+    role="dialog" aria-modal="true" aria-labelledby="tradition-form-title" [class.is-open]="addTraditionModelOpened()">
+    <div class="tradition-form-modal__inner">
+        <h2 class="tradition-form-modal__title" id="tradition-form-title">{{isTraditionEdit()?'Edit':'Add New'}}
+            Tradition</h2>
+        <form class="tradition-form" id="tradition-form" [formGroup]="addTraditionForm" novalidate>
+            <label class="tradition-form__field" data-tradition-field="name"
+                [class.field--error]="hasAddTraditionFormErrors('traditionName')">
+                <span class="tradition-form__label">Tradition Name</span>
+                <input type="text" name="name" id="tradition-name" placeholder="E.g. Shinto" autocomplete="off"
+                    aria-describedby="tradition-name-error" formControlName="traditionName">
+                <p class="field__error" id="tradition-name-error" role="alert" hidden></p>
+            </label>
+            @if(hasAddTraditionFormErrors('traditionName','required')){
+            <div class="intention-field__error">
+                Tradition Name cannot be empty.
+            </div>
+            }
+            @if (isTraditionEdit()) {
+            <!-- Show status only when editing tradition -->
+            <div class="zone-form__field zone-form__field--full">
+                <div class="zone-form__label-wrap">
+                    <span class="zone-form__label">Status</span>
+                    <span class="zone-form__hint">Enable or disable this tradition.</span>
+                </div>
+
+                <div class="status-toggle">
+                    <span class="status-toggle__label" [class.is-active]="addTraditionForm.controls.isActive.value">
+                        {{ addTraditionForm.controls.isActive.value ? 'Active' : 'Inactive' }}
+                    </span>
+
+                    <button type="button" class="status-toggle__switch"
+                        [class.is-on]="addTraditionForm.controls.isActive.value" role="switch"
+                        [attr.aria-checked]="addTraditionForm.controls.isActive.value"
+                        aria-label="Toggle tradition status" (click)="toggleTraditionStatus()">
+
+                        <span class="status-toggle__thumb" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            }
+            <label class="tradition-form__field" data-tradition-field="description"
+                [class.field--error]="hasAddTraditionFormErrors('description')">
+                <span class="tradition-form__label">Description(Optional)</span>
+                <textarea name="description" id="tradition-description" class="tradition-form__textarea"
+                    placeholder="E.g. Shinto is the religion of Japan" rows="3" maxlength="350" autocomplete="off"
+                    aria-describedby="tradition-description-counter" formControlName="description"></textarea>
+                <div class="chars-left" id="tradition-description-counter" data-chars-left-for="tradition-description"
+                    aria-live="polite">{{350 - addTraditionForm.controls.description.value.length}} characters left
+                </div>
+            </label>
+            @if(hasAddTraditionFormErrors('description','maxLength'))
+            {
+            <div class="intention-field__error">
+                description must be at least 350 characters.
+            </div>
+            }
+            <div class="tradition-form__actions">
+                <button type="button" class="tradition-form__cancel" data-tradition-form-close
+                    (click)="cancelTraditionModal()">Cancel</button>
+                <button type="submit" class="tradition-form__submit" id="tradition-form-submit"
+                    (click)="submitTradition()">{{isTraditionEdit()?'Edit':'Add'}} Tradition</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Application Setting add / edit modal -->
+<div class="settings-form-backdrop" [hidden]="!applicationSettingModalOpened()"
+    (click)="cancelApplicationSettingModal()" id="application-setting-form-backdrop">
+</div>
+
+<div class="settings-form-modal tradition-form-modal tradition-form-modal--create" id="application-setting-form-modal"
+    role="dialog" aria-modal="true" aria-labelledby="application-setting-form-title"
+    [class.is-open]="applicationSettingModalOpened()">
+    <div class="tradition-form-modal__inner">
+        <h2 class="tradition-form-modal__title" id="application-setting-form-title">
+            {{this.isConfiguration()?'Edit':'Add' }} Application Setting
+        </h2>
+
+        <form class="tradition-form" id="application-setting-form" [formGroup]="addApplicationSettingForm" novalidate>
+            <!-- Key -->
+            <label class="tradition-form__field" data-setting-field="key"
+                [class.field--error]="hasAddApplicationSettingFormErrors('key')">
+                <span class="tradition-form__label">
+                    Key
+                </span>
+                <input type="text" name="key" id="application-setting-key" placeholder="E.g. pageSize"
+                    autocomplete="off" aria-describedby="application-setting-key-error" formControlName="key">
+            </label>
+            @if (hasAddApplicationSettingFormErrors('key', 'required')) {
+            <div class="intention-field__error">
+                Key cannot be empty.
+            </div>
+            }
+
+            <!-- Value -->
+            <label class="tradition-form__field" data-setting-field="value"
+                [class.field--error]="hasAddApplicationSettingFormErrors('value')">
+                <span class="tradition-form__label">
+                    Value
+                </span>
+                <input type="text" name="value" id="application-setting-value" placeholder="E.g. 100" autocomplete="off"
+                    aria-describedby="application-setting-value-error" formControlName="value">
+            </label>
+            @if (hasAddApplicationSettingFormErrors('value', 'required')) {
+            <div class="intention-field__error">
+                Value cannot be empty.
+            </div>
+            }
+            @else if (hasAddApplicationSettingFormErrors('value', 'maxLimit')) {
+            <div class="intention-field__error">
+                Please enter a value of {{ editBackendPageSizeVal }} or less.
+            </div>
+            }
+            <!-- Actions -->
+            <div class="tradition-form__actions">
+                <button type="button" class="tradition-form__cancel" (click)="cancelApplicationSettingModal()">Cancel
+                </button>
+                <button type="submit" class="tradition-form__submit" id="application-setting-form-submit"
+                    (click)="submitAppSetting(this.isConfiguration()?'Edit':'Add')">{{
+                    this.isConfiguration()?'Edit':'Add' }}
+                    Setting
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+@if (applicationSettingWarningModalOpened()) {
+
+<!-- Application Setting unsaved changes confirmation -->
+<div class="confirm-backdrop" [class.is-open]="applicationSettingWarningModalOpened()"
+    id="application-setting-warning-backdrop">
+</div>
+
+<div class="confirm-modal" [class.is-open]="applicationSettingWarningModalOpened()"
+    id="application-setting-warning-modal" role="alertdialog" aria-modal="true"
+    aria-labelledby="application-setting-warning-title" aria-describedby="application-setting-warning-text">
+    <div class="confirm-modal__body">
+        <div class="confirm-modal__intro">
+            <div class="confirm-modal__icon-wrap">
+                <span class="material-symbols-outlined msi-md" aria-hidden="true">
+                    error
+                </span>
+            </div>
+            <h2 class="confirm-modal__title" id="application-setting-warning-title">
+                Discard Changes?
+            </h2>
+        </div>
+        <p class="confirm-modal__text" id="application-setting-warning-text">
+            You have unsaved changes. Are you sure you want to discard them?
+        </p>
+
+    </div>
+
+    <div class="confirm-modal__actions">
+        <button type="button" class="confirm-modal__cancel" (click)="cancelApplicationSettingWarning()">
+            Keep Editing
+        </button>
+        <button type="button" class="confirm-modal__confirm confirm-modal__confirm--reject"
+            (click)="discardApplicationSettingChanges()">
+            Discard Changes
+        </button>
+
+    </div>
+
+</div>
+}

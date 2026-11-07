@@ -1,0 +1,657 @@
+/*
+  Admin UI — single stylesheet (plain HTML/CSS prototype)
+
+  Sections: Icons, Buttons, Login, App shell, Intention Review,
+  Published Messages, Audit Logs, Settings.
+
+  Every HTML page links only this file (+ Google Fonts).
+*/
+
+/* CHANGED: Make the PrimeNG password component full width */
+:host ::ng-deep p-password {
+    display: block;
+    width: 100%;
+}
+
+/* CHANGED: Make the PrimeNG password wrapper the same width as email */
+:host ::ng-deep .login-card .password-control {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* CHANGED: Make the actual password input fill the complete wrapper */
+:host ::ng-deep .login-card .password-input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+}
+
+/* CHANGED: Ensure the internal PrimeNG input uses the full width */
+:host ::ng-deep .login-card .password-control input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* CHANGED: Apply red border when password validation fails */
+:host ::ng-deep .login-card .field--error .password-control {
+    border-color: #d90019 !important;
+}
+
+/* CHANGED: Also apply red border to the actual PrimeNG input */
+:host ::ng-deep .login-card .field--error .password-input {
+    border-color: #d90019 !important;
+}
+
+/* --- Icons --- */
+.material-symbols-outlined {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    font-variation-settings:
+        "FILL" 0,
+        "wght" 400,
+        "GRAD" 0,
+        "opsz" 24;
+}
+
+.msi-sm {
+    font-size: 16px;
+}
+
+.msi-md {
+    font-size: 20px;
+}
+
+.msi-lg {
+    font-size: 24px;
+}
+
+.msi--muted {
+    color: #575757;
+}
+
+.msi--success {
+    color: #1b9f56;
+}
+
+.msi--danger {
+    color: #d33131;
+}
+
+/* --- Buttons --- */
+:root {
+    --btn-transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.field__toggle {
+    border-radius: 4px;
+    transition: var(--btn-transition);
+}
+
+.field__toggle:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #140f1d;
+}
+
+.field__toggle:active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.field__toggle:focus-visible {
+    outline: 2px solid rgba(142, 63, 90, 0.45);
+    outline-offset: 2px;
+}
+
+.login-card__submit {
+    transition: var(--btn-transition);
+}
+
+.login-card__submit:hover {
+    background: #7d3750;
+}
+
+.login-card__submit:active {
+    background: #6b2f44;
+}
+
+.login-card__submit:focus-visible {
+    outline: 2px solid rgba(142, 63, 90, 0.55);
+    outline-offset: 2px;
+}
+
+.sidebar__collapse {
+    border-radius: 6px;
+    transition: var(--btn-transition);
+}
+
+.sidebar__collapse:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: #140f1d;
+}
+
+.sidebar__collapse:active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar__collapse:focus-visible {
+    outline: 2px solid rgba(170, 5, 148, 0.35);
+    outline-offset: 2px;
+}
+
+.sidebar__logout {
+    transition: var(--btn-transition);
+    text-decoration: none;
+}
+
+.sidebar__logout:hover {
+    background: rgba(170, 5, 148, 0.08);
+    color: #aa0594;
+}
+
+.sidebar__logout:active {
+    background: rgba(170, 5, 148, 0.14);
+    color: #8f047c;
+}
+
+.sidebar__logout:focus-visible {
+    outline: 2px solid rgba(170, 5, 148, 0.35);
+    outline-offset: 2px;
+}
+
+.app__menu-btn {
+    transition: var(--btn-transition);
+}
+
+.app__menu-btn:hover {
+    background: #f6f6f6;
+    border-color: rgba(0, 0, 0, 0.18);
+}
+
+.app__menu-btn:active {
+    background: #ececec;
+    border-color: rgba(0, 0, 0, 0.22);
+}
+
+.app__menu-btn:focus-visible {
+    outline: 2px solid rgba(170, 5, 148, 0.35);
+    outline-offset: 2px;
+}
+
+.filter__dates {
+    transition: var(--btn-transition);
+}
+
+.filter__dates:hover {
+    background: #f8f8f8;
+    border-color: rgba(0, 0, 0, 0.28);
+    color: #424242;
+}
+
+.filter__dates:active {
+    background: #f0f0f0;
+    border-color: rgba(0, 0, 0, 0.32);
+}
+
+.filter__dates:focus-visible {
+    outline: 2px solid rgba(142, 63, 90, 0.35);
+    outline-offset: 2px;
+}
+
+.date-popover__btn {
+    transition: var(--btn-transition);
+}
+
+.date-popover__btn--ghost:hover {
+    background: #f3f3f3;
+    border-color: rgba(0, 0, 0, 0.24);
+    color: #424242;
+}
+
+.date-popover__btn--ghost:active {
+    background: #e8e8e8;
+    border-color: rgba(0, 0, 0, 0.28);
+}
+
+.date-popover__btn--apply:hover {
+    background: #7d3750;
+}
+
+.date-popover__btn--apply:active {
+    background: #6b2f44;
+}
+
+.date-popover__btn:focus-visible {
+    outline: 2px solid rgba(142, 63, 90, 0.45);
+    outline-offset: 2px;
+}
+
+.btn-view {
+    transition: var(--btn-transition);
+}
+
+.btn-view:hover {
+    background: rgba(142, 63, 90, 0.16);
+    color: #7d3750;
+}
+
+.btn-view:active {
+    background: rgba(142, 63, 90, 0.22);
+    color: #6b2f44;
+}
+
+.btn-view:focus-visible {
+    outline: 2px solid rgba(142, 63, 90, 0.4);
+    outline-offset: 2px;
+}
+
+.pager__btn {
+    transition: var(--btn-transition);
+}
+
+.pager__btn:not(:disabled):hover {
+    background: #f6f6f6;
+    border-color: rgba(0, 0, 0, 0.18);
+}
+
+.pager__btn:not(:disabled):active {
+    background: #ececec;
+    border-color: rgba(0, 0, 0, 0.24);
+}
+
+.pager__btn.is-active:not(:disabled):hover {
+    background: rgba(170, 5, 148, 0.14);
+    border-color: rgba(170, 5, 148, 0.28);
+}
+
+.pager__btn.is-active:not(:disabled):active {
+    background: rgba(170, 5, 148, 0.2);
+    border-color: rgba(170, 5, 148, 0.34);
+}
+
+.pager__btn:focus-visible {
+    outline: 2px solid rgba(170, 5, 148, 0.35);
+    outline-offset: 2px;
+}
+
+.detail-panel__close {
+    border-radius: 6px;
+    transition: var(--btn-transition);
+}
+
+.detail-panel__close:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: #424242;
+}
+
+.detail-panel__close:active {
+    background: rgba(0, 0, 0, 0.1);
+    color: #140f1d;
+}
+
+.detail-panel__close:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 2px;
+}
+
+.detail-panel__reject,
+.detail-panel__accept {
+    transition: var(--btn-transition);
+}
+
+.detail-panel__reject:hover {
+    background: rgba(224, 0, 0, 0.16);
+    color: #c80000;
+}
+
+.detail-panel__reject:active {
+    background: rgba(224, 0, 0, 0.22);
+    color: #b00000;
+}
+
+.detail-panel__accept:hover {
+    background: #16924d;
+}
+
+.detail-panel__accept:active {
+    background: #128342;
+}
+
+.detail-panel__reject:focus-visible,
+.detail-panel__accept:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 2px;
+}
+
+.confirm-modal__cancel,
+.confirm-modal__confirm {
+    transition: var(--btn-transition);
+}
+
+.confirm-modal__cancel:hover {
+    background: #f3f3f3;
+    border-color: rgba(0, 0, 0, 0.28);
+}
+
+.confirm-modal__cancel:active {
+    background: #e8e8e8;
+    border-color: rgba(0, 0, 0, 0.34);
+}
+
+.confirm-modal__confirm--accept:hover {
+    background: #16924d;
+}
+
+.confirm-modal__confirm--accept:active {
+    background: #128342;
+}
+
+.confirm-modal__confirm--reject:hover {
+    background: #c02b2b;
+}
+
+.confirm-modal__confirm--reject:active {
+    background: #a82424;
+}
+
+.confirm-modal__cancel:focus-visible,
+.confirm-modal__confirm:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 2px;
+}
+
+.detail-panel__unpublish {
+    transition: var(--btn-transition);
+}
+
+.detail-panel__unpublish:hover {
+    background: rgba(224, 0, 0, 0.16);
+    color: #c80000;
+}
+
+.detail-panel__unpublish:active {
+    background: rgba(224, 0, 0, 0.22);
+    color: #b00000;
+}
+
+.detail-panel__unpublish:focus-visible {
+    outline: 2px solid rgba(224, 0, 0, 0.35);
+    outline-offset: 2px;
+}
+
+.confirm-modal__confirm--unpublish:hover {
+    background: #c02b2b;
+}
+
+.confirm-modal__confirm--unpublish:active {
+    background: #a82424;
+}
+
+.filter__reset {
+    border-radius: 6px;
+    transition: var(--btn-transition);
+}
+
+.filter__reset:hover {
+    color: #424242;
+}
+
+.filter__reset:hover .filter__reset-icon {
+    color: #424242;
+}
+
+.filter__reset:active {
+    color: #140f1d;
+}
+
+.filter__reset:active .filter__reset-icon {
+    color: #140f1d;
+}
+
+.filter__reset:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 2px;
+}
+
+.settings-panel__add {
+    transition: var(--btn-transition);
+}
+
+.settings-panel__add:hover {
+    background: #7d3750;
+}
+
+.settings-panel__add:active {
+    background: #6b2f44;
+}
+
+.settings-panel__add:focus-visible {
+    outline: 2px solid rgba(142, 63, 90, 0.55);
+    outline-offset: 2px;
+}
+
+.settings-table__icon-btn {
+    transition: var(--btn-transition);
+}
+
+.settings-table__icon-btn:hover {
+    background: #f6f6f6;
+    border-color: rgba(0, 0, 0, 0.18);
+    color: #424242;
+}
+
+.settings-table__icon-btn:active {
+    background: #ececec;
+}
+
+.settings-table__icon-btn:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 2px;
+}
+
+.settings-table__icon-btn--delete:hover {
+    background: rgba(224, 0, 0, 0.08);
+    border-color: rgba(224, 0, 0, 0.2);
+    color: #c80000;
+}
+
+.openai-form__save {
+    transition: var(--btn-transition);
+}
+
+.openai-form__save:hover {
+    background: #7d3750;
+}
+
+.openai-form__save:active {
+    background: #6b2f44;
+}
+
+.openai-form__reset {
+    transition: var(--btn-transition);
+}
+
+.openai-form__reset:hover {
+    background: #f3f3f3;
+    border-color: rgba(0, 0, 0, 0.28);
+}
+
+.openai-form__reset:active {
+    background: #e8e8e8;
+}
+
+.settings-form__cancel,
+.settings-form__submit {
+    transition: var(--btn-transition);
+}
+
+.settings-form__cancel:hover {
+    background: #f3f3f3;
+    border-color: rgba(0, 0, 0, 0.28);
+}
+
+.settings-form__submit:hover {
+    background: #7d3750;
+}
+
+.settings-form__submit:active {
+    background: #6b2f44;
+}
+
+.confirm-modal__confirm--delete:hover,
+.zone-delete-modal__confirm:hover {
+    background: #c02b2b;
+}
+
+.confirm-modal__confirm--delete:active,
+.zone-delete-modal__confirm:active {
+    background: #a82424;
+}
+
+.zone-form__cancel,
+.zone-form__submit {
+    transition: var(--btn-transition);
+}
+
+.zone-form__cancel:hover {
+    background: #f3f3f3;
+    border-color: rgba(0, 0, 0, 0.28);
+}
+
+.zone-form__cancel:active {
+    background: #e8e8e8;
+}
+
+.zone-form__submit:hover {
+    background: #7d3750;
+}
+
+.zone-form__submit:active {
+    background: #6b2f44;
+}
+
+.zone-form__cancel:focus-visible,
+.zone-form__submit:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 2px;
+}
+
+.tradition-form__cancel,
+.tradition-form__submit {
+    transition: var(--btn-transition);
+}
+
+.tradition-form__cancel:hover {
+    background: #f3f3f3;
+    border-color: rgba(0, 0, 0, 0.28);
+}
+
+.tradition-form__cancel:active {
+    background: #e8e8e8;
+}
+
+.tradition-form__submit:hover {
+    background: #7d3750;
+}
+
+.tradition-form__submit:active {
+    background: #6b2f44;
+}
+
+.tradition-form__cancel:focus-visible,
+.tradition-form__submit:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 2px;
+}
+
+.zone-delete-modal__cancel {
+    transition: var(--btn-transition);
+}
+
+.zone-delete-modal__cancel:hover {
+    background: #f3f3f3;
+    border-color: rgba(0, 0, 0, 0.28);
+}
+
+.zone-delete-modal__confirm {
+    transition: var(--btn-transition);
+}
+
+.zone-delete-modal__confirm:focus-visible,
+.zone-delete-modal__cancel:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 2px;
+}
+
+
+/* CHANGED: Make the Angular login component fill the browser viewport */
+:host {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    background: #fff;
+}
+
+/* CHANGED: Remove unused space below the login layout */
+.login {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-height: 100%;
+    margin: 0;
+    padding: 16px;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+/* CHANGED: Make both desktop panels fill the available height */
+.login__split {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+@media (min-width: 960px) {
+
+    /* CHANGED: Keep the form and showcase side by side */
+    .login__split {
+        flex-direction: row;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    /* CHANGED: Keep both panels at equal width and full height */
+    .login__panel--form,
+    .login__panel--showcase {
+        flex: 1 1 50%;
+        min-width: 0;
+        min-height: 0;
+        height: 100%;
+    }
+
+    /* CHANGED: Avoid an unnecessary scrollbar in the showcase */
+    .login__panel--showcase {
+        overflow: hidden;
+    }
+}

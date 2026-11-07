@@ -1,0 +1,245 @@
+<section id="wall" class="wall" [class.is-focus-mode]="isfocused()">
+    <div class="wall__inner">
+        <div class="wall__header">
+            <div class="wall__intro">
+                <h2 class="wall__title">
+                    The Wall is Never Empty.
+                </h2>
+
+                <p class="wall__subtitle">
+                    Every note below was written by a person and reviewed before it was
+                    placed. They rise slowly, the way a wall fills. One at a time.
+                </p>
+            </div>
+
+            <div class="wall__stat">
+                <div class="wall__stat-row">
+                    <span class="wall__stat-dot-wrap" aria-hidden="true">
+                        <span class="wall__stat-dot"></span>
+                    </span>
+
+                    <!-- Static count for now. -->
+                    <p class="wall__stat-number">
+                        {{this.messageCount()}}
+                    </p>
+                </div>
+
+                <p class="wall__stat-label">
+                    INTENTIONS POSTED
+                </p>
+            </div>
+        </div>
+
+        <div class="wall__filters">
+            <div class="wall__tabs-wrap">
+                <div #wallTabsScroll class="wall__tabs-scroll" id="wall-tabs-scroll">
+                    <div class="wall__tabs" role="tablist" aria-label="Filter by wall">
+                        <button [class.is-active]="selectedZoneId() === null" type="button" class="wall__tab is-active"
+                            role="tab" [attr.aria-selected]="selectedZoneId() === null" (click)="onAllWallsClick()">
+                            All Walls
+                        </button>
+                        @for (zone of zoneList(); track zone.Id) {
+                        <button type="button" class="wall__tab" role="tab" aria-selected="false"
+                            [class.is-active]="selectedZoneId() === zone.Id"
+                            [attr.aria-selected]="selectedZoneId() === zone.Id" (click)="onMeesagesByZoneId(zone.Id)">
+                            {{zone.Name}}
+                        </button>
+                        }
+                    </div>
+                </div>
+                <div #wallTabsStartEdge class="wall__tabs-edge wall__tabs-edge--start is-hidden" aria-hidden="true">
+                    <span class="material-symbols-outlined wall__tabs-edge-icon">chevron_left</span>
+                </div>
+                <div #wallTabsEndEdge class="wall__tabs-edge wall__tabs-edge--end is-hidden" aria-hidden="true">
+                    <span class="material-symbols-outlined wall__tabs-edge-icon">chevron_right</span>
+                </div>
+            </div>
+
+            <div class="wall__actions">
+                <button type="button" class="wall__share" aria-label="Share the wall" (click)="shareWall()">
+                    <span class="material-symbols-outlined wall__share-icon" aria-hidden="true">share</span>
+                </button>
+                <button type="button" class="wall__expand" [class.is-active]="isfocused()"
+                    [attr.aria-label]="isfocused() ? 'Exit focus mode' : 'Enter focus mode'"
+                    [attr.aria-pressed]="isfocused()" (click)="toggleWallFocusMode()">
+                    <span class="material-symbols-outlined wall__expand-icon" aria-hidden="true">fullscreen</span>
+                </button>
+            </div>
+        </div>
+
+
+        <div class="wall__board" [class.is-empty]="messageList().length === 0">
+            <div class="wall__fade wall__fade--top" aria-hidden="true"></div>
+            <div class="wall__fade wall__fade--bottom" aria-hidden="true"></div>
+            <div class="wall__board-inner">
+                <div class="wall__columns" id="wall-columns">
+                    @if (messageList().length===0) {
+                    <!-- design-team empty wall state -->
+                    <div class="wall__empty">
+                        <img class="wall__empty-image" src="/images/wall-empty-state.png" alt="" aria-hidden="true" />
+                        <h3 class="wall__empty-title">
+                            No Intentions here yet.
+                        </h3>
+                        <p class="wall__empty-text">
+                            Be the first to add a note of hope and it will rise on the wall
+                            for the world to see.
+                        </p>
+                    </div>
+                    } @else {
+                    <div class="wall__columns">
+                        @for (column of columns(); track $index; let i = $index) {
+                        <div class="wall__column" [style.--wall-drift-duration]="columnDurations()[i]">
+                            <div class="wall__column-track">
+                                @for (set of [0, 1]; track set) {
+                                <div class="wall__column-set" [attr.aria-hidden]="set === 1 ? true : null">
+                                    @for (message of column; track message.Id) {
+                                    <article class="wall-card">
+                                        <span class="wall-card__fold" aria-hidden="true"></span>
+                                        <div class="wall-card__place">
+                                            <img class="wall-card__pin" src="/icons/mdi-location.svg" alt="" width="25"
+                                                height="25" />
+                                            <span>
+                                                {{ message.ZoneName }}
+                                            </span>
+                                        </div>
+
+                                        <p class="wall-card__message">
+                                            {{ message.Content }}
+                                        </p>
+
+                                        <hr class="wall-card__rule" />
+
+                                        <div class="wall-card__meta">
+                                            <p class="wall-card__byline">
+                                                <span class="wall-card__name"
+                                                    [attr.title]="(message.Post_Anonymously===0)? message.FirstName:'Anonymous'">
+                                                    {{ (message.Post_Anonymously===0)? message.FirstName:'Anonymous'}}
+                                                </span>
+                                                @if (message.CountryName) {
+                                                <span class="wall-card__sep">
+                                                    •
+                                                </span>
+
+                                                <span class="wall-card__country" [attr.title]="message.CountryName">
+                                                    {{ message.CountryName }}
+                                                </span>
+                                                }
+
+                                            </p>
+                                            @if (message.TradtionName) {
+                                            <span class="wall-card__category">
+                                                {{ message.TradtionName }}
+                                            </span>
+                                            }
+                                            <div class="wall-card__meta-right">
+                                                <!-- <span class="material-symbols-outlined wall-card__share-icon"
+                                                aria-hidden="true">
+                                                share
+                                            </span> -->
+                                            </div>
+                                        </div>
+                                    </article>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="wall__cta-wrap">
+            <a href="#intention" (click)="scrollToSection($event, 'intention')" class="btn-gold">
+                <span class="btn-gold__label">
+                    Add Your Intention
+                </span>
+
+                <span class="material-symbols-outlined btn-gold__icon" aria-hidden="true">
+                    arrow_forward
+                </span>
+            </a>
+        </div>
+    </div>
+</section>
+<div class="share-modal" [class.is-open]="shareModal()" id="share-modal" [class.hidden]="!shareModal()">
+    <div class="share-modal__backdrop" data-share-close tabindex="-1" (click)="closeShareWall()"></div>
+    <div class="share-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="share-modal-title"
+        [class.aria-hidden]="!shareModal()">
+        <div class="share-modal__header">
+            <div class="share-modal__intro">
+                <h2 class="share-modal__title" id="share-modal-title">Share this Wall</h2>
+                <p class="share-modal__subtitle">Invite someone to add their intention</p>
+            </div>
+            <button type="button" class="share-modal__close" data-share-close aria-label="Close" (click)="closeShareWall()">
+                <span class="material-symbols-outlined" aria-hidden="true" (click)="closeShareWall()">close</span>
+            </button>
+        </div>
+
+        <div class="share-modal__link-row">
+            <p class="share-modal__url">{{ shareUrl() }}</p>
+            <button type="button" class="share-modal__copy" (click)="copyWallShareUrl()">
+                <span class="material-symbols-outlined share-modal__copy-icon share-modal__copy-icon--copy"
+                    aria-hidden="true">content_copy</span>
+                <span class="material-symbols-outlined share-modal__copy-icon share-modal__copy-icon--check"
+                    aria-hidden="true">check</span>
+                <span class="share-modal__copy-label">{{ shareCopied() ? 'Copied' : 'Copy' }}</span>
+            </button>
+        </div>
+
+        <hr class="share-modal__rule">
+
+        <p class="share-modal__via">Share via</p>
+
+        <div class="share-modal__channels-wrap">
+            <div class="share-modal__edge share-modal__edge--start"
+                [class.is-visible]="shareScroll().overflow && !shareScroll().atStart">
+                <button type="button" class="share-modal__scroll-btn" aria-label="Previous share options"
+                    (click)="scrollShareChannels(-1)">
+                    <span class="material-symbols-outlined share-modal__scroll-icon"
+                        aria-hidden="true">arrow_back_ios_new</span>
+                </button>
+            </div>
+        <div #shareChannels class="share-modal__channels" (scroll)="updateShareScroll()">
+            <a class="share-modal__channel" id="share-modal-whatsapp" [href]="whatsappShareHref()" target="_blank"
+                rel="noopener noreferrer">
+                <img src="images/whatsapp-icon.svg" alt="" class="share-modal__channel-icon" width="31" height="31">
+                <span>WhatsApp</span>
+            </a>
+            <a class="share-modal__channel" id="share-modal-twitter" [href]="twitterShareHref()" target="_blank" rel="noopener noreferrer">
+                <img src="images/x-icon.svg" alt="" class="share-modal__channel-icon" width="31" height="31">
+                <span>X/Twitter</span>
+            </a>
+            <a class="share-modal__channel" id="share-modal-gmail" [href]="gmailShareHref()" target="_blank" rel="noopener noreferrer">
+                <img src="images/gmail-icon.svg" alt="" class="share-modal__channel-icon" width="31" height="25">
+                <span>Gmail</span>
+            </a>
+            <a class="share-modal__channel" id="share-modal-linkedin" [href]="linkedInShareHref()" target="_blank"
+                rel="noopener noreferrer">
+                <img src="images/linkedin-icon.svg" alt="" class="share-modal__channel-icon" width="31" height="31">
+                <span>LinkedIn</span>
+            </a>
+            <a class="share-modal__channel" id="share-modal-facebook" [href]="facebookShareHref()" target="_blank"
+                rel="noopener noreferrer">
+                <img src="images/facebook-icon.svg" alt="" class="share-modal__channel-icon" width="31" height="31">
+                <span>Facebook</span>
+            </a>
+            <a class="share-modal__channel" id="share-modal-instagram" href="https://www.instagram.com/"
+                target="_blank" rel="noopener noreferrer">
+                <img src="images/instagram-icon.svg" alt="" class="share-modal__channel-icon" width="31" height="31">
+                <span>Instagram</span>
+            </a>
+        </div>
+            <div class="share-modal__edge share-modal__edge--end"
+                [class.is-visible]="shareScroll().overflow && !shareScroll().atEnd">
+                <button type="button" class="share-modal__scroll-btn" aria-label="Next share options"
+                    (click)="scrollShareChannels(1)">
+                    <span class="material-symbols-outlined share-modal__scroll-icon"
+                        aria-hidden="true">arrow_forward_ios</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

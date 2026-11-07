@@ -1,0 +1,525 @@
+<section id="walls-of-the-world" class="world">
+    <div class="world__inner">
+        <h2 class="world__title">Walls of the World</h2>
+        <p class="world__subtitle">
+            Not one flat feed - a world you can travel through. Each wall is anchored to a real place with its own
+            aesthetic, its own light, its own way of holding prayer.
+        </p>
+        <div class="world__panel">
+            <p class="world__status" id="world-map-status" hidden>Map unavailable</p>
+            <!-- Scroll wrapper is separate from .world__panel so the horizontal
+             scroll (≤1023px) only moves the map, not the overlay below,
+             which needs to stay anchored to the panel's own fixed bounds. -->
+            <div class="world__map-scroll" (scroll)="closeZoneChooser()">
+                <div #worldMap id="world-map" class="world__map" role="region" aria-label="Walls of the World map">
+                </div>
+            </div>
+            <!-- Shown when a map pin is shared by 2+ zones; -->
+            <div #zoneChooser class="zone-chooser" id="zone-chooser" role="group" aria-labelledby="zone-chooser-title"
+                [hidden]="!zoneChooserOpened()">
+                <p class="zone-chooser__title" id="zone-chooser-title"> {{ zoneChooserWalls.length }} zones in this
+                    region</p>
+                <div class="zone-chooser__list">
+                    @for (wall of zoneChooserWalls; track wall.name) {
+                    <button type="button" class="zone-chooser__row" (click)="selectZoneFromChooser(wall)">
+                        <span class="zone-chooser__row-main">
+                            <span class="zone-chooser__dot" aria-hidden="true">
+                            </span>
+                            <span>
+                                {{ wall.label }}
+                            </span>
+                        </span>
+                        <span class="material-symbols-outlined zone-chooser__arrow" aria-hidden="true">
+                            arrow_forward
+                        </span>
+                    </button>
+                    }
+                </div>
+            </div>
+
+            <div class="wall-overlay" id="wall-overlay" [class.is-open]="wallOverlayOpened()"
+                [attr.aria-hidden]="!wallOverlayOpened()">
+
+                <!-- BACKDROP -->
+                <div class="wall-overlay__backdrop" tabindex="-1" (click)="closeWallOverlay()">
+                </div>
+                <!-- SIDEBAR -->
+                @if (wallOverlayOpened()) {
+                <aside class="wall-overlay__panel" role="dialog" aria-modal="true" aria-labelledby="wall-overlay-title"
+                    [attr.aria-hidden]="!wallOverlayOpened()">
+                    <!-- TOP -->
+                    <div class="wall-overlay__top">
+                        <p class="wall-overlay__live">
+                            <span class="wall-overlay__live-dot" aria-hidden="true">
+                            </span>
+                            LIVE WALL
+                        </p>
+                        <button type="button" class="wall-overlay__close" aria-label="Close"
+                            (click)="closeWallOverlay()">
+                            <span class="material-symbols-outlined wall-overlay__close-icon" aria-hidden="true">
+                                close
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- TITLE -->
+                    <h2 class="wall-overlay__title" id="wall-overlay-title">
+                        {{ selectedWall?.label }}
+                    </h2>
+                    <!-- DESCRIPTION -->
+                    <p class="wall-overlay__copy">
+                        {{ selectedWall?.description }}
+                    </p>
+                    <!-- FAITHS -->
+                    <div class="wall-overlay__faiths">
+                        @for (tradition of selectedWall?.traditions ?? [];track tradition.id)
+                        {
+                        <div class="wall-overlay__faith">
+                            @if (tradition.id === 'judaism') {
+                            <img src="/icons/mdi-judaism.svg" alt="" width="24" height="24" />
+                            }
+
+                            @if (tradition.id === 'islam') {
+                            <img src="/icons/boxicons-islam.svg" alt="" width="24" height="24" />
+                            }
+
+                            @if (tradition.id === 'christianity') {
+                            <img src="/icons/mdi-christianity.svg" alt="" width="24" height="24" />
+                            }
+
+                            @if (tradition.id === 'buddhism') {
+                            <img src="/icons/dharmachakra-buddhism.svg" alt="" width="24" height="24" />
+                            }
+                            <span>
+                                {{ tradition.label }}
+                            </span>
+                        </div>
+                        }
+                    </div>
+                    <!-- CTA -->
+                    <a href="#intention" (click)="scrollToSection($event, 'intention')"
+                        class="btn-gold wall-overlay__cta" (click)="closeWallOverlay()">
+
+                        <span class="btn-gold__label">
+                            Add Your Intention
+                        </span>
+
+                        <span class="material-symbols-outlined btn-gold__icon" aria-hidden="true">
+                            arrow_forward
+                        </span>
+                    </a>
+                </aside>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+<section id="how-it-works" class="how-it-works">
+    <div class="how-it-works__inner">
+        <h2 class="how-it-works__title">How it Works?</h2>
+        <div class="how-it-works__steps">
+            <article class="how-it-works__step">
+                <p class="how-it-works__num">01</p>
+                <span class="material-symbols-outlined how-it-works__icon" aria-hidden="true">edit_note</span>
+                <div class="how-it-works__copy">
+                    <h3 class="how-it-works__step-title">You write it.</h3>
+                    <p class="how-it-works__step-body">
+                        A sentence in your own words, aimed at a place.
+                    </p>
+                </div>
+            </article>
+
+            <div class="how-it-works__rule" aria-hidden="true"></div>
+
+            <article class="how-it-works__step">
+                <p class="how-it-works__num">02</p>
+                <span class="material-symbols-outlined how-it-works__icon" aria-hidden="true">gpp_good</span>
+                <div class="how-it-works__copy">
+                    <h3 class="how-it-works__step-title">AI moderation reads it with care.</h3>
+                    <p class="how-it-works__step-body">
+                        Every Intention is reviewed before it is placed - for harm, for hate,
+                        for anything that turns a prayer into a position. Almost always under
+                        a minute.
+                    </p>
+                </div>
+            </article>
+
+            <div class="how-it-works__rule" aria-hidden="true"></div>
+
+            <article class="how-it-works__step">
+                <p class="how-it-works__num">03</p>
+                <span class="material-symbols-outlined how-it-works__icon" aria-hidden="true">foundation</span>
+                <div class="how-it-works__copy">
+                    <h3 class="how-it-works__step-title">It takes its place on the wall.</h3>
+                    <p class="how-it-works__step-body">
+                        Your note appears with your name and country, aimed at the zone you
+                        chose, drifting up alongside everyone else’s. You get one email when
+                        it lands.
+                    </p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+<section id="film" class="film">
+    <div class="film__inner">
+        <div class="film__copy">
+            <div class="film__intro">
+                <h2 class="film__title">Shalom Salam</h2>
+                <p class="film__lede">
+                    Peace in Hebrew. Peace in Arabic. The same word, twice.
+                </p>
+            </div>
+
+            <div class="film__body">
+                <p>
+                    Two young entrepreneurs in Los Angeles, cut off from their families by a
+                    war neither of them started, open a hummus stand. Customers begin sending
+                    a prayer along with their order. The prayers are captured, transcribed,
+                    and carried the whole way — folded into the Western Wall, read aloud in
+                    the mosque, sent on to the church.
+                </p>
+                <p>
+                    They started with one physical location. Then they took it global. The
+                    film is in post-production and entering festivals; when the credits roll,
+                    a QR code puts the wall in the audience’s hands.
+                </p>
+            </div>
+
+            <blockquote class="film__quote">
+                <div class="film__quote-body">
+                    <p class="film__quote-text">
+                        One of our goals is to make hope and understanding and peace viral.
+                    </p>
+                    <footer class="film__quote-attr">Daniel &amp; Bayou - Dream Team Directors</footer>
+                </div>
+            </blockquote>
+        </div>
+
+        <figure class="film__card">
+            <div class="film__photo">
+                <img src="/images/movie-poster.png"
+                    alt="WRDSMTH artwork of a wall broken open, with light behind it and two people at the gap"
+                    width="446" height="639">
+            </div>
+            <div class="film__fade" aria-hidden="true"></div>
+            <figcaption class="film__caption">
+                <p class="film__caption-quote">“Empathy is a path to hope”</p>
+                <p class="film__caption-note">
+                    The artwork by WRDSMTH, the artist in the film - a wall broken open,
+                    light behind it, two people at the gap and a typewritten notes pressed
+                    onto it. The whole idea of this page is already in that picture.
+                </p>
+            </figcaption>
+        </figure>
+    </div>
+</section>
+<section id="the-idea" class="idea" aria-labelledby="idea-title">
+    <div class="idea__inner">
+        <header class="idea__header">
+            <h2 class="idea__title" id="idea-title">A film, an idea and a Wall</h2>
+            <p class="idea__intro">
+                Three steps, one greater story. Connected by a belief in a kinder world.
+            </p>
+        </header>
+        <!-- Progressive enhancement: without JS all three slides render
+           stacked and the arrows stay hidden. initIdeaCarousel() in
+           script.js adds .idea-carousel--enhanced to switch to the
+           one-slide-at-a-time crossfade. -->
+        <div class="idea-carousel" [class.idea-carousel--enhanced]="isCarouselEnhanced()" role="region"
+            aria-roledescription="carousel" aria-label="Three steps of the story" (keydown)="onCarouselKeydown($event)"
+            tabindex="0">
+            <div class="idea-carousel__track">
+                <div class="idea-slide" [class.is-active]="currentSlide() === 0" role="group"
+                    aria-roledescription="slide" aria-label="1 of 3" [attr.aria-hidden]="currentSlide() !== 0">
+                    <div class="idea-slide__media">
+                        <img class="idea-slide__img idea-slide__img--film" src="/images/the-film.png"
+                            alt="Two men laughing together over a meal." loading="lazy" decoding="async">
+                    </div>
+                    <div class="idea-slide__text">
+                        <div class="idea-slide__marker" aria-hidden="true">
+                            <span class="idea-slide__num">01</span>
+                            <span class="idea-slide__line"></span>
+                        </div>
+                        <h3 class="idea-slide__title">The Film</h3>
+                        <p class="idea-slide__body">
+                            Two people from different backgrounds sat down over hummus and discovered something
+                            powerful: despite their differences, they shared the same hopes for a better tomorrow.
+                        </p>
+                    </div>
+                </div>
+                <div class="idea-slide" [class.is-active]="currentSlide() === 1" role="group"
+                    aria-roledescription="slide" aria-label="2 of 3" [attr.aria-hidden]="currentSlide() !== 1">
+                    <div class="idea-slide__media">
+                        <img class="idea-slide__img idea-slide__img--idea" src="/images/the-idea.png"
+                            alt="Hands holding a handwritten note reading &quot;A kinder world is possible.&quot;"
+                            loading="lazy" decoding="async">
+                    </div>
+                    <div class="idea-slide__text">
+                        <div class="idea-slide__marker" aria-hidden="true">
+                            <span class="idea-slide__num">02</span>
+                            <span class="idea-slide__line"></span>
+                        </div>
+                        <h3 class="idea-slide__title">The Idea</h3>
+                        <p class="idea-slide__body">
+                            Their conversations revealed a simple truth: small acts of empathy can cross borders,
+                            challenge stereotypes and bring people closer. The film captures these moments, real people,
+                            real perspectives, real hope.
+                        </p>
+                    </div>
+                </div>
+                <div class="idea-slide" [class.is-active]="currentSlide() === 2" role="group"
+                    aria-roledescription="slide" aria-label="3 of 3" [attr.aria-hidden]="currentSlide() !== 2">
+                    <div class="idea-slide__media">
+                        <img class="idea-slide__img idea-slide__img--wall" src="/images/the-wall.png"
+                            alt="A glowing opening in a brick wall covered in notes." loading="lazy" decoding="async">
+                    </div>
+                    <div class="idea-slide__text">
+                        <div class="idea-slide__marker" aria-hidden="true">
+                            <span class="idea-slide__num">03</span>
+                            <span class="idea-slide__line"></span>
+                        </div>
+                        <h3 class="idea-slide__title">The Wall</h3>
+                        <p class="idea-slide__body">
+                            That idea grew into an intention wall, a global space where anyone, anywhere can share their
+                            intentions for peace. What started as a conversation is now a living wall of hope, written
+                            by people around the world.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="idea-carousel__controls" [hidden]="!isCarouselEnhanced()">
+                <button type="button" class="idea-carousel__btn idea-carousel__btn--prev" aria-label="Previous step"
+                    [disabled]="currentSlide() === 0" (click)="previousSlide()">
+                    <span class="material-symbols-outlined idea-carousel__icon"
+                        aria-hidden="true">arrow_back_ios_new</span>
+                </button>
+                <button type="button" class="idea-carousel__btn idea-carousel__btn--next" aria-label="Next step"
+                    [disabled]="currentSlide() === totalSlides - 1" (click)="nextSlide()">
+                    <span class="material-symbols-outlined idea-carousel__icon"
+                        aria-hidden="true">arrow_forward_ios</span>
+                </button>
+            </div>
+            <p class="idea-carousel__status" aria-live="polite" aria-atomic="true"></p>
+        </div>
+    </div>
+</section>
+<section id="festivals" class="festivals" aria-labelledby="festivals-title">
+    <div class="festivals__inner">
+        <header class="festivals__header">
+            <h2 class="festivals__title" id="festivals-title">Festival Selections &amp; Awards</h2>
+            <p class="festivals__intro">
+                Shalom Salam has been selected, nominated, and recognised at film festivals around the world.
+            </p>
+        </header>
+        <!-- One <li class="festival-card"> per festival: copy a whole <li> to
+           add another. The grid wraps extra cards into new rows of 3.
+           role="list" keeps list semantics in Safari/VoiceOver once
+           list-style is removed. The visually hidden ", " separators make a
+           screen reader read each card as "Winner, Mill Valley Film
+           Festival, 2026". -->
+        <ul class="festivals__list" role="list">
+            <li class="festival-card">
+                <img class="festival-card__laurel" src="/icons/laurel-left.svg" alt="" aria-hidden="true" width="49"
+                    height="91">
+                <p class="festival-card__text">
+                    <span class="festival-card__status">Winner</span><span class="festival-card__sep">, </span>
+                    <span class="festival-card__name">Mill Valley Film Festival</span><span class="festival-card__sep">,
+                    </span>
+                    <time class="festival-card__year" datetime="2026">2026</time>
+                </p>
+                <img class="festival-card__laurel" src="/icons/laurel-right.svg" alt="" aria-hidden="true" width="49"
+                    height="91">
+            </li>
+            <li class="festival-card">
+                <img class="festival-card__laurel" src="/icons/laurel-left.svg" alt="" aria-hidden="true" width="49"
+                    height="91">
+                <p class="festival-card__text">
+                    <span class="festival-card__status">Official selection</span><span class="festival-card__sep">,
+                    </span>
+                    <span class="festival-card__name">DocEdge Film Festival</span><span class="festival-card__sep">,
+                    </span>
+                    <time class="festival-card__year" datetime="2026">2026</time>
+                </p>
+                <img class="festival-card__laurel" src="/icons/laurel-right.svg" alt="" aria-hidden="true" width="49"
+                    height="91">
+            </li>
+            <li class="festival-card">
+                <img class="festival-card__laurel" src="/icons/laurel-left.svg" alt="" aria-hidden="true" width="49"
+                    height="91">
+                <p class="festival-card__text">
+                    <span class="festival-card__status">Official selection</span><span class="festival-card__sep">,
+                    </span>
+                    <span class="festival-card__name">Aspen Shortsfest</span><span class="festival-card__sep">, </span>
+                    <time class="festival-card__year" datetime="2026">2026</time>
+                </p>
+                <img class="festival-card__laurel" src="/icons/laurel-right.svg" alt="" aria-hidden="true" width="49"
+                    height="91">
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section id="stories" class="stories" aria-labelledby="stories-title">
+    <div class="stories__inner">
+        <header class="stories__header">
+            <h2 class="stories__title" id="stories-title">The story continues beyond the screen</h2>
+            <p class="stories__intro">
+                Explore the film through the conversations, stories and ideas behind its making.
+            </p>
+        </header>
+
+        <!-- Reusable click-to-load video: see initVideoEmbeds() in script.js.
+           Nothing third-party loads until the play button is pressed. -->
+        <div class="stories__trailer">
+            <!-- VIDEO: set data-video-provider to "youtube" or "vimeo" and paste
+             the video ID into data-video-id, e.g. data-video-provider="youtube"
+             data-video-id="dQw4w9WgXcQ". The play button stays disabled while
+             the ID is empty. -->
+            <div class="video-card" data-video-provider="vimeo"
+                data-video-id="https://vimeo.com/1225999647/8f0b524729?fl=pl&fe=sh"
+                data-video-title="Shalom Salam trailer">
+                <div class="video-card__frame">
+                    <div class="video-card__poster" data-video-poster>
+                        <img class="video-card__thumb" src="/images/trailer-thumbnail.png" alt="" loading="lazy"
+                            decoding="async">
+                        <span class="video-card__shade" aria-hidden="true"></span>
+                        <button type="button" class="video-card__play"
+                            (click)="playVideo($event, 'vimeo', 'https://vimeo.com/1225999647/8f0b524729?fl=pl&fe=sh', 'Shalom Salam trailer')"
+                            data-video-play aria-label="Play trailer: Watch the trailer"
+                            [disabled]="!isVideoAvailable('vimeo', 'https://vimeo.com/1225999647/8f0b524729?fl=pl&fe=sh')">
+                            <span class="material-symbols-outlined video-card__play-icon"
+                                aria-hidden="true">play_arrow</span>
+                        </button>
+                        <div class="video-card__overlay">
+                            <p class="video-card__label">
+                                <span>Trailer</span>
+                                <span class="video-card__bar" aria-hidden="true"></span>
+                            </p>
+                            <div class="video-card__heading">
+                                <h3 class="video-card__title">Watch the trailer</h3>
+                                <p class="video-card__desc">A glimpse into the world of Shalom Salam</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direct children in reading order (heading, video, text) so the
+           screen, reading and tab order match at every width; the
+           side-by-side layout is done with grid areas in styles.css. -->
+        <div class="stories__interview interview">
+            <h3 class="interview__title">A Conversation Behind the Wall</h3>
+            <!-- VIDEO: set data-video-provider to "youtube" or "vimeo" and paste
+             the video ID into data-video-id. The play button stays disabled
+             while the ID is empty. -->
+            <div class="video-card" data-video-provider="vimeo"
+                data-video-id="https://vimeo.com/1225999647/8f0b524729?fl=pl&fe=sh"
+                data-video-title="Shalom Salam: interview with the directors">
+                <div class="video-card__frame">
+                    <div class="video-card__poster" data-video-poster>
+                        <img class="video-card__thumb" src="/images/interview-thumbnail.png" alt="" loading="lazy"
+                            decoding="async">
+                        <span class="video-card__shade" aria-hidden="true"></span>
+                        <button type="button" class="video-card__play" (click)="playVideo($event,'vimeo','https://vimeo.com/1225999647/8f0b524729?fl=pl&fe=sh',
+                        'Shalom Salam: interview with the directors'
+                    )" data-video-play aria-label="Play interview: Why we made Shalom Salam"
+                            [disabled]="!isVideoAvailable('vimeo','https://vimeo.com/1225999647/8f0b524729?fl=pl&fe=sh')">
+                            <span class="material-symbols-outlined video-card__play-icon"
+                                aria-hidden="true">play_arrow</span>
+                        </button>
+                        <div class="video-card__overlay">
+                            <p class="video-card__label">
+                                <span>In conversation</span>
+                                <span class="video-card__bar" aria-hidden="true"></span>
+                            </p>
+                            <div class="video-card__heading">
+                                <!-- A styled <p>, not a heading: this block's h3 is
+                       .interview__title above. -->
+                                <p class="video-card__title">Why we made Shalom Salam</p>
+                                <p class="video-card__desc">A conversation with the directors about people, ideas and
+                                    the experiences that shaped the film</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interview__content">
+                <div class="interview__body">
+                    <p>
+                        Go behind the making of Shalom Salam with the directors as they share the story behind the film,
+                        the idea that inspired the Peace Wall, and why individual intentions can become part of
+                        something much bigger.
+                    </p>
+                    <!-- Temporarily hidden, restore when approved.
+            <p>
+              In this conversation, the directors reflect on the people, places, and experiences that shaped the film, and explore what it means to create a space where voices from around the world can come together with a shared intention for peace.
+            </p>
+            -->
+                    <p>
+                        Watch the interview and hear directly from the people behind the film and discover the idea that
+                        brought the Peace Wall to life.
+                    </p>
+                </div>
+                <p class="interview__credit">Daniel &amp; Bayou - Dream Team Directors</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="directors" class="directors" aria-labelledby="directors-title">
+    <!-- Direct children in mobile reading order (heading, directors, bio)
+         so reading and tab order match the screen there; tablet and
+         desktop place them with grid areas in styles.css. -->
+    <div class="directors__inner">
+        <div class="directors__heading">
+            <p class="directors__eyebrow">Meet the directors</p>
+            <h2 class="directors__title" id="directors-title">DreamTeamDirectors</h2>
+        </div>
+        <!-- One <li class="director-card"> per director. role="list" keeps
+           list semantics in Safari/VoiceOver once list-style is removed. -->
+        <ul class="directors__list" role="list">
+            <li class="director-card">
+                <img class="director-card__photo" src="/images/daniel.png" alt="Portrait of Daniel" width="179"
+                    height="179" loading="lazy" decoding="async">
+                <h3 class="director-card__name">Daniel</h3>
+                <p class="director-card__role">Director</p>
+            </li>
+            <li class="director-card">
+                <img class="director-card__photo" src="/images/bayou.png" alt="Portrait of Bayou" width="179"
+                    height="179" loading="lazy" decoding="async">
+                <h3 class="director-card__name">Bayou</h3>
+                <p class="director-card__role">Director</p>
+            </li>
+        </ul>
+        <!-- TODO: placeholder copy, replace with the real directors' bio before approval. -->
+        <p class="directors__bio">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud
+        </p>
+    </div>
+</section>
+
+<!-- CTA banner (Figma 328:6685): ported from the static site. -->
+<section class="find-cta">
+    <div class="find-cta__inner">
+        <div class="find-cta__card">
+            <div class="find-cta__copy">
+                <h2 class="find-cta__title">Every Intention, no matter how small, adds to a better world.</h2>
+                <a href="#intention" (click)="scrollToSection($event, 'intention')" class="btn-gold">
+                    <span class="btn-gold__label">Add Your Intention</span>
+                    <span class="material-symbols-outlined btn-gold__icon" aria-hidden="true">arrow_forward</span>
+                </a>
+            </div>
+
+            <div class="find-cta__media" aria-hidden="true">
+                <img class="find-cta__map" src="/images/world-map.png" alt="">
+            </div>
+        </div>
+    </div>
+</section>

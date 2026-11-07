@@ -1,0 +1,201 @@
+.zone-country {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: 8px;
+    margin-bottom: 0;
+    padding: 8px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
+.zone-country img {
+    width: 24px;
+    height: 18px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.zone-country__more {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px;
+    margin-left: 0;
+    background: #f5f5f5;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
+#application-setting-form-modal[hidden] {
+    display: none !important;
+}
+
+.zone-form-modal {
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.zone-form-modal__inner {
+    min-height: 0;
+}
+
+
+.tradition-multiselect {
+    width: 100%;
+}
+
+
+.tradition-multiselect .p-multiselect-overlay {
+    max-height: 20rem;
+}
+
+
+.tradition-multiselect .p-multiselect-list-container {
+    max-height: 20rem;
+    overflow-y: auto;
+}
+
+
+/* ---------------------------------------------------------------------------
+   Settings tables: static column widths, cell padding and truncation.
+   PrimeNG renders the <table> and its own cell padding (12px 16px) out-ranks the
+   global static rules, so the padding and widths are set explicitly here.
+   --------------------------------------------------------------------------- */
+
+/* PrimeNG's own container is the single horizontal scroller (as in the queue tables),
+   so the host must not force a min-width of its own */
+.zone-table,
+.tradition-table {
+    min-width: 0;
+}
+
+/* Zone table (Name / Country / Tradition / Description / Actions) */
+.zone-table ::ng-deep .p-datatable-thead>tr>th,
+.zone-table ::ng-deep .p-datatable-tbody>tr>td {
+    padding: 0 12px;
+}
+
+.zone-table ::ng-deep .p-datatable-thead>tr>th:nth-child(1),
+.zone-table ::ng-deep .p-datatable-tbody>tr>td:nth-child(1) {
+    min-width: 200px;
+    max-width: 260px;
+    width: 1%;
+    padding-left: 16px;
+}
+
+.zone-table ::ng-deep .p-datatable-tbody>tr>td:nth-child(1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.zone-table ::ng-deep .p-datatable-thead>tr>th:nth-child(2),
+.zone-table ::ng-deep .p-datatable-tbody>tr>td:nth-child(2) {
+    width: 1%;
+}
+
+.zone-table ::ng-deep .p-datatable-thead>tr>th:nth-child(3),
+.zone-table ::ng-deep .p-datatable-tbody>tr>td:nth-child(3) {
+    min-width: 160px;
+    max-width: 200px;
+    width: 200px;
+}
+
+.zone-table ::ng-deep .p-datatable-thead>tr>th:nth-child(4),
+.zone-table ::ng-deep .p-datatable-tbody>tr>td:nth-child(4) {
+    min-width: 200px;
+    max-width: 260px;
+    width: 260px;
+}
+
+.zone-table ::ng-deep .p-datatable-thead>tr>th:last-child,
+.zone-table ::ng-deep .p-datatable-tbody>tr>td:last-child {
+    min-width: 108px;
+    width: 1%;
+    padding-right: 16px;
+}
+
+/* Tradition table (Name / Description / Actions) */
+.tradition-table ::ng-deep .p-datatable-table {
+    table-layout: fixed;
+}
+
+.tradition-table ::ng-deep .p-datatable-thead>tr>th,
+.tradition-table ::ng-deep .p-datatable-tbody>tr>td {
+    padding: 0 16px;
+}
+
+.tradition-table ::ng-deep .p-datatable-thead>tr>th:nth-child(1),
+.tradition-table ::ng-deep .p-datatable-tbody>tr>td:nth-child(1) {
+    width: 245px;
+    padding-left: 24px;
+}
+
+.tradition-table ::ng-deep .p-datatable-thead>tr>th:nth-child(2),
+.tradition-table ::ng-deep .p-datatable-tbody>tr>td:nth-child(2) {
+    width: 380px;
+}
+
+.tradition-table ::ng-deep .p-datatable-tbody>tr>td:nth-child(2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tradition-table ::ng-deep .p-datatable-thead>tr>th:last-child,
+.tradition-table ::ng-deep .p-datatable-tbody>tr>td:last-child {
+    width: auto;
+    padding-right: 24px;
+}
+
+/* Empty state (PrimeNG #emptymessage row), same layout as the queue pages.
+   The single cell also matches the column rules above, so specificity is raised to out-rank them.
+   PrimeNG's scroller (.p-datatable-table-container) is a size container so the content stays centred in
+   the visible width when the table (min-width 960/920/700px) scrolls sideways. */
+.settings-table ::ng-deep .p-datatable-table-container {
+    container-type: inline-size;
+}
+
+.settings-table ::ng-deep .p-datatable-tbody>tr>td.empty-state {
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    height: auto;
+    padding: 48px 0;
+    overflow: visible;
+    white-space: normal;
+    text-align: center;
+}
+
+.settings-table ::ng-deep .empty-state__content {
+    position: sticky;
+    left: 0;
+    width: 100cqw;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.settings-table ::ng-deep .empty-state__img {
+    width: 208px;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 16px;
+}
+
+.settings-table ::ng-deep .empty-state__title {
+    margin: 0;
+    color: #140f1d;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.settings-table ::ng-deep .empty-state__text {
+    max-width: 326px;
+    margin: 8px 0 0;
+    color: #575757;
+    font-size: 16px;
+    font-weight: 500;
+}

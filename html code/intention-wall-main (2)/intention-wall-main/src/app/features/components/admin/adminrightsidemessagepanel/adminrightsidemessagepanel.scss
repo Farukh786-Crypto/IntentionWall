@@ -1,0 +1,14 @@
+.detail-panel>form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+:host {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+}

@@ -1,0 +1,525 @@
+<section id="intention" class="intention">
+    <div class="intention__inner">
+        <div class="intention__intro">
+            <div class="intention__copy">
+                <h2 class="intention__title">Write your Intention.</h2>
+                <p class="intention__lede">
+                    There is no right way to word this. A sentence is enough. Name the place
+                    you’re thinking of, and we’ll carry it to that wall.
+                </p>
+            </div>
+
+            <ul class="intention__notes">
+                <li>
+                    <span class="material-symbols-outlined intention__note-icon" aria-hidden="true">gpp_good</span>
+                    <span>Every Intention is read by AI moderation before its placed.</span>
+                </li>
+                <li>
+                    <span class="material-symbols-outlined intention__note-icon" aria-hidden="true">balance</span>
+                    <span>No politics, no sides. Only what one person hopes for another.</span>
+                </li>
+                <li>
+                    <span class="material-symbols-outlined intention__note-icon" aria-hidden="true">language</span>
+                    <span>English at Launch. More languages as the wall open.</span>
+                </li>
+            </ul>
+        </div>
+        <div class="intention-panel">
+        @if (postingState() === 'idle') {
+        <form class="intention-card" [formGroup]="addIntentionForm" novalidate>
+            <label class="intention-field">
+                <span class="intention-field__label">
+                    YOUR INTENTION <span class="intention-field__req" aria-hidden="true">*</span>
+                </span>
+                <textarea class="intention-field__input intention-field__input--area" name="intention" rows="4"
+                    formControlName="content"
+                    placeholder="May the children of every side of this sleep through the night"
+                    [class.is-invalid]="hasAddPostFormErrors('content')"></textarea>
+                <div class="chars-left" id="detail-comment-counter" data-chars-left-for="detail-comment"
+                    aria-live="polite">{{350 - (addIntentionForm.controls.content.value?.length)}}
+                    characters left</div>
+                @if(hasAddPostFormErrors('content','required')){
+                <div class="intention-field__error">
+                    Intention content cannot be empty.
+                </div>
+                }
+                @else if(hasAddPostFormErrors('content','minlength'))
+                {
+                <div class="intention-field__error">
+                    content must be at least 3 characters.
+                </div>
+                }
+                @else if(hasAddPostFormErrors('content','maxLength'))
+                {
+                <div class="intention-field__error">
+                    content must be at least 350 characters.
+                </div>
+                }
+                @else if(hasAddPostFormErrors('content','englishOnly'))
+                {
+                <div class="intention-field__error">
+                    Only English contents are allowed.
+                </div>
+                }
+            </label>
+
+            <label class="intention-field">
+                <span class="intention-field__label">
+                    WHICH WALL IS THIS FOR?
+                    <span class="intention-field__req" aria-hidden="true">*</span>
+                </span>
+                <p-select [options]="zonesListOptions()" formControlName="zone" optionLabel="Name" optionValue="Id"
+                    [showClear]="true" [filter]="true" filterBy="Name" placeholder="Choose a wall"
+                    styleClass="intention-field__select" panelStyleClass="intention-dd-panel" scrollHeight="280px"
+                    [invalid]="hasAddPostFormErrors('zone', 'required')">
+                    <ng-template #selectedItem let-selectedOption>
+                        @if (selectedOption) {
+                        <span>{{ selectedOption.Name }}</span>
+                        }
+                    </ng-template>
+                    <ng-template #item let-zone>
+                        <span>{{ zone.Name | titlecase }}</span>
+                    </ng-template>
+                </p-select>
+                @if (hasAddPostFormErrors('zone', 'required')) {
+                <span class="intention-field__error">
+                    Choosing a wall is required.
+                </span>
+                }
+            </label>
+
+            <div class="intention-field">
+                <span class="intention-field__label">YOUR TRADITION
+                </span>
+                <p-select [options]="traditionListOptions()" formControlName="tradition" optionLabel="Name"
+                    optionValue="Id" [filter]="true" filterBy="Name" [showClear]="true" placeholder="Optional"
+                    styleClass="intention-field__select" panelStyleClass="intention-dd-panel" scrollHeight="280px">
+                    <ng-template #selectedItem let-selectedOption>
+                        @if (selectedOption) {
+                        <span>{{ selectedOption.Name }}</span>
+                        }
+                    </ng-template>
+                    <ng-template #item let-tradition>
+                        <span>{{ tradition.Name | titlecase }}</span>
+                    </ng-template>
+                </p-select>
+                <p class="intention-field__hint">
+                    Shown on your note if you choose one. never used to rank or filter anything.
+                </p>
+            </div>
+
+            <div class="intention-row">
+                <label class="intention-field">
+                    <span class="intention-field__label">FIRST NAME
+                        <span class="intention-field__req" aria-hidden="true">*</span>
+                    </span>
+                    <input class="intention-field__input" type="text" name="firstName" formControlName="firstName"
+                        autocomplete="given-name" placeholder="Bruce"
+                        [class.is-invalid]="hasAddPostFormErrors('firstName')" />
+                    @if (hasAddPostFormErrors('firstName','required'))
+                    {
+                    <div class="intention-field__error">
+                        First name is required.
+                    </div>
+                    }
+                    @else if (hasAddPostFormErrors('firstName','pattern'))
+                    {
+                    <div class="intention-field__error">
+                        Only letters are allowed.
+                    </div>
+                    }
+                </label>
+                <label class="intention-field">
+                    <span class="intention-field__label">LAST NAME
+                        <span class="intention-field__req" aria-hidden="true">*</span>
+                    </span>
+                    <input class="intention-field__input" type="text" name="lastName" formControlName="lastName"
+                        autocomplete="family-name" placeholder="Wayne"
+                        [class.is-invalid]="hasAddPostFormErrors('lastName')" />
+                    @if (hasAddPostFormErrors('lastName','required'))
+                    {
+                    <div class="intention-field__error">
+                        Last name is required.
+                    </div>
+                    }
+                    @else if (hasAddPostFormErrors('lastName','pattern'))
+                    {
+                    <div class="intention-field__error">
+                        Only letters are allowed.
+                    </div>
+                    }
+                </label>
+            </div>
+
+            <label class="intention-field">
+                <span class="intention-field__label">YOUR COUNTRY
+                    <span class="intention-field__req" aria-hidden="true">*</span>
+                </span>
+                <p-select [options]="countriesListOptions()" formControlName="country" optionLabel="Name"
+                    optionValue="Id" [filter]="true" filterBy="Name" [showClear]="true" placeholder="Select country"
+                    styleClass="intention-field__select" panelStyleClass="intention-dd-panel" scrollHeight="280px"
+                    [invalid]="hasAddPostFormErrors('country', 'required')">
+                    <ng-template #selectedItem let-selectedOption>
+                        @if (selectedOption) {
+                        <div class="country-option">
+                            @if (selectedOption.CountryCode) {
+                            <img class="country-option__flag"
+                                [src]="'https://flagcdn.com/24x18/' + selectedOption.CountryCode.toLowerCase() + '.png'"
+                                [alt]="selectedOption.Name + ' flag'" />
+                            }
+                            <span class="country-option__name">
+                                {{ selectedOption.Name }}
+                            </span>
+                        </div>
+                        }
+                    </ng-template>
+
+                    <!-- Country options with flags -->
+                    <ng-template #item let-country>
+                        <div class="country-option">
+                            @if (country.CountryCode) {
+                            <img class="country-option__flag"
+                                [src]="'https://flagcdn.com/24x18/' + country.CountryCode.toLowerCase() + '.png'"
+                                [alt]="country.Name + ' flag'" />
+                            }
+                            <span class="country-option__name">
+                                {{ country.Name }}
+                            </span>
+                        </div>
+                    </ng-template>
+                </p-select>
+
+                <span>
+                    @if(hasAddPostFormErrors('country','required'))
+                    {
+                    <span class="intention-field__error">
+                        Country is required.
+                    </span>
+                    }
+                </span>
+            </label>
+
+            <label class="intention-field">
+                <span class="intention-field__label">EMAIL
+                    <span class="intention-field__req" aria-hidden="true">*</span>
+                </span>
+                <span class="intention-field__email" [class.is-invalid]="hasAddPostFormErrors('email')">
+                    <input class="intention-field__input intention-field__input--email" type="email" name="email"
+                        formControlName="email" autocomplete="email" placeholder="you@email.com" />
+                    @if(addIntentionForm.controls['email'].valid && !emailVerified() && !sendOtp())
+                    {
+                    <button type="button" class="intention-field__verify"
+                        [attr.aria-busy]="isSendingEmailOtp() ? 'true' : null" [disabled]="isSendingEmailOtp()"
+                        (click)="SendEmailOtp({email:addIntentionForm.controls['email'].value})">
+                        <span class="intention-verify__code-spinner" aria-hidden="true" [hidden]="!isSendingEmailOtp()">
+                        </span>
+                        <span>{{ isSendingEmailOtp()? 'Sending…': emailVerifyButtonText() }}</span>
+                    </button>
+                    }
+                    @if(addIntentionForm.controls['email'].valid && emailVerified())
+                    {
+                    <span class="material-symbols-outlined intention-field__email-check" id="intention-email-check"
+                        aria-hidden="true">check_circle</span>
+                    }
+
+                </span>
+                @if (hasAddPostFormErrors('email','required'))
+                {
+                <span class="intention-field__error">
+                    Email is required.
+                </span>
+                }
+                @else if(hasAddPostFormErrors('email','email'))
+                {
+                <span class="intention-field__error">
+                    Please enter a valid email address
+                </span>
+                }
+            </label>
+
+            @if(sendOtp() && !emailVerified() && !otpEmailVerify())
+            {
+            <div class="intention-verify" id="intention-verify-panel">
+                <div class="intention-verify__sent">
+                    <div class="intention-verify__banner">
+                        <span class="material-symbols-outlined intention-verify__mail" aria-hidden="true">mail</span>
+                        <div class="intention-verify__banner-text">
+                            <p class="intention-verify__banner-line">Code sent to <span class="intention-verify__email"
+                                    id="intention-verify-message"></span>{{addIntentionForm.controls['email'].value}}
+                            </p>
+                            <p class="intention-verify__banner-note">It can take up to a minute to arrive.</p>
+                        </div>
+                    </div>
+                    <div class="intention-verify__resend">
+                        <p>Didn’t receive the code?</p>
+                        @if(otpCountdown() > 0){
+                        <p id="intention-resend-line">
+                            Resend in <span id="intention-resend-timer">{{otpTimerDisplay()}}</span>
+                        </p>
+                        }
+                        @if(otpCountdown() === 0){
+                        <button type="button" class="intention-verify__resend-btn" id="intention-resend"
+                            (click)="SendEmailOtp({email:addIntentionForm.controls['email'].value})">
+                            Resend
+                        </button>
+                        }
+                    </div>
+                </div>
+
+                <div class="intention-field">
+                    <span class="intention-field__label" id="otp-label">
+                        VERIFICATION CODE
+                        <span class="intention-field__req" aria-hidden="true">*</span>
+                    </span>
+
+                    <div class="intention-otp" role="group" aria-labelledby="otp-label"
+                        [class.is-invalid]="hasAddPostFormErrors('otp')">
+                        <input #otpInput class="intention-otp__digit" type="text" inputmode="numeric" maxlength="1"
+                            placeholder="-" aria-label="Digit 1" autocomplete="one-time-code"
+                            (input)="onOtpInput($event, 0)" (keydown)="onOtpKeyDown($event, 0)">
+
+                        <input #otpInput class="intention-otp__digit" type="text" inputmode="numeric" maxlength="1"
+                            placeholder="-" aria-label="Digit 2" (input)="onOtpInput($event, 1)"
+                            (keydown)="onOtpKeyDown($event, 1)">
+
+                        <input #otpInput class="intention-otp__digit" type="text" inputmode="numeric" maxlength="1"
+                            placeholder="-" aria-label="Digit 3" (input)="onOtpInput($event, 2)"
+                            (keydown)="onOtpKeyDown($event, 2)">
+
+                        <input #otpInput class="intention-otp__digit" type="text" inputmode="numeric" maxlength="1"
+                            placeholder="-" aria-label="Digit 4" (input)="onOtpInput($event, 3)"
+                            (keydown)="onOtpKeyDown($event, 3)">
+
+                        <input #otpInput class="intention-otp__digit" type="text" inputmode="numeric" maxlength="1"
+                            placeholder="-" aria-label="Digit 5" (input)="onOtpInput($event, 4)"
+                            (keydown)="onOtpKeyDown($event, 4)">
+
+                        <input #otpInput class="intention-otp__digit" type="text" inputmode="numeric" maxlength="1"
+                            placeholder="-" aria-label="Digit 6" (input)="onOtpInput($event, 5)"
+                            (keydown)="onOtpKeyDown($event, 5)">
+
+                    </div>
+                    @if (verifyOtpMessage()) {
+                    <div class="intention-field__error">
+                        {{verifyOtpMessage()}}
+                        <p class="intention-field__error" id="intention-otp-error" role="alert" hidden></p>
+                        <div class="intention-verify__banner intention-verify__banner--error"
+                            id="intention-verify-code-banner" role="alert" hidden>
+                            <span class="material-symbols-outlined intention-verify__mail"
+                                aria-hidden="true">error</span>
+                            <div class="intention-verify__banner-text">
+                                <p class="intention-verify__banner-line" id="intention-verify-code-banner-title"></p>
+                                <p class="intention-verify__banner-note" id="intention-verify-code-banner-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    <button type="button" class="btn-intention-outline intention-verify__code-btn"
+                        id="intention-verify-code" (click)="VerifyOtpClick()" [disabled]="otpVerify()">
+                        <span class="intention-verify__code-spinner" id="intention-verify-code-spinner"
+                            aria-hidden="true" [hidden]="!isVerifyingOtp()">
+                        </span>
+                        <span id="intention-verify-code-label">
+                            {{ isVerifyingOtp() ? 'Verifying…' : verifyOtpButtonText() }}
+                        </span>
+                    </button>
+                    <!--
+                    @else if (hasAddPostFormErrors('otp', 'pattern')) {
+                    <div class="intention-field__error">
+                        Verification code must be 6 digits.
+                    </div>
+                    } -->
+                </div>
+
+            </div>
+            }
+            @if (otpSent() && emailVerified() && otpEmailVerify()) {
+            <label class="intention-anon">
+                <input class="intention-anon__box" type="checkbox" formControlName="post_Anonymously"
+                    name="anonymous" />
+                <span>
+                    <span class="intention-anon__title">Post this intention anonymously.</span>
+                    <span class="intention-anon__copy">
+                        Your name won't be shown publicly. Your email will only be used for
+                        verification and will never be displayed.
+                    </span>
+                </span>
+            </label>
+            }
+
+            <!-- Erros shows in Verify Email -->
+            <div class="intention-verify__error" id="intention-verify-error" [hidden]="!errorVerifyEmail()">
+                <div class="intention-verify__banner intention-verify__banner--error" role="alert">
+                    <span class="material-symbols-outlined intention-verify__mail" aria-hidden="true">error</span>
+                    <div class="intention-verify__banner-text">
+                        <p class="intention-verify__banner-line">We couldn’t send the code</p>
+                        <p class="intention-verify__banner-note" id="intention-verify-error-text">Something went wrong
+                            on our end. Please try again in a few minutes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intention-consent-stack">
+                <label class="intention-consent">
+                    <input class="intention-consent__input" type="checkbox" name="consent" id="intention-consent"
+                        formControlName="emailconsent" [class.is-invalid]="hasAddPostFormErrors('emailconsent')">
+                    <span class="intention-consent__box" aria-hidden="true"></span>
+                    <span class="intention-consent__copy">
+                        Yes — you may email me about my intention and about the Intention Wall as new walls open. I
+                        can unsubscribe at any time, and my address is never sold or shared with anyone outside this
+                        project.
+                    </span>
+                </label>
+                <label class="intention-consent">
+                    <input class="intention-consent__input" type="checkbox" name="terms" id="intention-terms"
+                        formControlName="consent" [class.is-invalid]="hasAddPostFormErrors('consent')">
+                    <span class="intention-consent__box" aria-hidden="true"></span>
+                    <span class="intention-consent__copy">I Accept the Terms and Conditions.</span>
+                </label>
+                <span class="intention-field__error">
+                    @if(hasAddPostFormErrors('consent','required'))
+                    {
+                    <div class="intention-field__error">
+                        Consent is required.
+                    </div>
+                    }
+                </span>
+            </div>
+            <div class="intention-card__submit">
+                <IntentionWall-button label="Post Intention" icon="pi pi-arrow-up" iconPos="right" variant="gold"
+                    [disabled]="addIntentionForm.invalid" (click)="onSubmit()">
+                </IntentionWall-button>
+            </div>
+        </form>
+        }
+        @else {
+        <!-- Figma 792:2283 (Submitting), 792:2296 (Success), 792:2289 (Error) — posting
+           state. Replaces the form while an intention is being posted; data-state is
+           posting | success | error (set by script.js). The video block is independent
+           of the state. -->
+        <div class="intention-card intention-posting" id="intention-posting" [attr.data-state]="postingState()">
+            <!-- VIDEO: set data-video-provider to "youtube" or "vimeo" and paste the
+             video (a full link or just the ID) into data-video-id. Both empty =
+             static placeholder frame. The iframe is only inserted when posting
+             starts, so nothing loads on page load. -->
+            <div class="intention-posting__video" #postingVideo id="intention-posting-video" data-video-provider="vimeo"
+                data-video-id="https://vimeo.com/1225999647/8f0b524729?fl=pl&fe=sh"
+                data-video-title="Shalom Salam film clip">
+                <img class="intention-posting__placeholder" src="/images/trailer-thumbnail.png" alt="" decoding="async">
+            </div>
+
+            <!-- Content below the video. Heading, description and button change per
+             state (submitting / success / error); copy is set in script.js. -->
+            <div class="intention-posting__body">
+                <!-- Status: announced on every state change. -->
+                <div class="intention-posting__status" id="intention-posting-status" aria-live="polite">
+                    <h3 class="intention-posting__title" id="intention-posting-title" tabindex="-1">{{postingTitle()}}
+                    </h3>
+                    <p class="intention-posting__text" id="intention-posting-text">
+                        {{postingText()}}
+                    </p>
+                </div>
+
+                <!-- Error state button. -->
+                <!-- @if (showTryAgain()) {
+                <button type="button" class="btn-intention-outline" id="intention-try-again" (click)="tryAgain()">Try
+                    Again</button>
+                } -->
+                <!-- Success state button. -->
+                @if (showPostAnother() || showTryAgain()) {
+                <button type="button" class="btn-intention-outline" id="intention-post-another"
+                    (click)="postAnotherIntention()">Post Another
+                    Intention</button>
+                }
+            </div>
+        </div>
+        }
+        </div>
+
+    </div>
+</section>
+<section id="explanatory" class="explanatory" aria-labelledby="explanatory-title">
+    <div class="explanatory__inner">
+        <header class="explanatory__header">
+            <h2 class="explanatory__title" id="explanatory-title">
+                More than a note. <em>A&nbsp;kinder tomorrow.</em>
+            </h2>
+            <p class="explanatory__intro">
+                It starts with a thought. It becomes words. And together, our intentions can become something greater.
+            </p>
+        </header>
+        <!-- role="list" keeps list semantics in Safari/VoiceOver, which drops
+           them from <ol>/<ul> once list-style is set to none. -->
+        <ol class="explanatory__list" role="list">
+            <li class="explanatory-step">
+                <div class="explanatory-step__text">
+                    <div class="explanatory-step__marker" aria-hidden="true">
+                        <span class="explanatory-step__num">01</span>
+                        <span class="explanatory-step__bar"></span>
+                    </div>
+                    <div class="explanatory-step__copy">
+                        <h3 class="explanatory-step__title">What is an intention?</h3>
+                        <p class="explanatory-step__body">
+                            An intention is a thought you choose to put into the world. It can be a hope, a promise, a
+                            wish for someone else, or simply a better way of seeing tomorrow.
+                        </p>
+                    </div>
+                </div>
+                <figure class="explanatory-step__figure">
+                    <div class="explanatory-step__frame">
+                        <img class="explanatory-step__img" src="/images/explanatory-1.png"
+                            alt="A hand writing a short note on paper by candlelight." loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="explanatory-step__caption">A thought begins</figcaption>
+                </figure>
+            </li>
+            <li class="explanatory-step">
+                <div class="explanatory-step__text">
+                    <div class="explanatory-step__marker" aria-hidden="true">
+                        <span class="explanatory-step__num">02</span>
+                        <span class="explanatory-step__bar"></span>
+                    </div>
+                    <div class="explanatory-step__copy">
+                        <h3 class="explanatory-step__title">How does it affect the world?</h3>
+                        <p class="explanatory-step__body">
+                            Every change begins as an idea. When shared, your words can remind someone else that they
+                            are not alone, inspire a different perspective, or become part of something larger than
+                            yourself.
+                        </p>
+                    </div>
+                </div>
+                <figure class="explanatory-step__figure">
+                    <div class="explanatory-step__frame">
+                        <img class="explanatory-step__img" src="/images/explanatory-2.png"
+                            alt="Handwritten notes pinned across a dimly lit wall, one reading &quot;You are not alone.&quot;"
+                            loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="explanatory-step__caption">A ripple reaches others</figcaption>
+                </figure>
+            </li>
+            <li class="explanatory-step">
+                <div class="explanatory-step__text">
+                    <div class="explanatory-step__marker" aria-hidden="true">
+                        <span class="explanatory-step__num">03</span>
+                        <span class="explanatory-step__bar"></span>
+                    </div>
+                    <div class="explanatory-step__copy">
+                        <h3 class="explanatory-step__title">What power does your intention hold?</h3>
+                        <p class="explanatory-step__body">
+                            Thousands of intentions, carried by thousands of people, create a more compassionate,
+                            connected world.
+                        </p>
+                    </div>
+                </div>
+                <figure class="explanatory-step__figure">
+                    <div class="explanatory-step__frame">
+                        <img class="explanatory-step__img" src="/images/explanatory-3.png"
+                            alt="A glowing map of the world at night, its cities linked by threads of golden light."
+                            loading="lazy" decoding="async">
+                    </div>
+                    <figcaption class="explanatory-step__caption">A brighter tomorrow</figcaption>
+                </figure>
+            </li>
+        </ol>
+    </div>
+</section>

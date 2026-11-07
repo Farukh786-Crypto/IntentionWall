@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 74 74" fill="none" aria-hidden="true">
+  <!-- fi:loader  Figma 544:1494 (intention submitting state) -->
+  <g stroke="#cd953a" stroke-linecap="round" stroke-width="5">
+    <line x1="37" y1="8" x2="37" y2="18"/>
+    <line x1="37" y1="56" x2="37" y2="66"/>
+    <line x1="16.46" y1="16.46" x2="23.54" y2="23.54"/>
+    <line x1="50.46" y1="50.46" x2="57.54" y2="57.54"/>
+    <line x1="8" y1="37" x2="18" y2="37"/>
+    <line x1="56" y1="37" x2="66" y2="37"/>
+    <line x1="16.46" y1="57.54" x2="23.54" y2="50.46"/>
+    <line x1="50.46" y1="23.54" x2="57.54" y2="16.46"/>
+  </g>
+</svg>

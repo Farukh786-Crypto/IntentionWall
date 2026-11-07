@@ -1,0 +1,3900 @@
+// *,
+// *::before,
+// *::after {
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;
+// }
+
+// img {
+//     max-width: 100%;
+// }
+
+// .material-symbols-outlined {
+//     direction: ltr;
+//     display: inline-block;
+//     font-family: 'Material Symbols Outlined';
+//     font-size: 24px;
+//     font-style: normal;
+//     font-weight: normal;
+//     letter-spacing: normal;
+//     line-height: 1;
+//     text-transform: none;
+//     white-space: nowrap;
+//     word-wrap: normal;
+//     -webkit-font-smoothing: antialiased;
+// }
+
+// :root {
+//     --intention-bg-primary: #140f1d;
+//     --intention-text-primary: #f7f2ec;
+//     --intention-text-secondary: #cfc7be;
+//     --intention-accent-gold: #e8b25a;
+//     --intention-accent-gold-light: #fbcc7e;
+//     --intention-border: rgba(255, 255, 255, 0.1);
+//     --font-fraunces: 'Fraunces', serif;
+//     --font-roboto: 'Roboto', sans-serif;
+//     --page-margin: 80px;
+//     --header-height: 81px;
+//     --content-max-width: 1280px;
+// }
+
+// /* Site-wide desktop content cap (1024px+ only — inert below 1280px
+//    viewport width regardless, since these boxes can never reach
+//    --content-max-width until the viewport exceeds it). Caps each
+//    section's existing padded "__inner" row at 1280px and centers it,
+//    so nothing stretches edge-to-edge on very large screens; each
+//    section's own full-bleed background/media layer (.hero, .wall,
+//    etc.) is untouched and still spans the full viewport behind it.
+//    .site-header__inner is deliberately excluded — the header stays
+//    full-bleed like .hero__media, only its var(--page-margin) padding
+//    governs left/right spacing, at every desktop width. */
+// @media (min-width: 1024px) {
+
+//     .find-info__inner,
+//     .find-cta__inner,
+//     .wall__inner,
+//     .intention__inner,
+//     .world__inner,
+//     .how-it-works__inner,
+//     .film__inner,
+//     .footer-top {
+//         margin-inline: auto;
+//         max-width: var(--content-max-width);
+//     }
+
+//     /* .hero__content is a flex item, not a block-level div like the
+//      others above — it doesn't stretch to fill the row on its own, so
+//      it needs width:100% before max-width/margin-inline can do
+//      anything. The hero's background image/wash/gradient live on the
+//      sibling .hero__media layer and stay full-bleed, untouched. */
+//     .hero__content,
+//     .find-hero__content {
+//         margin-inline: auto;
+//         max-width: var(--content-max-width);
+//         width: 100%;
+//     }
+
+//     /* Separate from the width cap above: .hero's height is otherwise
+//      100vh-relative with no ceiling, which over-stretches the section
+//      (and its background image) on tall/ultra-wide monitors. Capping it
+//      here still lets height shrink below 850px on ordinary desktop
+//      screens where 100vh - header-height is already under that. */
+//     .hero,
+//     .find-hero {
+//         max-height: 850px;
+//     }
+// }
+
+// html {
+//     scroll-behavior: smooth;
+// }
+
+// html,
+// body {
+//     background-color: var(--intention-bg-primary);
+//     font-family: var(--font-roboto);
+// }
+
+// .btn-gold {
+//     align-items: center;
+//     appearance: none;
+//     -webkit-appearance: none;
+//     background: linear-gradient(to top, #e8b25a 14.894%, #fbcc7e 88.298%);
+//     border: 0;
+//     border-bottom: 1px solid #ffcd96;
+//     border-radius: 60px;
+//     color: #140f1d;
+//     cursor: pointer;
+//     display: inline-flex;
+//     flex-shrink: 0;
+//     font-family: var(--font-roboto);
+//     font-size: 20px;
+//     font-weight: 500;
+//     gap: 8px;
+//     justify-content: center;
+//     padding: 12px 16px;
+//     text-decoration: none;
+//     white-space: nowrap;
+// }
+
+// .btn-gold:not(:disabled):hover,
+// .btn-gold:not(:disabled):focus {
+//     background: linear-gradient(to top, #e8b25a 14.894%, #fbcc7e 88.298%);
+//     border: 0;
+//     border-bottom: 1px solid #ffcd96;
+//     color: #140f1d;
+//     outline: none;
+// }
+
+// .btn-gold__label {
+//     color: #140f1d;
+//     font-family: var(--font-roboto);
+//     font-size: inherit;
+//     font-weight: 500;
+// }
+
+// .btn-gold__icon {
+//     color: #140f1d;
+//     flex-shrink: 0;
+//     font-size: 1em;
+// }
+
+// .btn-ghost {
+//     align-items: center;
+//     background: rgba(255, 255, 255, 0.05);
+//     border: 1px solid rgba(255, 255, 255, 0.2);
+//     border-radius: 60px;
+//     color: var(--intention-text-primary);
+//     cursor: pointer;
+//     display: inline-flex;
+//     flex-shrink: 0;
+//     font-family: var(--font-roboto);
+//     font-size: 20px;
+//     font-weight: 500;
+//     justify-content: center;
+//     padding: 12px 16px;
+//     text-decoration: none;
+//     white-space: nowrap;
+// }
+
+// .btn-gold:disabled {
+//     background: #f4e8d3;
+//     border: 0;
+//     color: #8b8174;
+//     cursor: default;
+// }
+
+// .btn-gold:disabled .btn-gold__label,
+// .btn-gold:disabled .btn-gold__icon {
+//     color: #8b8174;
+// }
+
+// .btn-ghost:hover,
+// .btn-ghost:focus {
+//     background: rgba(255, 255, 255, 0.05);
+//     border: 1px solid rgba(255, 255, 255, 0.2);
+//     color: var(--intention-text-primary);
+//     outline: none;
+// }
+
+// /* ===== HEADER ===== */
+
+// .site-header {
+//     background: rgba(255, 255, 255, 0.01);
+//     backdrop-filter: blur(14px);
+//     -webkit-backdrop-filter: blur(14px);
+//     border-bottom: 1px solid var(--intention-border);
+//     position: sticky;
+//     top: 0;
+//     width: 100%;
+//     z-index: 100;
+// }
+
+// .site-header__inner {
+//     align-items: center;
+//     display: flex;
+//     height: calc(var(--header-height) - 1px);
+//     justify-content: space-between;
+//     padding: 16px 80px;
+// }
+
+// .site-header__brand {
+//     align-items: center;
+//     display: flex;
+//     flex-shrink: 0;
+//     gap: 12px;
+//     min-width: 0;
+//     text-decoration: none;
+// }
+
+// .site-header__logo {
+//     background-color: var(--intention-accent-gold);
+//     border-radius: 0;
+//     flex-shrink: 0;
+//     height: 32px;
+//     width: 32px;
+// }
+
+// .site-header__name {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 26px;
+//     font-weight: 400;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+// }
+
+// .site-header__right {
+//     align-items: center;
+//     display: flex;
+//     flex-shrink: 0;
+//     gap: 16px;
+// }
+
+// .site-header__nav {
+//     align-items: center;
+//     display: flex;
+//     gap: 8px;
+// }
+
+// .site-header__nav a,
+// .site-header__mobile-nav a {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 20px;
+//     font-weight: 400;
+//     padding: 8px 12px;
+//     text-decoration: none;
+//     white-space: nowrap;
+// }
+
+// .site-header__nav a:hover,
+// .site-header__nav a:focus,
+// .site-header__mobile-nav a:hover,
+// .site-header__mobile-nav a:focus {
+//     color: var(--intention-text-primary);
+// }
+
+// .site-header__nav a.is-active,
+// .site-header__mobile-nav a.is-active {
+//     color: var(--intention-accent-gold);
+//     font-weight: 500;
+// }
+
+// .site-header__menu-btn {
+//     align-items: center;
+//     background: transparent;
+//     border: 0;
+//     cursor: pointer;
+//     display: none;
+//     flex-direction: column;
+//     gap: 5px;
+//     height: 2.25rem;
+//     justify-content: center;
+//     padding: 0.25rem;
+//     width: 2.25rem;
+// }
+
+// .site-header__menu-icon {
+//     color: var(--intention-text-secondary);
+//     font-size: 1.75rem;
+// }
+
+// .site-header__mobile-nav {
+//     display: none;
+//     flex-direction: column;
+//     gap: 0;
+//     max-height: 0;
+//     opacity: 0;
+//     overflow: hidden;
+//     padding: 0 80px;
+//     transition: max-height 0.25s ease, opacity 0.25s ease, padding 0.25s ease;
+// }
+
+// .site-header__mobile-nav.is-open {
+//     max-height: 20rem;
+//     opacity: 1;
+//     padding-bottom: 16px;
+// }
+
+// .site-header__mobile-nav .btn-gold {
+//     margin-top: 16px;
+//     padding: 12px 16px;
+// }
+
+// @media (min-width: 1280px) and (max-width: 1439px) {
+//     :root {
+//         --header-height: 72px;
+//     }
+
+//     .site-header__inner {
+//         padding: 12px 52px;
+//     }
+
+//     .site-header__brand {
+//         gap: 10px;
+//     }
+
+//     .site-header__logo {
+//         height: 27px;
+//         width: 27px;
+//     }
+
+//     .site-header__name {
+//         font-size: 22px;
+//     }
+
+//     .site-header__right {
+//         gap: 13px;
+//     }
+
+//     .site-header__nav {
+//         gap: 6px;
+//     }
+
+//     .site-header__nav a {
+//         font-size: 16px;
+//         padding: 10px;
+//     }
+
+//     .site-header .btn-gold {
+//         font-size: 16px;
+//         gap: 6px;
+//         padding: 10px 13px;
+//     }
+// }
+
+// @media (max-width: 1279px) {
+
+//     .site-header__inner,
+//     .site-header__mobile-nav {
+//         padding-left: var(--page-margin);
+//         padding-right: var(--page-margin);
+//     }
+
+//     .site-header__nav {
+//         display: none;
+//     }
+
+//     .site-header__menu-btn {
+//         display: flex;
+//     }
+
+//     .site-header__mobile-nav {
+//         display: flex;
+//     }
+// }
+
+// @media (max-width: 1023px) {
+//     :root {
+//         --page-margin: 48px;
+//     }
+// }
+
+// @media (max-width: 479px) {
+//     :root {
+//         --page-margin: 24px;
+//     }
+
+//     /* Wordmark is visible again at this breakpoint (an earlier round hid it
+//      entirely; reversed per instruction). At the base 26px size "The
+//      Intention Wall" is wider than the space left over after the logo
+//      square, brand gap, and hamburger icon at 375px width, so it's sized
+//      down to fit — same 20px value this rule used before it was ever
+//      hidden. .site-header__name already has overflow:hidden;
+//      text-overflow:ellipsis as a safety net if a translation or future
+//      copy change makes the wordmark longer. */
+//     .site-header__name {
+//         font-size: 20px;
+//     }
+// }
+
+// @media (max-width: 767px) {
+
+//     /* Header CTA is redundant with the Hero and Wall CTAs and does not fit
+//      next to the brand + hamburger at mobile widths without overflowing. */
+//     #post-intention-btn {
+//         display: none;
+//     }
+// }
+
+// /* ===== HERO ===== */
+
+// .hero {
+//     align-items: center;
+//     background-color: var(--intention-bg-primary);
+//     display: flex;
+//     height: calc(100vh - var(--header-height));
+//     position: relative;
+// }
+
+// .hero__media {
+//     inset: 0;
+//     overflow: hidden;
+//     pointer-events: none;
+//     position: absolute;
+// }
+
+// .hero__image {
+//     display: block;
+//     height: 111%;
+//     left: 0;
+//     mix-blend-mode: lighten;
+//     object-fit: cover;
+//     object-position: center;
+//     position: absolute;
+//     top: 0;
+//     width: 100%;
+// }
+
+// .hero__wash {
+//     background: rgba(20, 15, 29, 0.15);
+//     bottom: 0;
+//     left: calc(489 / 1440 * 100%);
+//     position: absolute;
+//     right: 0;
+//     top: 0;
+// }
+
+// .hero__gradient {
+//     background: linear-gradient(102deg,
+//             rgba(20, 15, 29, 0.47) 0%,
+//             rgba(20, 15, 29, 0.47) 47%,
+//             rgba(20, 15, 29, 0) 77%);
+//     bottom: 0;
+//     left: 0;
+//     position: absolute;
+//     top: 0;
+//     width: calc(1045 / 1440 * 100%);
+// }
+
+// /* Mobile-only (≤479px) image block — a plain <img>, not the desktop
+//    .hero__media overlay. Hidden above 479px; see the media query below. */
+// .hero__image-mobile {
+//     display: none;
+// }
+
+// .hero__content {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: flex-start;
+//     padding-left: 80px;
+//     position: relative;
+//     z-index: 1;
+// }
+
+// .hero__title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 72px;
+//     font-style: normal;
+//     font-weight: 400;
+//     letter-spacing: 0;
+//     line-height: 1.1;
+//     max-width: 100%;
+//     width: 535px;
+// }
+
+// .hero__title span {
+//     color: var(--intention-accent-gold);
+//     font-family: var(--font-fraunces);
+//     font-style: italic;
+//     font-weight: 600;
+// }
+
+// .hero__subtitle {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 16px 0 0;
+//     max-width: 514px;
+// }
+
+// .hero__actions {
+//     align-items: flex-end;
+//     align-self: flex-start;
+//     display: flex;
+//     flex-direction: row;
+//     flex-wrap: nowrap;
+//     gap: 16px;
+//     margin-top: 32px;
+//     width: max-content;
+// }
+
+// @media (max-width: 1023px) {
+
+//     /* Stacked "text block, then image block" layout now extends through the
+//      whole tablet range (768–1023px) instead of falling through to the
+//      desktop full-bleed background — only 1024px+ still uses .hero__media
+//      as an absolute background. This block holds everything that's shared
+//      across 768–1023 / 480–767 / ≤479 (same structure at every one of those
+//      widths); tier-specific padding, font-size, and image height are set
+//      below at the 767px and 479px breakpoints.
+//      height: auto is required here, not optional — the base .hero rule
+//      sets a fixed, unconditional `height: calc(100vh - header-height)`,
+//      which would otherwise win over content-driven sizing and keep the
+//      box rigid regardless of how tall the stacked content actually is
+//      (the same trap hit in an earlier mobile-only round). */
+//     .hero {
+//         align-items: stretch;
+//         flex-direction: column;
+//         height: auto;
+//     }
+
+//     .hero__media {
+//         display: none;
+//     }
+
+//     .hero__content {
+//         padding: 40px var(--page-margin);
+//     }
+
+//     .hero__title {
+//         font-size: 56px;
+//         width: 100%;
+//     }
+
+//     .hero__actions {
+//         flex-wrap: wrap;
+//         /* Base rule sets width: max-content, which sizes a wrapping flex
+//        container as if it never wraps (max-content assumes infinite
+//        space, so nothing would force a wrap) — flex-wrap: wrap would
+//        never actually trigger and the row would overflow instead of
+//        dropping to a second line. width: auto lets it size as a normal
+//        flex item (shrink-to-fit within available space), so wrap can
+//        engage whenever the two buttons don't fit. Needed at every width
+//        in this stacked-layout range, not just the narrowest phones. */
+//         width: auto;
+//     }
+
+//     /* Plain <img>, not the desktop overlay technique — width/height set
+//      directly, object-fit handles the crop. No wash, no gradient at any
+//      width in this range: dropped per an earlier instruction to prioritize
+//      a clean, correctly-sized render over preserving every desktop visual
+//      effect. mix-blend-mode is kept since it needs no extra markup, just a
+//      background to blend against (.hero's own background-color). Height is
+//      768–1023's value; 767px and 479px below override it narrower. */
+//     .hero__image-mobile {
+//         display: block;
+//         height: 480px;
+//         margin: 0;
+//         mix-blend-mode: lighten;
+//         object-fit: cover;
+//         object-position: center;
+//         width: 100%;
+//     }
+// }
+
+// @media (max-width: 767px) {
+//     .hero__content {
+//         padding: 32px var(--page-margin);
+//     }
+
+//     .hero__title {
+//         font-size: 40px;
+//     }
+
+//     .hero__subtitle {
+//         font-size: 18px;
+//     }
+
+//     .hero__image-mobile {
+//         height: 400px;
+//     }
+// }
+
+// @media (max-width: 479px) {
+
+//     /* Title/subtitle font-size not repeated here — same 40px/18px as the
+//      767px tier above, no further reduction at the narrowest phones. */
+//     .hero__content {
+//         padding: 24px 16px;
+//     }
+
+//     .hero__actions {
+//         gap: 8px;
+//         margin-top: 16px;
+//     }
+
+//     .hero__image-mobile {
+//         height: 342px;
+//     }
+// }
+
+// /* ===== FIND INTENTIONS HERO ===== */
+
+// .find-hero {
+//     align-items: center;
+//     background-color: var(--intention-bg-primary);
+//     display: flex;
+//     height: calc(100vh - var(--header-height));
+//     position: relative;
+// }
+
+// .find-hero__media {
+//     inset: 0;
+//     overflow: hidden;
+//     pointer-events: none;
+//     position: absolute;
+// }
+
+// .find-hero__image {
+//     display: block;
+//     height: 111%;
+//     left: 0;
+//     mix-blend-mode: lighten;
+//     object-fit: cover;
+//     object-position: center;
+//     position: absolute;
+//     top: 0;
+//     width: 100%;
+// }
+
+// .find-hero__gradient {
+//     background: linear-gradient(102deg,
+//             rgba(20, 15, 29, 0.47) 0%,
+//             rgba(20, 15, 29, 0.47) 47%,
+//             rgba(20, 15, 29, 0) 77%);
+//     bottom: 0;
+//     left: 0;
+//     position: absolute;
+//     top: 0;
+//     width: 100%;
+// }
+
+// /* Mobile-only (≤479px) image block — a plain <img>, not the desktop
+//    .find-hero__media overlay. Hidden above 479px; see the media query
+//    below. Same technique as .hero__image-mobile on the homepage. */
+// .find-hero__image-mobile {
+//     display: none;
+// }
+
+// .find-hero__content {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: flex-start;
+//     padding-left: 80px;
+//     position: relative;
+//     z-index: 1;
+// }
+
+// .find-hero__title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 72px;
+//     font-style: normal;
+//     font-weight: 400;
+//     letter-spacing: 0;
+//     line-height: 1.1;
+//     max-width: 100%;
+//     width: 620px;
+// }
+
+// .find-hero__title span {
+//     color: var(--intention-accent-gold);
+//     font-family: var(--font-fraunces);
+//     font-style: italic;
+//     font-weight: 600;
+// }
+
+// .find-hero__subtitle {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 16px 0 0;
+//     max-width: 514px;
+// }
+
+// /* ----- Email search bar -----
+//    Desktop: one rounded-full pill (gold-tinted border, faint white fill)
+//    holding the mail icon + plain-text email input on the left and the
+//    gold CTA button on the right — same shared-pill pattern as
+//    .intention-field__email / .intention-field__input--email /
+//    .intention-field__verify, just re-skinned for the dark Hero. */
+// .find-hero__search {
+//     align-items: center;
+//     background: rgba(255, 255, 255, 0.05);
+//     border: 1px solid rgba(232, 178, 90, 0.5);
+//     border-radius: 999px;
+//     display: flex;
+//     gap: 12px;
+//     margin-top: 32px;
+//     max-width: 541px;
+//     padding: 8px 8px 8px 20px;
+//     width: 100%;
+// }
+
+// .find-hero__search:focus-within {
+//     border-color: var(--intention-accent-gold);
+// }
+
+// .find-hero__search-field {
+//     align-items: center;
+//     display: flex;
+//     flex: 1 1 auto;
+//     gap: 12px;
+//     min-width: 0;
+// }
+
+// .find-hero__search-icon {
+//     color: var(--intention-accent-gold);
+//     flex-shrink: 0;
+//     font-size: 24px;
+// }
+
+// .find-hero__search-input {
+//     background: transparent;
+//     border: 0;
+//     color: var(--intention-text-primary);
+//     flex: 1 1 auto;
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     min-width: 0;
+//     padding: 12px 0;
+// }
+
+// .find-hero__search-input::placeholder {
+//     color: var(--intention-text-secondary);
+// }
+
+// .find-hero__search-input:focus {
+//     outline: none;
+// }
+
+// .find-hero__search-submit {
+//     flex-shrink: 0;
+// }
+
+// @media (max-width: 1023px) {
+
+//     /* Same stacked "text block, then image block" switch as .hero at this
+//      tier — height:auto is required, not optional: the base .find-hero
+//      rule sets a fixed height:calc(100vh - header-height) that would
+//      otherwise win over content-driven sizing regardless of how tall the
+//      stacked content (title + subtitle + search bar) actually is. */
+//     .find-hero {
+//         align-items: stretch;
+//         flex-direction: column;
+//         height: auto;
+//     }
+
+//     .find-hero__media {
+//         display: none;
+//     }
+
+//     .find-hero__content {
+//         padding: 40px var(--page-margin);
+//     }
+
+//     .find-hero__title {
+//         font-size: 56px;
+//         width: 100%;
+//     }
+
+//     /* Same single combined pill as desktop, just scaled down — icon,
+//      placeholder input, and the gold button all stay nested inside one
+//      pill rather than splitting into two stacked pieces. Input stays
+//      at the 16px floor already set on the base rule (unchanged here);
+//      the button drops to that same 16px floor via its own font-size,
+//      which the .btn-gold label/icon already inherit/em-size from. */
+//     .find-hero__search {
+//         gap: 8px;
+//         padding: 6px 6px 6px 16px;
+//     }
+
+//     .find-hero__search-field {
+//         gap: 8px;
+//     }
+
+//     .find-hero__search-icon {
+//         font-size: 20px;
+//     }
+
+//     .find-hero__search-input {
+//         padding: 10px 0;
+//     }
+
+//     /* Icon-only on mobile/tablet — the "View Intention" label was
+//      cramping the email input's placeholder against the pill's edge.
+//      Button becomes a small circle (equal padding on every side, no
+//      gap needed with a single visible child); the label is still in
+//      the DOM (display:none) with an aria-label carrying the same
+//      accessible name so the control isn't unlabeled for AT users. */
+//     .find-hero__search-submit {
+//         font-size: 16px;
+//         padding: 10px;
+//     }
+
+//     .find-hero__search-submit .btn-gold__label {
+//         display: none;
+//     }
+
+//     .find-hero__image-mobile {
+//         display: block;
+//         height: 480px;
+//         margin: 0;
+//         mix-blend-mode: lighten;
+//         object-fit: cover;
+//         object-position: center;
+//         width: 100%;
+//     }
+// }
+
+// @media (max-width: 767px) {
+//     .find-hero__content {
+//         padding: 32px var(--page-margin);
+//     }
+
+//     .find-hero__title {
+//         font-size: 40px;
+//     }
+
+//     .find-hero__subtitle {
+//         font-size: 18px;
+//     }
+
+//     .find-hero__image-mobile {
+//         height: 400px;
+//     }
+// }
+
+// @media (max-width: 479px) {
+//     .find-hero__content {
+//         padding: 24px 16px;
+//     }
+
+//     .find-hero__search {
+//         margin-top: 16px;
+//     }
+
+//     .find-hero__image-mobile {
+//         height: 342px;
+//     }
+// }
+
+// /* ===== FIND INTENTIONS — INFO PANEL =====
+//    Bordered card below the Hero (Figma 328:6739 "Shared"). Structure
+//    mirrors .how-it-works: a grid of centered columns separated by 1px
+//    __rule hairlines that flip from vertical to horizontal when the grid
+//    collapses to one column. */
+
+// .find-info {
+//     background: var(--intention-bg-primary);
+// }
+
+// .find-info__inner {
+//     padding: 60px var(--page-margin) 80px;
+// }
+
+// /* Matches the page background on purpose (per design direction) so the
+//    card reads as flush with the page rather than a raised panel — the
+//    1px border is the only separation from .find-info's own
+//    --intention-bg-primary fill. */
+// .find-info__card {
+//     background: var(--intention-bg-primary);
+//     border: 1px solid rgba(255, 255, 255, 0.2);
+//     border-radius: 16px;
+//     padding: 56px 40px;
+// }
+
+// /* Decorative raster behind the heading. Sized here so the correct
+//    export drops straight in — see the TODO(asset) comment in
+//    find-intentions.html. */
+// .find-info__glow {
+//     display: block;
+//     height: auto;
+//     margin: 0 auto 24px;
+//     width: 180px;
+// }
+
+// .find-info__title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 40px;
+//     font-weight: 600;
+//     line-height: 1.2;
+//     margin: 0 auto;
+//     max-width: 880px;
+//     text-align: center;
+// }
+
+// .find-info__subtitle {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 16px auto 0;
+//     max-width: 760px;
+//     text-align: center;
+// }
+
+// .find-info__features {
+//     align-items: stretch;
+//     display: grid;
+//     gap: 0 32px;
+//     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+//     margin-top: 56px;
+// }
+
+// .find-info__feature {
+//     align-items: center;
+//     display: flex;
+//     flex-direction: column;
+//     gap: 20px;
+//     min-width: 0;
+//     text-align: center;
+// }
+
+// .find-info__icon {
+//     color: var(--intention-accent-gold);
+//     flex-shrink: 0;
+//     font-size: 63px;
+// }
+
+// .find-info__copy {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 8px;
+// }
+
+// .find-info__feature-title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 600;
+//     line-height: 1.3;
+// }
+
+// .find-info__feature-body {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 0;
+// }
+
+// /* Same hairline as .how-it-works__rule. Vertical while the grid has
+//    three columns; the ≤767px block below flips it to a horizontal rule
+//    once each rule becomes its own grid row. */
+// .find-info__rule {
+//     background: rgba(255, 255, 255, 0.12);
+//     flex-shrink: 0;
+//     width: 1px;
+// }
+
+// @media (max-width: 1279px) {
+//     .find-info__inner {
+//         padding: 48px var(--page-margin) 60px;
+//     }
+
+//     .find-info__card {
+//         padding: 48px 32px;
+//     }
+
+//     .find-info__title {
+//         font-size: 36px;
+//     }
+
+//     .find-info__subtitle {
+//         font-size: 20px;
+//     }
+
+//     .find-info__features {
+//         margin-top: 40px;
+//     }
+
+//     .find-info__icon {
+//         font-size: 54px;
+//     }
+
+//     .find-info__feature-title {
+//         font-size: 20px;
+//     }
+
+//     .find-info__feature-body {
+//         font-size: 18px;
+//     }
+// }
+
+// /* Three columns survive this tier: at 768px the card's content box is
+//    768 - 2*48 (--page-margin) - 2*24 (card padding) = 576px, which after
+//    the 4x24px gaps and two 1px rules leaves ~159px per column — enough
+//    for the shortened type set above/here without words breaking. */
+// @media (max-width: 1023px) {
+//     .find-info__card {
+//         padding: 40px 24px;
+//     }
+
+//     .find-info__features {
+//         gap: 0 24px;
+//     }
+
+//     .find-info__feature {
+//         gap: 16px;
+//     }
+
+//     .find-info__icon {
+//         font-size: 48px;
+//     }
+
+//     .find-info__feature-title {
+//         font-size: 18px;
+//     }
+
+//     .find-info__feature-body {
+//         font-size: 16px;
+//     }
+// }
+
+// @media (max-width: 767px) {
+//     .find-info__inner {
+//         padding: 32px var(--page-margin) 48px;
+//     }
+
+//     .find-info__card {
+//         padding: 32px 24px;
+//     }
+
+//     .find-info__glow {
+//         width: 140px;
+//     }
+
+//     .find-info__title {
+//         font-size: 30px;
+//     }
+
+//     .find-info__subtitle {
+//         font-size: 18px;
+//     }
+
+//     /* Single column — each __rule now occupies its own grid row, so it
+//      flips to a full-width horizontal hairline. Same collapse the
+//      homepage uses in .how-it-works at this tier, which drops its rules
+//      entirely; here they are kept as separators because the three
+//      features read as one list rather than numbered steps. */
+//     .find-info__features {
+//         gap: 24px;
+//         grid-template-columns: minmax(0, 1fr);
+//         margin-top: 32px;
+//     }
+
+//     .find-info__rule {
+//         height: 1px;
+//         width: 100%;
+//     }
+
+//     .find-info__icon {
+//         font-size: 44px;
+//     }
+
+//     .find-info__feature-title {
+//         font-size: 20px;
+//     }
+
+//     .find-info__feature-body {
+//         font-size: 16px;
+//     }
+// }
+
+// @media (max-width: 479px) {
+//     .find-info__inner {
+//         padding: 24px 16px 40px;
+//     }
+
+//     .find-info__card {
+//         padding: 28px 20px;
+//     }
+
+//     .find-info__title {
+//         font-size: 28px;
+//     }
+
+//     .find-info__icon {
+//         font-size: 40px;
+//     }
+// }
+
+// /* ----- Empty state / results state toggle -----
+//    #find-results carries data-state="empty" | "results" (see
+//    handleFindIntentions() in script.js). */
+// .find-results[data-state="empty"] .find-results__results {
+//     display: none;
+// }
+
+// .find-results[data-state="results"] .find-results__empty {
+//     display: none;
+// }
+
+// /* ----- Results state (Figma 334:6970 "Their Shared Intentions") -----
+//    Grid cards reuse the exact .wall-card component from the homepage
+//    Wall section (same cardHtml() markup in script.js) as a static grid
+//    — no drift animation, no infinite scroll. */
+// .find-results__header {
+//     align-items: center;
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 16px;
+// }
+
+// .find-results__title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 32px;
+//     font-weight: 400;
+//     line-height: 1.2;
+//     margin: 0;
+//     min-width: 0;
+// }
+
+// .find-results__count {
+//     align-items: center;
+//     background: rgba(232, 178, 90, 0.1);
+//     border: 1px solid var(--intention-accent-gold);
+//     border-radius: 50%;
+//     color: var(--intention-accent-gold);
+//     display: flex;
+//     flex-shrink: 0;
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     font-weight: 500;
+//     height: 40px;
+//     justify-content: center;
+//     width: 40px;
+// }
+
+// /* Static grid at the site's established column-count breakpoints
+//    (matches getWallColumnCount()'s 767/1023 thresholds) — a plain CSS
+//    grid rather than the homepage's JS-driven drifting columns, since
+//    this is a one-off discovered-results view with no animation. */
+// .find-results__grid {
+//     display: grid;
+//     gap: 24px;
+//     grid-template-columns: repeat(3, minmax(0, 1fr));
+//     margin-top: 40px;
+// }
+
+// .find-results__cta-wrap {
+//     display: flex;
+//     justify-content: center;
+//     margin-top: 40px;
+// }
+
+// @media (max-width: 1023px) {
+//     .find-results__grid {
+//         grid-template-columns: repeat(2, minmax(0, 1fr));
+//     }
+// }
+
+// @media (max-width: 767px) {
+
+//     /* Below 768px the heading wraps to two lines, and the flex-row
+//      layout used above 767px would strand the badge as its own
+//      block-level flex child on a third line. Switching the header to
+//      plain block flow and both children to inline-level (title:inline,
+//      badge:inline-flex) puts the badge back in the same text-wrapping
+//      context as the heading — it now rides along after "Intentions"
+//      on whichever line that word lands on, like an inline glyph. */
+//     .find-results__header {
+//         display: block;
+//     }
+
+//     .find-results__title {
+//         display: inline;
+//     }
+
+//     /* 40px (the desktop size) dwarfs the wrapped mobile heading — scaled
+//      down to read as a caption-scale badge riding beside the text
+//      instead of a shape competing with it. */
+//     .find-results__count {
+//         display: inline-flex;
+//         font-size: 15px;
+//         height: 30px;
+//         margin-left: 12px;
+//         vertical-align: middle;
+//         width: 30px;
+//     }
+
+//     .find-results__grid {
+//         grid-template-columns: minmax(0, 1fr);
+//     }
+// }
+
+// @media (max-width: 479px) {
+//     .find-results__count {
+//         font-size: 14px;
+//         height: 28px;
+//         width: 28px;
+//     }
+// }
+
+// /* ===== FIND INTENTIONS — CTA BANNER (Figma 328:6685) ===== */
+
+// .find-cta {
+//     background: var(--intention-bg-primary);
+// }
+
+// .find-cta__inner {
+//     padding: 0 var(--page-margin) 80px;
+// }
+
+// /* #1A1324 per Figma spec — close to but distinct from the #1b1427
+//    raised-card surface used elsewhere (.world__panel etc.); kept as its
+//    own literal value rather than reusing that token since the two
+//    colours are not actually the same. */
+// .find-cta__card {
+//     align-items: center;
+//     background: #1a1324;
+//     border-radius: 24px;
+//     display: flex;
+//     gap: 48px;
+//     justify-content: space-between;
+//     overflow: hidden;
+//     padding: 40px;
+// }
+
+// .find-cta__copy {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: flex-start;
+//     gap: 24px;
+//     /* 560px forced the heading to wrap 3 lines; the sentence's natural
+//      2-line break needs ~572px of rendered width. 600px clears that
+//      with a small margin. Only takes effect once the row actually has
+//      that much room to give — see the max-width:1023px note below. */
+//     max-width: 600px;
+// }
+
+// .find-cta__title {
+//     color: var(--intention-accent-gold);
+//     font-family: var(--font-fraunces);
+//     font-size: 40px;
+//     font-weight: 400;
+//     line-height: 1.2;
+//     margin: 0;
+// }
+
+// /* Known limitation: because this never shrinks, .find-cta__copy is
+//    squeezed below its 600px max-width for any viewport under ~1290px
+//    (i.e. all of 1024-1279px, before .find-cta__inner's 1280px cap
+//    gives the row extra room) — the heading wraps 3-4 lines there no
+//    matter how .find-cta__copy's max-width is tuned, since the row
+//    simply doesn't have ~572px to give it. Fixing that tier would mean
+//    letting this shrink (or capping .find-cta__map narrower) at that
+//    breakpoint — flagged, not changed here. */
+// /* height: 0 takes this column out of the flex row's cross-size
+//    calculation entirely, so it can never push .find-cta__card taller —
+//    the row's height stays driven purely by .find-cta__copy. The map
+//    inside is then absolutely positioned and free to render taller than
+//    this 0px box, bleeding past the card's vertical padding the way the
+//    homepage Hero's jar image bleeds past its container. position:
+//    relative here (not on the card) makes this column the map's
+//    containing block, so it centers on this column's flex position
+//    without needing to know the card's own height. */
+// .find-cta__media {
+//     flex-shrink: 0;
+//     height: 0;
+//     overflow: visible;
+//     position: relative;
+//     width: 420px;
+// }
+
+// .find-cta__map {
+//     /* No border-radius here: at this size the image bleeds past the
+//      card's own edges, so the card's overflow: hidden + 24px radius
+//      (not this element) is what clips it — a second, smaller radius
+//      on the image itself would show as a mismatched seam right where
+//      the card clips it. */
+//     display: block;
+//     left: 0;
+//     position: absolute;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     width: 100%;
+// }
+
+// @media (max-width: 1023px) {
+//     .find-cta__inner {
+//         padding: 0 var(--page-margin) 64px;
+//     }
+
+//     .find-cta__card {
+//         align-items: flex-start;
+//         flex-direction: column;
+//         gap: 32px;
+//         padding: 40px 32px;
+//     }
+
+//     .find-cta__copy {
+//         max-width: none;
+//     }
+
+//     /* Stacked layout: the map is a normal block below the text, not a
+//      bleeding side column, so the height:0/absolute-positioning trick
+//      from the row layout is undone here. */
+//     .find-cta__media {
+//         height: auto;
+//         position: static;
+//         width: 100%;
+//     }
+
+//     .find-cta__map {
+//         border-radius: 16px;
+//         height: auto;
+//         left: auto;
+//         max-width: 100%;
+//         position: static;
+//         top: auto;
+//         transform: none;
+//         width: 100%;
+//     }
+// }
+
+// @media (max-width: 767px) {
+//     .find-cta__inner {
+//         padding: 0 var(--page-margin) 48px;
+//     }
+
+//     .find-cta__card {
+//         border-radius: 16px;
+//         padding: 40px 24px;
+//     }
+
+//     .find-cta__title {
+//         font-size: 28px;
+//     }
+// }
+
+// /* ===== FILM CREDIT STRIP ===== */
+
+// .film-credit {
+//     padding: 48px var(--page-margin);
+// }
+
+// .film-credit__row {
+//     align-items: center;
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 16px;
+//     justify-content: center;
+// }
+
+// .film-credit__left {
+//     align-items: flex-end;
+//     display: flex;
+//     gap: 8px;
+// }
+
+// .film-credit__icon {
+//     color: var(--intention-accent-gold);
+//     flex-shrink: 0;
+//     font-size: 32px;
+// }
+
+// .film-credit__copy,
+// .film-credit__right {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-style: normal;
+//     font-weight: 400;
+//     line-height: 1.3;
+// }
+
+// .film-credit__copy span {
+//     color: var(--intention-accent-gold);
+//     font-family: var(--font-roboto);
+//     font-style: italic;
+//     font-weight: 400;
+// }
+
+// .film-credit__divider {
+//     background: var(--intention-text-secondary);
+//     flex-shrink: 0;
+//     height: 36px;
+//     opacity: 0.6;
+//     width: 1px;
+// }
+
+// @media (max-width: 767px) {
+//     .film-credit {
+//         padding: 40px var(--page-margin);
+//     }
+
+//     .film-credit__row {
+//         flex-direction: column;
+//         gap: 12px;
+//     }
+
+//     .film-credit__left,
+//     .film-credit__right {
+//         justify-content: center;
+//         text-align: center;
+//     }
+
+//     .film-credit__divider {
+//         height: 1px;
+//         width: 36px;
+//     }
+
+//     .film-credit__copy,
+//     .film-credit__right {
+//         font-size: 18px;
+//     }
+// }
+
+// @media (max-width: 479px) {
+//     .film-credit__row {
+//         display: grid;
+//         column-gap: 12px;
+//         grid-template-columns: auto auto;
+//         justify-content: center;
+//         row-gap: 4px;
+//     }
+
+//     /* Drops the box but keeps its children (icon, copy) in the DOM,
+//      promoting them to direct grid items of .film-credit__row so the
+//      icon can span both text rows independently of the copy text —
+//      without touching markup shared with the desktop/tablet layout. */
+//     .film-credit__left {
+//         display: contents;
+//     }
+
+//     .film-credit__icon {
+//         align-self: center;
+//         grid-column: 1;
+//         grid-row: 1 / 3;
+//     }
+
+//     .film-credit__copy {
+//         grid-column: 2;
+//         grid-row: 1;
+//         text-align: left;
+//     }
+
+//     .film-credit__right {
+//         grid-column: 2;
+//         grid-row: 2;
+//         text-align: left;
+//     }
+
+//     .film-credit__divider {
+//         display: none;
+//     }
+// }
+
+// /* ===== WALL SECTION ===== */
+
+// .wall {
+//     background: var(--intention-bg-primary);
+//     scroll-margin-top: var(--header-height);
+// }
+
+// .wall__inner {
+//     padding: 64px var(--page-margin);
+// }
+
+// .wall__header {
+//     align-items: flex-start;
+//     display: flex;
+//     gap: 32px;
+//     justify-content: space-between;
+// }
+
+// .wall__intro {
+//     max-width: 720px;
+// }
+
+// .wall__title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 56px;
+//     font-weight: 400;
+//     line-height: 1.1;
+// }
+
+// .wall__subtitle {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 16px 0 0;
+// }
+
+// .wall__stat {
+//     flex-shrink: 0;
+//     text-align: center;
+//     width: 244px;
+// }
+
+// .wall__stat-row {
+//     align-items: center;
+//     display: flex;
+//     gap: 8px;
+//     justify-content: center;
+// }
+
+// .wall__stat-dot-wrap {
+//     align-items: center;
+//     display: inline-flex;
+//     flex-shrink: 0;
+//     height: 32px;
+//     justify-content: center;
+//     width: 32px;
+// }
+
+// .wall__stat-dot {
+//     animation: wall-stat-pulse 1.6s ease-in-out infinite;
+//     background: var(--intention-accent-gold);
+//     border-radius: 50%;
+//     box-shadow: 0 0 0 8px rgba(232, 178, 90, 0.18);
+//     flex-shrink: 0;
+//     height: 12px;
+//     width: 12px;
+// }
+
+// .wall__stat-number {
+//     color: var(--intention-accent-gold);
+//     font-family: var(--font-fraunces);
+//     font-size: 56px;
+//     font-weight: 400;
+//     line-height: 1;
+// }
+
+// .wall__stat-label {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 400;
+//     letter-spacing: 0.48px;
+//     margin: 8px 0 0;
+// }
+
+// .wall__filters {
+//     align-items: center;
+//     display: flex;
+//     gap: 16px;
+//     justify-content: space-between;
+//     margin: 22px 0;
+// }
+
+// .wall__tabs {
+//     align-items: center;
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 8px;
+//     min-width: 0;
+// }
+
+// .wall__tab {
+//     background: rgba(255, 255, 255, 0.05);
+//     border: 1px solid rgba(255, 255, 255, 0.2);
+//     border-radius: 999px;
+//     color: var(--intention-text-secondary);
+//     cursor: pointer;
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     padding: 8px 16px;
+// }
+
+// .wall__tab.is-active {
+//     background: rgba(232, 178, 90, 0.1);
+//     border: 1px solid var(--intention-accent-gold);
+//     color: var(--intention-accent-gold);
+// }
+
+// .wall__expand {
+//     align-items: center;
+//     background: rgba(255, 255, 255, 0.1);
+//     border: 1px solid transparent;
+//     border-radius: 138px;
+//     cursor: pointer;
+//     display: inline-flex;
+//     flex-shrink: 0;
+//     height: 48px;
+//     justify-content: center;
+//     padding: 8px;
+//     width: 48px;
+// }
+
+// .wall__expand-icon {
+//     color: #f7f2ec;
+//     font-size: 32px;
+// }
+
+// .wall__board {
+//     border: 1px solid rgba(255, 255, 255, 0.2);
+//     border-radius: 24px;
+//     height: 897px;
+//     overflow: hidden;
+//     position: relative;
+// }
+
+// .wall__fade {
+//     left: 0;
+//     pointer-events: none;
+//     position: absolute;
+//     right: 0;
+//     z-index: 2;
+// }
+
+// .wall__fade--top {
+//     background: linear-gradient(to bottom,
+//             var(--intention-bg-primary) 0%,
+//             transparent 100%);
+//     height: 116px;
+//     top: 0;
+// }
+
+// .wall__fade--bottom {
+//     background: linear-gradient(to top,
+//             var(--intention-bg-primary) 0%,
+//             transparent 100%);
+//     bottom: 0;
+//     height: 116px;
+// }
+
+// .wall__board-inner {
+//     height: 100%;
+//     overflow: hidden;
+//     padding: 22px;
+// }
+
+// .wall__status {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     margin: 4rem 0 0;
+//     text-align: center;
+// }
+
+// .wall__columns {
+//     display: flex;
+//     gap: 22px;
+//     height: 100%;
+//     width: 100%;
+// }
+
+// .wall__column {
+//     flex: 1 1 0;
+//     height: 100%;
+//     min-height: 0;
+//     min-width: 0;
+//     overflow: hidden;
+// }
+
+// .wall__column-track {
+//     animation: wall-drift var(--wall-drift-duration, 96s) linear infinite;
+//     display: flex;
+//     flex-direction: column;
+//     flex-shrink: 0;
+//     width: 100%;
+//     will-change: transform;
+// }
+
+// .wall__column:hover .wall__column-track {
+//     animation-play-state: paused;
+// }
+
+// .wall__column-set {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 22px;
+//     padding-bottom: 22px;
+// }
+
+// .wall-card {
+//     background: #f5efe6;
+//     border-radius: 5px;
+//     box-shadow: 0 9px 23px rgba(0, 0, 0, 0.68);
+//     display: flex;
+//     flex-direction: column;
+//     min-height: 254px;
+//     overflow: hidden;
+//     padding: 14px;
+//     position: relative;
+//     width: 100%;
+// }
+
+// .wall-card__fold {
+//     border-color: transparent #e4d5c0 transparent transparent;
+//     border-style: solid;
+//     border-width: 0 22px 22px 0;
+//     height: 0;
+//     position: absolute;
+//     right: 0;
+//     top: 0;
+//     width: 0;
+// }
+
+// .wall-card__fold::after {
+//     border-color: transparent #cbb896 transparent transparent;
+//     border-style: solid;
+//     border-width: 0 10px 10px 0;
+//     content: '';
+//     height: 0;
+//     position: absolute;
+//     right: -22px;
+//     top: 0;
+//     width: 0;
+// }
+
+// .wall-card__place {
+//     align-items: center;
+//     color: #cd953a;
+//     display: flex;
+//     font-family: var(--font-roboto);
+//     font-size: 22px;
+//     font-weight: 500;
+//     gap: 7px;
+//     letter-spacing: 0.44px;
+//     text-transform: uppercase;
+// }
+
+// .wall-card__pin {
+//     flex-shrink: 0;
+//     font-size: 24px;
+// }
+
+// .wall-card__message {
+//     color: #140f1d;
+//     flex: 1 1 auto;
+//     font-family: var(--font-fraunces);
+//     font-size: 22px;
+//     font-weight: 400;
+//     line-height: 1.35;
+//     margin: 12px 0 16px;
+// }
+
+// .wall-card__rule {
+//     border: 0;
+//     border-top: 1px solid rgba(20, 15, 29, 0.1);
+//     margin: 0 0 12px;
+// }
+
+// .wall-card__meta {
+//     align-items: center;
+//     display: flex;
+//     gap: 8px;
+//     justify-content: space-between;
+// }
+
+// .wall-card__meta-right {
+//     align-items: center;
+//     display: flex;
+//     flex-shrink: 0;
+//     gap: 8px;
+// }
+
+// .wall-card__share {
+//     align-items: center;
+//     appearance: none;
+//     -webkit-appearance: none;
+//     background: none;
+//     border: 0;
+//     color: #cd953a;
+//     cursor: pointer;
+//     display: inline-flex;
+//     flex-shrink: 0;
+//     justify-content: center;
+//     padding: 4px;
+// }
+
+// .wall-card__share-icon {
+//     font-size: 24px;
+// }
+
+// .wall-card__share-icon--check {
+//     color: #3a8c5a;
+// }
+
+// .wall-card__share[data-copied="true"] .wall-card__share-icon--share {
+//     display: none;
+// }
+
+// .wall-card__share:not([data-copied="true"]) .wall-card__share-icon--check {
+//     display: none;
+// }
+
+// .wall-card__byline {
+//     color: #140f1d;
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     min-width: 0;
+// }
+
+// .wall-card__name {
+//     font-weight: 500;
+// }
+
+// .wall-card__country {
+//     font-weight: 400;
+//     opacity: 0.8;
+// }
+
+// .wall-card__category {
+//     background: #f4e5ce;
+//     border: 1px solid rgba(205, 149, 58, 0.2);
+//     border-radius: 5px;
+//     color: #cd953a;
+//     flex-shrink: 0;
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     font-weight: 500;
+//     letter-spacing: 0.32px;
+//     padding: 7px;
+//     text-transform: uppercase;
+// }
+
+// .wall__cta-wrap {
+//     display: flex;
+//     justify-content: center;
+//     margin-top: 40px;
+// }
+
+// @keyframes wall-drift {
+//     from {
+//         transform: translateY(0);
+//     }
+
+//     to {
+//         transform: translateY(-50%);
+//     }
+// }
+
+// @keyframes wall-stat-pulse {
+
+//     0%,
+//     100% {
+//         box-shadow: 0 0 0 6px rgba(232, 178, 90, 0.16);
+//         opacity: 1;
+//     }
+
+//     50% {
+//         box-shadow: 0 0 0 12px rgba(232, 178, 90, 0.06);
+//         opacity: 0.75;
+//     }
+// }
+
+// @media (max-width: 1279px) {
+//     .wall__inner {
+//         padding: 48px var(--page-margin);
+//     }
+
+//     .wall__title,
+//     .wall__stat-number {
+//         font-size: 40px;
+//     }
+
+//     .wall__subtitle,
+//     .wall__stat-label {
+//         font-size: 18px;
+//     }
+
+//     .wall__board {
+//         height: 720px;
+//     }
+// }
+
+// @media (max-width: 1023px) {
+//     .wall__header {
+//         flex-direction: column;
+//     }
+
+//     .wall__stat {
+//         text-align: left;
+//         width: auto;
+//     }
+
+//     .wall__stat-row {
+//         justify-content: flex-start;
+//     }
+
+//     .wall__board {
+//         height: 640px;
+//     }
+// }
+
+// @media (prefers-reduced-motion: reduce) {
+//     .wall__column-track {
+//         animation: none;
+//     }
+// }
+
+// @media (max-width: 767px) {
+//     .wall__title {
+//         font-size: 32px;
+//     }
+
+//     .wall__filters {
+//         align-items: flex-start;
+//     }
+
+//     /* Base 22px exceeds the 18-20px body-text ceiling at this breakpoint —
+//      this is the intention note's own message text, not a heading. */
+//     .wall-card__message {
+//         font-size: 18px;
+//     }
+// }
+
+// @media (max-width: 479px) {
+
+//     /* "Focus mode" doesn't make sense as a mobile affordance; drop it. */
+//     .wall__expand {
+//         display: none;
+//     }
+
+//     /* Zone tabs scroll sideways instead of wrapping or shrinking to fit —
+//      deliberate mobile-only pattern, different from desktop/tablet wrap. */
+//     .wall__tabs {
+//         flex-wrap: nowrap;
+//         overflow-x: auto;
+//         white-space: nowrap;
+//         -webkit-overflow-scrolling: touch;
+//     }
+
+//     .wall__tab {
+//         flex-shrink: 0;
+//     }
+// }
+
+
+// /* ===== WRITE YOUR INTENTION ===== */
+
+// .intention {
+//     background: var(--intention-bg-primary);
+//     scroll-margin-top: var(--header-height);
+// }
+
+// .intention__inner {
+//     align-items: flex-start;
+//     display: flex;
+//     gap: 100px;
+//     justify-content: center;
+//     padding: 0 var(--page-margin) 64px;
+// }
+
+// .intention__intro {
+//     display: flex;
+//     flex: 0 1 610px;
+//     flex-direction: column;
+//     gap: 41px;
+//     max-width: 610px;
+// }
+
+// .intention__copy {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 16px;
+//     max-width: 541px;
+// }
+
+// .intention__title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 56px;
+//     font-weight: 400;
+//     line-height: 1.1;
+// }
+
+// .intention__lede {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 400;
+//     line-height: 1.3;
+// }
+
+// .intention__notes {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 30px;
+//     list-style: none;
+// }
+
+// .intention__notes li {
+//     align-items: flex-start;
+//     color: var(--intention-text-secondary);
+//     display: flex;
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     gap: 8px;
+//     line-height: 1.3;
+// }
+
+// .intention__note-icon {
+//     color: var(--intention-accent-gold);
+//     flex-shrink: 0;
+//     font-size: 32px;
+// }
+
+// .intention-panel {
+//     flex: 0 1 567px;
+//     max-width: 567px;
+//     width: 100%;
+// }
+
+// .intention-card {
+//     align-items: center;
+//     background: #f5efe6;
+//     border-radius: 16px;
+//     display: flex;
+//     flex-direction: column;
+//     gap: 32px;
+//     padding: 24px;
+//     width: 100%;
+// }
+
+// .intention-card[hidden] {
+//     display: none !important;
+// }
+
+// .intention-field {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 8px;
+//     width: 100%;
+// }
+
+// .intention-field__label {
+//     color: #382300;
+//     font-family: var(--font-roboto);
+//     font-size: 18px;
+//     font-weight: 500;
+//     letter-spacing: 0.36px;
+//     line-height: 1.1;
+// }
+
+// .intention-field__req {
+//     color: #d91900;
+// }
+
+// .intention-field__input {
+//     background: #fff8f2;
+//     border: 1px solid rgba(0, 0, 0, 0.1);
+//     border-radius: 12px;
+//     color: #140f1d;
+//     font-family: var(--font-roboto);
+//     font-size: 20px;
+//     font-weight: 400;
+//     line-height: 1.3;
+//     padding: 16px;
+//     width: 100%;
+// }
+
+// .intention-field__area-wrap {
+//     position: relative;
+//     width: 100%;
+// }
+
+// .intention-field__input--area {
+//     font-family: var(--font-fraunces);
+//     min-height: 141px;
+//     padding-bottom: 36px;
+//     resize: vertical;
+// }
+
+// .intention-field__counter {
+//     position: absolute;
+//     right: 16px;
+//     bottom: 12px;
+//     color: rgba(20, 15, 29, 0.5);
+//     font-family: var(--font-roboto);
+//     font-size: 14px;
+//     font-weight: 400;
+//     line-height: 1;
+//     pointer-events: none;
+// }
+
+// .intention-field__counter.is-limit {
+//     color: #d90019;
+// }
+
+// .intention-field__input::placeholder {
+//     color: rgba(20, 15, 29, 0.45);
+// }
+
+// .intention-field__input:focus {
+//     border-color: var(--intention-accent-gold);
+//     outline: none;
+// }
+
+// .intention-field__input.is-invalid {
+//     border-color: #d90019;
+// }
+
+// .intention-field__error {
+//     color: #d90019;
+//     font-family: var(--font-roboto);
+//     font-size: 14px;
+//     line-height: 1.3;
+// }
+
+// .intention-field__select-wrap {
+//     display: block;
+//     position: relative;
+// }
+
+// .intention-field__select {
+//     appearance: none;
+//     -webkit-appearance: none;
+//     cursor: pointer;
+//     padding-right: 48px;
+// }
+
+// .intention-field__chevron {
+//     color: #140f1d;
+//     font-size: 24px;
+//     pointer-events: none;
+//     position: absolute;
+//     right: 16px;
+//     top: 50%;
+//     transform: translateY(-50%);
+// }
+
+// .intention-field__hint {
+//     color: rgba(20, 15, 29, 0.8);
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     line-height: 1.1;
+// }
+
+// .intention-consent {
+//     align-items: flex-start;
+//     cursor: pointer;
+//     display: flex;
+//     gap: 12px;
+//     position: relative;
+//     width: 100%;
+// }
+
+// .intention-consent__input {
+//     height: 1px;
+//     opacity: 0;
+//     position: absolute;
+//     width: 1px;
+// }
+
+// .intention-consent__box {
+//     background: #fff8f2;
+//     border: 1px solid rgba(0, 0, 0, 0.2);
+//     border-radius: 4px;
+//     display: block;
+//     flex-shrink: 0;
+//     height: 20px;
+//     position: relative;
+//     width: 20px;
+// }
+
+// .intention-consent__input:checked+.intention-consent__box {
+//     background: #04863e;
+//     border-color: #04863e;
+// }
+
+// .intention-consent__input:checked+.intention-consent__box::after {
+//     border: solid #fff;
+//     border-width: 0 2px 2px 0;
+//     content: '';
+//     height: 9px;
+//     left: 6px;
+//     position: absolute;
+//     top: 2px;
+//     transform: rotate(45deg);
+//     width: 5px;
+// }
+
+// .intention-consent__input:focus-visible+.intention-consent__box {
+//     outline: 2px solid var(--intention-accent-gold);
+//     outline-offset: 2px;
+// }
+
+// .intention-consent__copy {
+//     color: #140f1d;
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     font-weight: 400;
+//     line-height: 1.1;
+// }
+
+// /* .intention-card (the form) uses align-items: center, not stretch, so a
+//    child with no width of its own sizes to fit-content and gets centered
+//    rather than filling the card — unlike .intention-field (e.g. Country),
+//    which is unaffected by that because it carries its own explicit
+//    width: 100%. .intention-row never had an equivalent width, so it was
+//    centered and undersized at every breakpoint, not just when stacked.
+//    width: 100% gives it the same explicit anchor .intention-field already
+//    has, independent of the parent's align-items mode. */
+// .intention-row {
+//     display: flex;
+//     gap: 8px;
+//     width: 100%;
+// }
+
+// /* First/Last Name previously relied on .intention-field's own width: 100%
+//    plus flexbox's default flex-basis: auto, which uses that width as the
+//    flex-basis — with two such items competing for one row, flex-shrink then
+//    has to squeeze both down using each field's own content-based minimum
+//    size, producing an imperfect, sometimes visibly uneven split rather than
+//    a clean half each. flex: 1 1 0 makes both items ignore their own content
+//    width and split the row exactly evenly, matching how Country/Email fill
+//    their own full-width row with nothing to compete against. This now has
+//    a genuinely full-width .intention-row to distribute (see width: 100%
+//    above), which is what it was missing before. Cancelled back out at
+//    767px below, where the row is already column-direction (each field
+//    full width, stacked) and this wouldn't apply anyway. */
+// .intention-row .intention-field {
+//     flex: 1 1 0;
+// }
+
+// .intention-field__email {
+//     align-items: center;
+//     background: #fff8f2;
+//     border: 1px solid rgba(0, 0, 0, 0.1);
+//     border-radius: 12px;
+//     display: flex;
+//     gap: 8px;
+//     min-height: 60px;
+//     overflow: hidden;
+//     padding: 8px 12px 8px 16px;
+// }
+
+// .intention-field__email:focus-within {
+//     border-color: var(--intention-accent-gold);
+// }
+
+// .intention-field__input--email {
+//     background: transparent;
+//     border: 0;
+//     flex: 1 1 auto;
+//     min-width: 0;
+//     padding: 0;
+// }
+
+// .intention-field__verify {
+//     background: transparent;
+//     border: 2px solid var(--intention-accent-gold);
+//     border-radius: 8px;
+//     color: var(--intention-accent-gold);
+//     cursor: pointer;
+//     flex-shrink: 0;
+//     font-family: var(--font-roboto);
+//     font-size: 18px;
+//     font-weight: 500;
+//     line-height: 1.3;
+//     padding: 8px 12px;
+//     white-space: nowrap;
+// }
+
+// .intention-field__verify:disabled {
+//     cursor: default;
+//     opacity: 0.55;
+// }
+
+// .intention-field__email.is-awaiting .intention-field__verify {
+//     display: none;
+// }
+
+// .intention-verify {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 32px;
+//     width: 100%;
+// }
+
+// .intention-verify[hidden] {
+//     display: none;
+// }
+
+// .intention-verify__sent {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 8px;
+//     width: 100%;
+// }
+
+// .intention-verify__banner {
+//     align-items: flex-start;
+//     background: rgba(27, 146, 49, 0.05);
+//     border-radius: 8px;
+//     display: flex;
+//     gap: 10px;
+//     padding: 8px 16px;
+//     width: 100%;
+// }
+
+// .intention-verify__mail {
+//     color: #1b9231;
+//     flex-shrink: 0;
+//     font-size: 24px;
+// }
+
+// .intention-verify__banner-text {
+//     color: #1b9231;
+//     font-family: var(--font-roboto);
+//     font-size: 18px;
+//     font-weight: 400;
+//     line-height: 1.3;
+// }
+
+// .intention-verify__resend {
+//     color: rgba(20, 15, 29, 0.8);
+//     display: flex;
+//     flex-direction: column;
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     gap: 8px;
+//     line-height: 1.1;
+// }
+
+// .intention-verify__resend #intention-resend-timer {
+//     color: #382300;
+// }
+
+// .intention-verify__resend-btn {
+//     background: none;
+//     border: 0;
+//     color: #382300;
+//     cursor: pointer;
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     font-weight: 500;
+//     padding: 0;
+//     text-decoration: underline;
+// }
+
+// .intention-verify__resend-btn[hidden] {
+//     display: none;
+// }
+
+// .intention-otp {
+//     display: flex;
+//     justify-content: space-between;
+//     width: 100%;
+// }
+
+// .intention-otp__digit {
+//     background: #fff8f2;
+//     border: 1px solid rgba(0, 0, 0, 0.1);
+//     border-radius: 12px;
+//     color: #140f1d;
+//     font-family: var(--font-roboto);
+//     font-size: 20px;
+//     height: 60px;
+//     line-height: 1.3;
+//     padding: 16px 0;
+//     text-align: center;
+//     width: 60px;
+// }
+
+// .intention-otp__digit::placeholder {
+//     color: rgba(20, 15, 29, 0.4);
+// }
+
+// .intention-otp__digit:focus {
+//     border-color: var(--intention-accent-gold);
+//     outline: none;
+// }
+
+// .intention-anon {
+//     align-items: center;
+//     background: #f1eee5;
+//     border: 1px solid rgba(0, 0, 0, 0.2);
+//     border-radius: 8px;
+//     cursor: pointer;
+//     display: flex;
+//     flex-shrink: 0;
+//     gap: 12px;
+//     padding: 16px;
+//     position: relative;
+//     width: 100%;
+// }
+
+// .intention-anon__title {
+//     color: #140f1d;
+//     font-family: var(--font-roboto);
+//     font-size: 18px;
+//     font-weight: 500;
+//     line-height: 1.1;
+// }
+
+// .intention-consent-stack {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 16px;
+//     width: 100%;
+// }
+
+// .intention-card__submit {
+//     display: flex;
+//     justify-content: center;
+// }
+
+// .intention-card__status {
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     line-height: 1.4;
+//     margin: -16px 0 0;
+//     text-align: center;
+// }
+
+// .intention-card__status.is-success {
+//     color: #04863e;
+// }
+
+// .intention-card__status.is-error {
+//     color: #d90019;
+// }
+
+// /* Figma 103:2980 (Submitting) — shown while backend reviews the message */
+// .intention-submitting {
+//     justify-content: center;
+//     min-height: min(1056px, calc(100dvh - var(--header-height) - 48px));
+//     text-align: center;
+// }
+
+// .intention-submitting__icon-wrap {
+//     align-items: center;
+//     display: flex;
+//     flex-shrink: 0;
+//     height: 104px;
+//     justify-content: center;
+//     width: 104px;
+// }
+
+// .intention-submitting__loader {
+//     animation: intention-loader-spin 0.9s linear infinite;
+//     color: #cd953a;
+//     display: block;
+//     flex-shrink: 0;
+//     height: 74px;
+//     transform-origin: center;
+//     width: 74px;
+// }
+
+// @keyframes intention-loader-spin {
+//     to {
+//         transform: rotate(360deg);
+//     }
+// }
+
+// @media (prefers-reduced-motion: reduce) {
+//     .intention-submitting__loader {
+//         animation: none;
+//     }
+// }
+
+// .intention-submitting__title {
+//     color: #cd953a;
+//     font-family: var(--font-fraunces);
+//     font-size: clamp(28px, 4vw, 40px);
+//     font-weight: 600;
+//     line-height: 1.1;
+//     margin: 0;
+//     max-width: 28ch;
+// }
+
+// .intention-submitting__body {
+//     color: #140f1d;
+//     font-family: var(--font-roboto);
+//     font-size: clamp(18px, 2.2vw, 24px);
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 0;
+//     max-width: 441px;
+// }
+
+// /* Figma 544:1509 — submission/API failure state */
+// .intention-failed {
+//     justify-content: center;
+//     min-height: min(1056px, calc(100dvh - var(--header-height) - 48px));
+//     text-align: center;
+// }
+
+// .intention-failed__icon-wrap {
+//     align-items: center;
+//     display: flex;
+//     flex-shrink: 0;
+//     height: 104px;
+//     justify-content: center;
+//     width: 104px;
+// }
+
+// .intention-failed__icon {
+//     color: #d91900;
+//     display: block;
+//     flex-shrink: 0;
+//     height: 74px;
+//     width: 74px;
+// }
+
+// .intention-failed__title {
+//     color: #d91900;
+//     font-family: var(--font-fraunces);
+//     font-size: clamp(28px, 4vw, 40px);
+//     font-weight: 600;
+//     line-height: 1.1;
+//     margin: 0;
+//     max-width: 28ch;
+// }
+
+// .intention-failed__body {
+//     color: #140f1d;
+//     font-family: var(--font-roboto);
+//     font-size: clamp(18px, 2.2vw, 24px);
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 0;
+//     max-width: 441px;
+// }
+
+// /* Figma 103:2980 — post-success state */
+// .intention-success {
+//     justify-content: center;
+//     min-height: min(1056px, calc(100dvh - var(--header-height) - 48px));
+//     text-align: center;
+// }
+
+// .intention-success__icon {
+//     align-items: center;
+//     border: 4px solid var(--intention-accent-gold);
+//     border-radius: 59px;
+//     display: flex;
+//     flex-shrink: 0;
+//     height: 104px;
+//     justify-content: center;
+//     width: 104px;
+// }
+
+// .intention-success__icon .material-symbols-outlined {
+//     color: var(--intention-accent-gold);
+//     font-size: 64px;
+// }
+
+// .intention-success__title {
+//     color: #cd953a;
+//     font-family: var(--font-fraunces);
+//     font-size: clamp(28px, 4vw, 40px);
+//     font-weight: 600;
+//     line-height: 1.1;
+//     margin: 0;
+//     max-width: 28ch;
+// }
+
+// .intention-success__body {
+//     color: #140f1d;
+//     font-family: var(--font-roboto);
+//     font-size: clamp(18px, 2.2vw, 24px);
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 0;
+//     max-width: 443px;
+// }
+
+// .intention-success__actions {
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 8px;
+//     justify-content: center;
+// }
+
+// .btn-intention-outline {
+//     align-items: center;
+//     appearance: none;
+//     -webkit-appearance: none;
+//     background: #fff8f2;
+//     border: 1px solid var(--intention-accent-gold);
+//     border-radius: 60px;
+//     color: #382300;
+//     cursor: pointer;
+//     display: inline-flex;
+//     font-family: var(--font-roboto);
+//     font-size: 20px;
+//     font-weight: 500;
+//     justify-content: center;
+//     padding: 12px 16px;
+//     white-space: nowrap;
+// }
+
+// .btn-intention-outline:hover,
+// .btn-intention-outline:focus {
+//     background: #fff8f2;
+//     border-color: var(--intention-accent-gold);
+//     color: #382300;
+//     outline: none;
+// }
+
+// @media (max-width: 1279px) {
+//     .intention__inner {
+//         flex-direction: column;
+//         gap: 48px;
+//         padding: 0 var(--page-margin) 48px;
+//     }
+
+//     .intention__intro,
+//     .intention-panel {
+//         flex: 1 1 auto;
+//         max-width: none;
+//         width: 100%;
+//     }
+
+//     .intention__title {
+//         font-size: 40px;
+//     }
+
+//     .intention__lede,
+//     .intention__notes li {
+//         font-size: 20px;
+//     }
+// }
+
+// @media (max-width: 767px) {
+//     .intention__title {
+//         font-size: 32px;
+//     }
+
+//     .intention-row {
+//         flex-direction: column;
+//     }
+
+//     /* Row is already column-direction and full-width/stacked here — the
+//      equal-split fix above doesn't apply, so cancel it back to normal. */
+//     .intention-row .intention-field {
+//         flex: none;
+//     }
+
+//     /* Base label is 18px — over the 12-16px caption-tier ceiling from the
+//      typography audit, and disproportionately large next to the inputs
+//      below. */
+//     .intention-field__label {
+//         font-size: 14px;
+//     }
+
+//     /* Tap-target height set to 44px without touching font-size (still
+//      20px — must stay >=16px so iOS doesn't zoom on focus). Excludes the
+//      textarea (a multi-line field, deliberately left full-size) and the
+//      email input, which gets its own height below since its base/767
+//      padding is already overridden separately. */
+//     .intention-field__input:not(.intention-field__input--area):not(.intention-field__input--email) {
+//         height: 44px;
+//         padding-block: 0;
+//     }
+
+//     /* At the wider (row) layout the input and Verify button intentionally
+//      share one bordered pill as a single combo control. Stacked here, that
+//      same shared border/background/padding just reads as the button being
+//      crammed onto the bottom of the input with no real separation between
+//      two otherwise-distinct actions. Move the visual "field" chrome onto
+//      the input itself (matching how every other standalone input looks)
+//      and let the wrapper become a plain, invisible flex column so the
+//      button reads as its own separate element below it. */
+//     .intention-field__email {
+//         align-items: stretch;
+//         background: transparent;
+//         border: 0;
+//         flex-direction: column;
+//         gap: 16px;
+//         min-height: 0;
+//         padding: 0;
+//     }
+
+//     .intention-field__input--email {
+//         background: #fff8f2;
+//         border: 1px solid rgba(0, 0, 0, 0.1);
+//         border-radius: 12px;
+//         height: 44px;
+//         padding: 0 16px;
+//     }
+
+//     /* height explicit + flex-centered rather than padding-derived, since
+//      this button (unlike the plain text inputs above) also needs to stay
+//      reliably centered — font-size stays 18px, from the typography
+//      audit. */
+//     .intention-field__verify {
+//         align-items: center;
+//         display: inline-flex;
+//         height: 44px;
+//         justify-content: center;
+//         padding-block: 0;
+//         width: 100%;
+//     }
+
+//     /* flex-wrap dropped — 6 boxes at 44px + 8px gaps (304px) didn't fit
+//      the ~279px available at 375px (card is 100% width, capped 567px,
+//      minus the card's own 24px padding each side and .intention__inner's
+//      page-margin), so they wrapped to a second row. Width/gap on
+//      .intention-otp__digit below are now sized to guarantee one row
+//      instead. */
+//     .intention-otp {
+//         gap: 6px;
+//         justify-content: flex-start;
+//     }
+
+//     /* Was a fixed 60x60px square, then matched to the 44px used by other
+//      inputs — both too wide for 6-in-a-row at 375px. Height kept at 44px
+//      (matching the other fields); width narrowed to 40px (6 x 40px +
+//      5 x 6px gap = 270px, fits the ~279px available with room to spare).
+//      font-size stays 20px — a single digit is still clearly legible at
+//      this width. */
+//     .intention-otp__digit {
+//         height: 44px;
+//         padding: 0;
+//         width: 40px;
+//     }
+
+//     /* .btn-gold already provides display:inline-flex + align-items:center,
+//      so height alone centers the label+icon; font-size (20px)
+//      untouched. */
+//     #intention-submit {
+//         height: 44px;
+//         padding-block: 0;
+//     }
+// }
+
+
+// /* ===== WALLS OF THE WORLD ===== */
+
+// .world {
+//     background: var(--intention-bg-primary);
+//     scroll-margin-top: calc(var(--header-height) + 24px);
+// }
+
+// .world__inner {
+//     padding: 32px var(--page-margin) 40px;
+// }
+
+// .world__title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 56px;
+//     font-weight: 400;
+//     line-height: 1.1;
+//     max-width: 1051px;
+// }
+
+// .world__subtitle {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 16px 0 0;
+//     max-width: 1051px;
+// }
+
+// .world__panel {
+//     background-color: #1b1427;
+//     background-image: linear-gradient(90deg, rgba(36, 26, 51, 0.2), rgba(36, 26, 51, 0.2));
+//     border: 1px solid rgba(255, 255, 255, 0.2);
+//     border-radius: 24px;
+//     height: 773px;
+//     isolation: isolate;
+//     margin-top: 40px;
+//     overflow: hidden;
+//     position: relative;
+//     width: 100%;
+//     z-index: 0;
+// }
+
+// /* Separate from .world__panel (see index.html comment) so horizontal
+//    scroll at ≤1023px only affects the map, not the overlay panel. */
+// .world__map-scroll {
+//     height: 100%;
+//     width: 100%;
+// }
+
+// .world__map {
+//     height: 100%;
+//     position: relative;
+//     width: 100%;
+//     z-index: 0;
+// }
+
+// .world__map.leaflet-container {
+//     background: #1b1427;
+//     cursor: default;
+//     font-family: var(--font-roboto);
+//     transition: none;
+// }
+
+// .world__map .leaflet-overlay-pane {
+//     filter:
+//         drop-shadow(0 0 180px rgba(157, 108, 66, 0.08)) drop-shadow(0 0 250px rgba(215, 163, 92, 0.12));
+// }
+
+// .world__status {
+//     align-items: center;
+//     color: var(--intention-text-secondary);
+//     display: flex;
+//     font-family: var(--font-roboto);
+//     font-size: 0.875rem;
+//     height: 100%;
+//     justify-content: center;
+//     margin: 0;
+// }
+
+// .world__status[hidden] {
+//     display: none;
+// }
+
+// .world__map .leaflet-marker-icon {
+//     cursor: pointer;
+// }
+
+// .world-map-pin {
+//     align-items: center;
+//     color: var(--intention-accent-gold);
+//     display: flex;
+//     justify-content: center;
+// }
+
+// .world-map-pin .material-symbols-outlined {
+//     font-size: 46px;
+//     font-variation-settings: 'FILL' 1;
+// }
+
+// .leaflet-tooltip.world-pin-tip {
+//     background: #1b1427;
+//     border: 1.5px solid var(--intention-accent-gold);
+//     border-radius: 12px;
+//     box-shadow: none;
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     font-weight: 500;
+//     line-height: 1.2;
+//     margin: 0;
+//     padding: 10px 24px;
+//     pointer-events: none;
+//     text-align: center;
+//     white-space: nowrap;
+// }
+
+// .leaflet-tooltip.world-pin-tip::before {
+//     display: none;
+// }
+
+// .wall-overlay {
+//     inset: 0;
+//     pointer-events: none;
+//     position: absolute;
+//     visibility: hidden;
+//     z-index: 20;
+// }
+
+// .wall-overlay.is-open {
+//     pointer-events: auto;
+//     visibility: visible;
+// }
+
+// .wall-overlay__backdrop {
+//     background: rgba(10, 8, 14, 0.45);
+//     inset: 0;
+//     opacity: 0;
+//     position: absolute;
+//     transition: opacity 0.35s ease;
+// }
+
+// .wall-overlay.is-open .wall-overlay__backdrop {
+//     opacity: 1;
+// }
+
+// .wall-overlay__panel {
+//     background-image: linear-gradient(to bottom, #23192f, #1a1222);
+//     border: 1px solid #4d3a5e;
+//     border-radius: 16px;
+//     bottom: 16px;
+//     box-shadow: 0 20px 80px rgba(0, 0, 0, 0.25);
+//     display: flex;
+//     flex-direction: column;
+//     max-height: none;
+//     overflow: auto;
+//     padding: 25px 20px 15px;
+//     position: absolute;
+//     right: 16px;
+//     top: 16px;
+//     transform: translateX(calc(100% + 32px));
+//     transition: transform 0.4s ease;
+//     width: min(407px, calc(100% - 32px));
+// }
+
+// .wall-overlay.is-open .wall-overlay__panel {
+//     transform: translateX(0);
+// }
+
+// .wall-overlay__top {
+//     align-items: center;
+//     display: flex;
+//     justify-content: space-between;
+//     margin-bottom: 8px;
+// }
+
+// .wall-overlay__live {
+//     align-items: center;
+//     color: var(--intention-accent-gold);
+//     display: flex;
+//     font-family: var(--font-roboto);
+//     font-size: 12px;
+//     gap: 4px;
+//     letter-spacing: 0.24px;
+//     line-height: 1.1;
+// }
+
+// .wall-overlay__live-dot {
+//     animation: wall-stat-pulse 2s ease-in-out infinite;
+//     background: var(--intention-accent-gold);
+//     border-radius: 50%;
+//     box-shadow: 0 0 0 4px rgba(232, 178, 90, 0.2);
+//     display: block;
+//     flex-shrink: 0;
+//     height: 10px;
+//     width: 10px;
+// }
+
+// .wall-overlay__close {
+//     background: none;
+//     border: 0;
+//     cursor: pointer;
+//     display: block;
+//     height: 24px;
+//     padding: 0;
+//     width: 24px;
+// }
+
+// .wall-overlay__close-icon {
+//     color: #f7f2ec;
+//     font-size: 24px;
+// }
+
+// .wall-overlay__title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 48px;
+//     font-weight: 400;
+//     line-height: 1.1;
+//     margin: 0 0 8px;
+// }
+
+// .wall-overlay__city {
+//     color: var(--intention-accent-gold);
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     letter-spacing: 0.32px;
+//     line-height: 1.1;
+//     margin: 0 0 12px;
+//     text-transform: uppercase;
+// }
+
+// .wall-overlay__copy {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 20px;
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 0 0 24px;
+// }
+
+// .wall-overlay__faiths {
+//     align-items: center;
+//     border-bottom: 1px solid rgba(232, 178, 90, 0.25);
+//     border-top: 1px solid rgba(232, 178, 90, 0.25);
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 16px 24px;
+//     margin: 0 0 24px;
+//     padding: 16px 0;
+// }
+
+// .wall-overlay__faith {
+//     align-items: center;
+//     display: flex;
+//     gap: 4px;
+// }
+
+// .wall-overlay__faith img {
+//     display: block;
+//     height: 24px;
+//     width: 24px;
+// }
+
+// .wall-overlay__faith span {
+//     color: var(--intention-accent-gold);
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     font-weight: 500;
+//     letter-spacing: 0.32px;
+// }
+
+// .wall-overlay__recent {
+//     display: flex;
+//     flex: 1 1 auto;
+//     flex-direction: column;
+//     gap: 8px;
+//     min-height: 0;
+// }
+
+// .wall-overlay__recent-label {
+//     color: var(--intention-accent-gold);
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     letter-spacing: 0.32px;
+//     line-height: 1.1;
+// }
+
+// .wall-overlay__recent-list {
+//     min-height: 0;
+// }
+
+// .wall-overlay__note {
+//     background: rgba(255, 255, 255, 0.05);
+//     border-radius: 5px;
+//     padding: 16px;
+// }
+
+// .wall-overlay__note-message {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 20px;
+//     font-weight: 400;
+//     line-height: 1.3;
+//     margin: 0 0 16px;
+// }
+
+// .wall-overlay__note-rule {
+//     border: 0;
+//     border-top: 1px solid rgba(255, 255, 255, 0.12);
+//     margin: 0 0 10px;
+// }
+
+// .wall-overlay__note-meta {
+//     align-items: center;
+//     display: flex;
+//     gap: 8px;
+//     justify-content: space-between;
+// }
+
+// .wall-overlay__note-byline {
+//     color: #cd953a;
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     line-height: 1.3;
+// }
+
+// .wall-overlay__note-name {
+//     font-weight: 500;
+// }
+
+// .wall-overlay__note-country {
+//     color: rgba(205, 149, 58, 0.8);
+// }
+
+// .wall-overlay__note-category {
+//     background: rgba(244, 229, 206, 0.1);
+//     border: 1px solid rgba(205, 149, 58, 0.2);
+//     border-radius: 5px;
+//     color: #cd953a;
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     font-weight: 500;
+//     letter-spacing: 0.34px;
+//     padding: 5px 7px;
+//     text-transform: uppercase;
+// }
+
+// .wall-overlay__empty {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     margin: 0;
+// }
+
+// .wall-overlay__cta {
+//     margin-top: 24px;
+//     width: 100%;
+// }
+
+// @media (prefers-reduced-motion: reduce) {
+
+//     .wall-overlay__backdrop,
+//     .wall-overlay__panel {
+//         transition: none;
+//     }
+// }
+
+// @media (max-width: 1023px) {
+
+//     /* Root cause of the clipping: .wall-overlay was position: absolute
+//      relative to .world__panel (which has overflow: hidden for its
+//      rounded corners), and .wall-overlay__panel's own box height was
+//      mathematically derived from top/bottom insets against that same
+//      container — so the popup's available height was hard-capped by
+//      however tall the map happened to be, regardless of how compact its
+//      content got. Switching both to position: fixed makes the viewport
+//      itself the containing block instead — the popup is now completely
+//      independent of .world__panel's height and its overflow: hidden can
+//      no longer clip it under any circumstance, which is more robust than
+//      continuing to just make the map taller. z-index bumped above the
+//      sticky header (100) so the modal correctly covers it instead of
+//      being partially covered by it. */
+//     .wall-overlay {
+//         position: fixed;
+//         z-index: 200;
+//     }
+
+//     .wall-overlay__panel {
+//         padding: 18px 16px 14px;
+//         position: fixed;
+//         right: 12px;
+//         /* Was a flat 12px — since the panel is position: fixed to the
+//        viewport, that put its top edge behind the sticky header
+//        (var(--header-height), 81px at this breakpoint — no override
+//        exists below the 1280-1439px tablet tier), tucking the title
+//        under it. Deriving from the same variable the header itself uses
+//        means this stays correct automatically if --header-height is
+//        ever changed, instead of hardcoding today's 81px. */
+//         top: calc(var(--header-height) + 12px);
+//         /* bottom is intentionally not set. With both top and bottom present
+//        on a position: fixed element and no explicit height, the height
+//        is *forced* to exactly (viewport height - top - bottom) regardless
+//        of content — that's what was stretching the panel well past the
+//        CTA button on short entries. Dropping bottom lets height default
+//        to auto, so the box sizes to its actual content and simply ends
+//        there. max-height below is the safety net for the case bottom
+//        used to (silently) guarantee: content long enough to run off the
+//        bottom of the viewport now triggers the existing overflow: auto
+//        scroll instead of pushing the panel past the visible area. */
+//         max-height: calc(100vh - var(--header-height) - 24px);
+//         /* Wider cap (was 407px) so text wraps to fewer lines, trading
+//        horizontal room for vertical room — an explicit lever alongside
+//        the font/spacing cuts, not a replacement for them. Now resolves
+//        against the viewport width (position: fixed), not .world__panel's
+//        width, but the calc(100% - 32px) fallback behaves the same way in
+//        practice on narrow phones either way. */
+//         width: min(460px, calc(100% - 32px));
+//     }
+
+//     /* Every section desktop shows still shows below — nothing removed,
+//      just scaled down (fonts ~65-80% of desktop, spacing more
+//      aggressively cut since many small margins stack up). overflow: auto
+//      on the panel stays as a defensive fallback rather than being
+//      removed — with position: fixed against the full viewport height,
+//      content should never come close to needing it, but there's no live
+//      rendering to confirm against this session. */
+
+//     /* Sticky so the close button stays reachable even if a particularly
+//      long entry genuinely needs the panel's overflow: auto to scroll.
+//      Kept as the whole row (label + button together) rather than just
+//      the button in isolation — sticking the button alone while its
+//      sibling label scrolls out from under it would look broken. Solid
+//      background (matching the panel gradient's top color) so scrolling
+//      content is fully hidden behind it, not just z-index-stacked over
+//      a transparent row. */
+//     .wall-overlay__top {
+//         background: #23192f;
+//         margin-bottom: 6px;
+//         position: sticky;
+//         top: 0;
+//         z-index: 1;
+//     }
+
+//     .wall-overlay__title {
+//         font-size: 32px;
+//         margin-bottom: 6px;
+//     }
+
+//     .wall-overlay__city {
+//         font-size: 14px;
+//         margin-bottom: 6px;
+//     }
+
+//     .wall-overlay__copy {
+//         font-size: 16px;
+//         margin-bottom: 12px;
+//     }
+
+//     .wall-overlay__faiths {
+//         gap: 8px 16px;
+//         margin-bottom: 12px;
+//         padding: 8px 0;
+//     }
+
+//     .wall-overlay__faith img {
+//         height: 18px;
+//         width: 18px;
+//     }
+
+//     .wall-overlay__faith span {
+//         font-size: 14px;
+//     }
+
+//     /* Base rule is flex: 1 1 auto, which grows this element to absorb all
+//      leftover vertical space in the panel — correct on desktop, where the
+//      panel's height is tuned close to content height, but with the panel
+//      now position: fixed and up to ~788px tall on a typical phone while
+//      the actual content needs a fraction of that, this was the real
+//      source of the "excess whitespace before the CTA" — not a margin
+//      value at all. flex: none lets it size to its own content instead,
+//      so any leftover panel space collects harmlessly at the very bottom
+//      of the panel instead of appearing as a gap in the middle of the
+//      content stack. */
+//     .wall-overlay__recent {
+//         flex: none;
+//         gap: 6px;
+//     }
+
+//     .wall-overlay__recent-label {
+//         font-size: 14px;
+//     }
+
+//     .wall-overlay__note {
+//         padding: 12px;
+//     }
+
+//     .wall-overlay__note-message {
+//         font-size: 16px;
+//         margin-bottom: 8px;
+//     }
+
+//     .wall-overlay__note-rule {
+//         margin-bottom: 8px;
+//     }
+
+//     .wall-overlay__note-byline,
+//     .wall-overlay__note-category {
+//         font-size: 14px;
+//     }
+
+//     .wall-overlay__cta {
+//         margin-top: 18px;
+//     }
+// }
+
+// @media (max-width: 767px) {
+
+//     /* One step tighter than the 1023px tier above — .world__panel (and so
+//      this panel's available height, since it's derived from top/bottom
+//      insets against that panel) is noticeably shorter here than at
+//      768-1023px, so the biggest space-consumers get trimmed a bit further
+//      for a larger safety margin. inset/right/bottom/top intentionally not
+//      repeated here — same 12px as the 1023px tier, inherited. */
+//     .wall-overlay__title {
+//         font-size: 28px;
+//     }
+
+//     /* font-size held at 16px, not trimmed further like its neighbors —
+//      that's the accessibility floor for body copy; margin still shrinks
+//      to help this tier's tighter panel height. */
+//     .wall-overlay__copy {
+//         font-size: 16px;
+//         margin-bottom: 12px;
+//     }
+
+//     .wall-overlay__panel {
+//         padding: 16px 14px 12px;
+//     }
+
+//     .wall-overlay__faiths {
+//         margin-bottom: 12px;
+//         padding: 8px 0;
+//     }
+
+//     .wall-overlay__note {
+//         padding: 10px;
+//     }
+
+//     .wall-overlay__note-message {
+//         margin-bottom: 8px;
+//     }
+
+//     .wall-overlay__cta {
+//         margin-top: 16px;
+//     }
+// }
+
+// @media (max-width: 1279px) {
+//     .world__inner {
+//         padding: 24px var(--page-margin) 40px;
+//     }
+
+//     .world__title {
+//         font-size: 40px;
+//     }
+
+//     .world__subtitle {
+//         font-size: 18px;
+//     }
+
+//     .world__panel {
+//         height: 560px;
+//     }
+// }
+
+// @media (max-width: 1023px) {
+
+//     /* Horizontal scroll instead of zoom: the map renders at a fixed
+//      natural width wider than the viewport (min-width below) rather than
+//      scaling/fitting itself down, and the wrapper scrolls to reveal it. */
+//     .world__map-scroll {
+//         -webkit-overflow-scrolling: touch;
+//         overflow-x: auto;
+//     }
+
+//     .world__map {
+//         min-width: 900px;
+//     }
+
+//     /* Was 630px (a ~12.5% bump from the original 560px) — that turned out
+//      to still be constraining the pin popup, which used to be sized
+//      relative to this container. The popup is now position: fixed to the
+//      viewport instead (see .wall-overlay below) and no longer depends on
+//      this height at all, but a taller map is still worth having on its
+//      own merits, so bumping further regardless. */
+//     .world__panel {
+//         height: 780px;
+//     }
+// }
+
+// @media (max-width: 767px) {
+//     .world__title {
+//         font-size: 32px;
+//     }
+
+//     .world__panel {
+//         border-radius: 16px;
+//         /* Was 470px — same reasoning as the 1023px tier above. */
+//         height: 580px;
+//     }
+// }
+
+// /* ===== HOW IT WORKS ===== */
+
+// .how-it-works {
+//     background: var(--intention-bg-primary);
+//     scroll-margin-top: calc(var(--header-height) + 24px);
+// }
+
+// .how-it-works__inner {
+//     padding: 60px var(--page-margin) 40px;
+// }
+
+// .how-it-works__title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 56px;
+//     font-weight: 400;
+//     line-height: 1.1;
+//     max-width: 541px;
+// }
+
+// .how-it-works__steps {
+//     align-items: stretch;
+//     display: grid;
+//     gap: 0 16px;
+//     grid-template-columns: minmax(0, 292px) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+//     margin-top: 56px;
+// }
+
+// .how-it-works__step {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 25px;
+//     min-width: 0;
+// }
+
+// .how-it-works__num {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-roboto);
+//     font-size: 20px;
+//     font-weight: 500;
+//     line-height: 1.3;
+// }
+
+// .how-it-works__icon {
+//     color: var(--intention-accent-gold);
+//     flex-shrink: 0;
+//     font-size: 50px;
+// }
+
+// .how-it-works__copy {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 8px;
+// }
+
+// .how-it-works__step-title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 32px;
+//     font-weight: 400;
+//     line-height: 1.3;
+// }
+
+// .how-it-works__step-body {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 400;
+//     line-height: 1.3;
+// }
+
+// .how-it-works__rule {
+//     background: rgba(255, 255, 255, 0.12);
+//     flex-shrink: 0;
+//     width: 1px;
+// }
+
+// @media (max-width: 1279px) {
+//     .how-it-works__inner {
+//         padding: 48px var(--page-margin) 40px;
+//     }
+
+//     .how-it-works__title {
+//         font-size: 40px;
+//     }
+
+//     .how-it-works__step-title {
+//         font-size: 28px;
+//     }
+
+//     .how-it-works__step-body {
+//         font-size: 18px;
+//     }
+// }
+
+// @media (max-width: 1023px) {
+//     .how-it-works__steps {
+//         gap: 40px 32px;
+//         grid-template-columns: 1fr 1fr;
+//         margin-top: 40px;
+//     }
+
+//     .how-it-works__rule {
+//         display: none;
+//     }
+// }
+
+// @media (max-width: 767px) {
+//     .how-it-works__title {
+//         font-size: 32px;
+//     }
+
+//     .how-it-works__steps {
+//         gap: 32px;
+//         grid-template-columns: 1fr;
+//     }
+
+//     .how-it-works__step-title {
+//         font-size: 24px;
+//     }
+// }
+
+// /* ===== FILM ===== */
+
+// .film {
+//     background: var(--intention-bg-primary);
+//     scroll-margin-top: calc(var(--header-height) + 24px);
+// }
+
+// .film__inner {
+//     align-items: center;
+//     display: flex;
+//     gap: 64px;
+//     justify-content: space-between;
+//     padding: 60px var(--page-margin) 80px;
+// }
+
+// .film__copy {
+//     display: flex;
+//     flex: 1 1 0;
+//     flex-direction: column;
+//     gap: 51px;
+//     max-width: 715px;
+//     min-width: 0;
+// }
+
+// .film__intro {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 10px;
+//     max-width: 541px;
+// }
+
+// .film__title {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 56px;
+//     font-style: italic;
+//     font-weight: 400;
+//     line-height: 1.1;
+// }
+
+// .film__lede {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-fraunces);
+//     font-size: 32px;
+//     font-weight: 400;
+//     line-height: 1.1;
+// }
+
+// .film__body {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 24px;
+//     font-weight: 400;
+//     line-height: 1.3;
+//     max-width: 715px;
+// }
+
+// .film__body p+p {
+//     margin-top: 16px;
+// }
+
+// .film__quote {
+//     align-items: stretch;
+//     border: 0;
+//     display: flex;
+//     gap: 17px;
+//     margin: 0;
+// }
+
+// .film__quote::before {
+//     background: var(--intention-accent-gold);
+//     content: '';
+//     flex-shrink: 0;
+//     width: 4px;
+// }
+
+// .film__quote-body {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 8px;
+//     min-width: 0;
+// }
+
+// .film__quote-text {
+//     color: var(--intention-text-primary);
+//     font-family: var(--font-fraunces);
+//     font-size: 32px;
+//     font-weight: 400;
+//     line-height: 1.1;
+//     max-width: 556px;
+// }
+
+// .film__quote-attr {
+//     color: var(--intention-accent-gold);
+//     font-family: var(--font-roboto);
+//     font-size: 20px;
+//     font-style: normal;
+//     font-weight: 500;
+//     letter-spacing: 0.4px;
+//     line-height: 1.1;
+//     text-transform: uppercase;
+// }
+
+// .film__card {
+//     background: #1f172a;
+//     border: 1px solid rgba(255, 255, 255, 0.2);
+//     border-radius: 24px;
+//     flex: 0 0 494px;
+//     height: 684px;
+//     margin: 0;
+//     overflow: hidden;
+//     position: relative;
+//     width: 494px;
+// }
+
+// .film__photo {
+//     border-radius: 16px;
+//     height: 639px;
+//     left: 24px;
+//     overflow: hidden;
+//     position: absolute;
+//     top: 24px;
+//     width: 446px;
+// }
+
+// .film__photo img {
+//     display: block;
+//     height: 100%;
+//     inset: 0;
+//     object-fit: cover;
+//     object-position: center;
+//     position: absolute;
+//     width: 100%;
+// }
+
+// .film__fade {
+//     background-image: linear-gradient(180deg,
+//             rgba(31, 23, 42, 0) 35.315%,
+//             rgba(31, 23, 42, 0.76) 56.633%,
+//             rgba(31, 23, 42, 0.93) 74.409%,
+//             rgb(31, 23, 42) 100%);
+//     height: 429px;
+//     left: 24px;
+//     pointer-events: none;
+//     position: absolute;
+//     top: 234px;
+//     width: 446px;
+// }
+
+// .film__caption {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 8px;
+//     left: 36px;
+//     position: absolute;
+//     top: 481px;
+//     width: 421px;
+// }
+
+// .film__caption-quote {
+//     color: var(--intention-accent-gold);
+//     font-family: var(--font-fraunces);
+//     font-size: 24px;
+//     font-style: italic;
+//     font-weight: 400;
+//     letter-spacing: 0.48px;
+//     line-height: 1.1;
+// }
+
+// .film__caption-note {
+//     color: var(--intention-text-secondary);
+//     font-family: var(--font-roboto);
+//     font-size: 20px;
+//     font-weight: 400;
+//     line-height: 1.3;
+// }
+
+// @media (max-width: 1279px) {
+//     .film__inner {
+//         align-items: flex-start;
+//         flex-direction: column;
+//         gap: 40px;
+//         padding: 48px var(--page-margin) 64px;
+//     }
+
+//     /* Un-nests .film__copy so .film__intro, .film__body and .film__quote
+//      become direct flex items of .film__inner (alongside .film__card),
+//      which lets `order` below reorder them independently of the DOM.
+//      Desktop keeps .film__copy as a real flex column, untouched. */
+//     .film__copy {
+//         display: contents;
+//         max-width: none;
+//     }
+
+//     .film__intro {
+//         order: 1;
+//     }
+
+//     .film__title {
+//         font-size: 40px;
+//     }
+
+//     .film__lede,
+//     .film__quote-text {
+//         font-size: 28px;
+//     }
+
+//     .film__body {
+//         font-size: 18px;
+//         order: 3;
+//     }
+
+//     .film__quote {
+//         order: 4;
+//     }
+
+//     .film__card {
+//         flex: 1 1 auto;
+//         height: auto;
+//         min-height: 560px;
+//         order: 2;
+//         width: 100%;
+//     }
+
+//     .film__photo {
+//         height: calc(100% - 48px);
+//         width: calc(100% - 48px);
+//     }
+
+//     .film__fade {
+//         height: auto;
+//         inset: 40% 24px 24px;
+//         width: auto;
+//     }
+
+//     .film__caption {
+//         bottom: 40px;
+//         left: 36px;
+//         right: 36px;
+//         top: auto;
+//         width: auto;
+//     }
+// }
+
+// @media (max-width: 767px) {
+//     .film__title {
+//         font-size: 32px;
+//     }
+
+//     /* Was one shared 22px rule with .film__quote-text below. Split: lede
+//      plays the same "subtitle under the title" role as .hero__subtitle /
+//      .wall__subtitle / .world__subtitle, all 18px at this breakpoint —
+//      22px was above the 18-20px body-text ceiling and inconsistent with
+//      those. .film__quote-text is a pull-quote, not flowing paragraph
+//      copy — kept a step larger at 20px (still within the ceiling) for
+//      the emphasis a blockquote conventionally gets; flag if that reading
+//      is wrong and it should match .film__lede exactly. */
+//     .film__lede {
+//         font-size: 18px;
+//     }
+
+//     .film__quote-text {
+//         font-size: 20px;
+//     }
+
+//     .film__quote-attr,
+//     .film__caption-note {
+//         font-size: 16px;
+//     }
+
+//     .film__caption-quote {
+//         font-size: 20px;
+//     }
+
+//     .film__card {
+//         min-height: 480px;
+//     }
+// }
+
+// /* ===== FOOTER ===== */
+// .footer {
+//     padding: 64px var(--page-margin) 40px;
+//     background: #100c17;
+// }
+
+// .footer-top {
+//     display: flex;
+//     justify-content: space-between;
+//     gap: 48px;
+//     flex-wrap: wrap;
+// }
+
+// .footer-col {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 12px;
+// }
+
+// .footer-brand {
+//     max-width: 340px;
+// }
+
+// .footer-logo {
+//     display: block;
+//     text-decoration: none;
+// }
+
+// .footer-logo-square {
+//     width: 48px;
+//     height: 48px;
+//     background: var(--intention-accent-gold);
+//     display: inline-block;
+//     margin-bottom: 8px;
+// }
+
+// .footer-brand-name {
+//     font-family: var(--font-fraunces);
+//     font-size: 32px;
+//     color: var(--intention-text-primary);
+// }
+
+// .footer-tagline {
+//     font-family: var(--font-roboto);
+//     font-size: 18px;
+//     line-height: 1.4;
+//     color: var(--intention-text-secondary);
+//     margin-top: 4px;
+// }
+
+// .footer-links {
+//     gap: 16px;
+//     padding-top: 4px;
+// }
+
+// .footer-col-label {
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     letter-spacing: 0.5px;
+//     color: var(--intention-accent-gold);
+//     margin-bottom: 4px;
+// }
+
+// .footer-links a {
+//     font-family: var(--font-roboto);
+//     font-size: 18px;
+//     color: var(--intention-text-primary);
+//     text-decoration: none;
+// }
+
+// .footer-links a:hover {
+//     color: var(--intention-accent-gold);
+// }
+
+// .footer-partners {
+//     max-width: 480px;
+//     gap: 16px;
+// }
+
+// .footer-partner-logos {
+//     display: flex;
+//     align-items: center;
+//     flex-wrap: wrap;
+//     gap: 16px;
+// }
+
+// .footer-partner-logo {
+//     height: 28px;
+//     width: auto;
+//     object-fit: contain;
+// }
+
+// .footer-partner-divider {
+//     width: 1px;
+//     height: 28px;
+//     background: var(--intention-border);
+// }
+
+// .footer-partner-text {
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     line-height: 1.5;
+//     color: var(--intention-text-secondary);
+// }
+
+// .footer-divider {
+//     border-top: 1px solid var(--intention-border);
+//     margin: 40px 0 24px;
+// }
+
+// .footer-bottom {
+//     display: flex;
+// }
+
+// .footer-copyright {
+//     font-family: var(--font-roboto);
+//     font-size: 16px;
+//     color: var(--intention-text-secondary);
+// }
+
+// @media (max-width: 900px) {
+//     .footer-top {
+//         flex-direction: column;
+//         gap: 32px;
+//     }
+// }
+
+// @media (max-width: 767px) {
+
+//     /* Overrides the base flex-wrap: wrap so all three logos stay on one
+//      row here; the shrunk height below is sized for that, tested against
+//      the 375px/24px-page-margin worst case (327px available). */
+//     .footer-partner-logos {
+//         flex-wrap: nowrap;
+//         gap: 12px;
+//     }
+
+//     .footer-partner-logo {
+//         height: 22px;
+//     }
+
+//     .footer-partner-divider {
+//         height: 22px;
+//     }
+// }

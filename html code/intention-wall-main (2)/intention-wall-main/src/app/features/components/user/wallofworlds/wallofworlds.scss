@@ -1,0 +1,65 @@
+// CHANGED: Leaflet creates these marker elements dynamically,
+// so allow component styles to reach Leaflet's generated DOM.
+
+:host ::ng-deep {
+
+    .world-map-zone-marker-wrap {
+        background: transparent;
+        border: 0;
+    }
+
+    .world-map-zone-marker {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        pointer-events: none;
+    }
+
+    .world-map-zone-marker__label {
+        background: rgba(27, 20, 39, 0.88);
+        border: 1.5px solid var(--zone-color,
+                var(--intention-accent-gold));
+        border-radius: 12px;
+        color: var(--zone-color,
+                var(--intention-text-primary));
+        font-family: var(--font-roboto);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.2;
+        padding: 4px 8px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .world-map-zone-marker__dot {
+        background: var(--zone-color,
+                var(--intention-accent-gold));
+        border-radius: 50%;
+        box-shadow: 0 0 0 3px color-mix(in srgb,
+                var(--zone-color, #e8b25a) 24%,
+                transparent);
+        display: block;
+        height: 7px;
+        width: 7px;
+    }
+
+}
+
+.idea-carousel--enhanced .idea-carousel__track {
+    display: grid;
+}
+
+.idea-carousel--enhanced .idea-slide {
+    border-top: 0;
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity 300ms ease, visibility 0s linear 300ms;
+    visibility: hidden;
+}
+
+.idea-carousel--enhanced .idea-slide.is-active {
+    opacity: 1;
+    transition: opacity 300ms ease;
+    visibility: visible;
+}

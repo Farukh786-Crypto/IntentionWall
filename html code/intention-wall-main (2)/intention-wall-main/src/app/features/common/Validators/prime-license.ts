@@ -1,0 +1,5 @@
+import { registerLicense } from '@primeui/license-manager';
+
+registerLicense({
+    primeui: 'eyJpZCI6ImU2MWUyODcyLTZlZGQtNDY3My05ODU3LWY3YjhmNjdlZGE2OSIsInByb2R1Y3QiOiJwcmltZXVpIiwidGllciI6ImNvbW11bml0eSIsInR5cGUiOiJkZXYiLCJpYXQiOjE3ODgzNDYyNTUsImV4cCI6MTgxOTg4MjI1NX0.SJvYBoAMNZTCotFuKZW8yO8YHqThjLIS7t4-vXAgMabnQKWhfiuSdJ0Km9txVgS1HBTqWrOE3SFhtMUk294uAw'
+});

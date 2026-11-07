@@ -1,0 +1,272 @@
+<div class="login">
+  <div class="login__split">
+    <section class="login__panel login__panel--form" aria-label="Sign in">
+      <div class="login__form-col">
+        <a class="login__brand" href="index.html">
+          <span class="login__logo" aria-hidden="true"></span>
+          <span class="login__brand-name">The Intention Wall</span>
+        </a>
+
+        <form class="login-card" [formGroup]="loginForm" id="login-form" action="intention-review.html" method="get"
+          novalidate>
+          <div class="login-card__intro">
+            <h1>Welcome Back!</h1>
+            <p>Login to manage your account</p>
+          </div>
+
+          <div class="login-card__fields">
+            <label class="field" id="email-field" [class.field--error]="hasLoginFormErrors('Email')">
+              <span class="field__label">Enter email</span>
+              <span class="field__control">
+                <span class="material-symbols-outlined field__icon msi-md msi--muted" aria-hidden="true">mail</span>
+                <input id="email" type="email" name="email" autocomplete="username" placeholder="e.g. bruce@wayne.com"
+                  formControlName="Email" aria-describedby="email-error">
+              </span>
+              <!-- <p class="field__error" id="email-error" role="alert" hidden></p> -->
+              @if(hasLoginFormErrors('Email','required')){
+              <div class="intention-field__error">
+                Please enter your email address.
+              </div>
+              }
+              @else if(hasLoginFormErrors('Email','email'))
+              {
+              <div class="intention-field__error">
+                Please enter a valid email address.
+              </div>
+              }
+            </label>
+
+            <div class="field" id="password-field" [class.field--error]="hasLoginFormErrors('Password')">
+              <label class="field__label" for="password">
+                Enter password
+              </label>
+              <p-password inputId="password" formControlName="Password" [toggleMask]="true" [feedback]="false"
+                placeholder="•••••••••••••••" autocomplete="current-password"
+                styleClass="field__control password-control" inputStyleClass="password-input"
+                [attr.aria-describedby]="'password-error'" />
+
+              @if (hasLoginFormErrors('Password', 'required')) {
+              <div class="intention-field__error" id="password-error" role="alert">
+                Please enter your Password.
+              </div>
+              }
+
+              <a class="field__hint" href="#">
+                Forgot password?
+              </a>
+            </div>
+
+            <button type="submit" class="login-card__submit" (click)="login()" [disabled]="isSubmitting()">
+              {{ isSubmitting() ? 'Signing in…' : 'Sign in' }}</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="login__panel login__panel--showcase" aria-hidden="true">
+      <div class="login__showcase-bg">
+        <img class="login__showcase-bg-image" src="/images/login-hero-bg.png" alt="">
+      </div>
+
+      <h2 class="login__hero-title">
+        <span class="login__hero-line">What unites us is greater than</span>
+        <span class="login__hero-line login__hero-line--accent"><em>what divides us.</em></span>
+      </h2>
+
+      <div class="login__card-wall-wrap">
+        <div class="login__card-wall">
+          <div class="login__card-col">
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Israel and Gaza
+              </p>
+              <p class="login-intention-card__message">For every family in Tel Aviv and in Rafah, as they gather around
+                the table, may they find solace in each other and strength.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Zara</strong> · Turkey</span>
+                <span class="login-intention-card__tag">Christianity</span>
+              </footer>
+            </article>
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Russia and Ukraine
+              </p>
+              <p class="login-intention-card__message">For every family in Ukraine and in Russia, sharing a meal while
+                the world outside rages on, may they hold onto the dream of peace.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Khalid</strong> · Gaza</span>
+                <span class="login-intention-card__tag">Islam</span>
+              </footer>
+            </article>
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Israel and Gaza
+              </p>
+              <p class="login-intention-card__message">For every family in Tel Aviv and in Rafah, as they share dinner
+                under the same sky, may they find strength in their unity.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Layla</strong> · Lebanon</span>
+                <span class="login-intention-card__tag">Islam</span>
+              </footer>
+            </article>
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Russia and Ukraine
+              </p>
+              <p class="login-intention-card__message">For every child in Odesa and in Belgorod who still dreams of
+                playgrounds without sirens, may peace find them soon.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Amara</strong> · Ghana</span>
+                <span class="login-intention-card__tag">Islam</span>
+              </footer>
+            </article>
+          </div>
+
+          <div class="login__card-col">
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Israel and Gaza
+              </p>
+              <p class="login-intention-card__message">For every family in Tel Aviv and in Rafah eating dinner while
+                aircraft pass overhead. Same fear, same sky.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Nadia</strong> · Jordan</span>
+                <span class="login-intention-card__tag">Islam</span>
+              </footer>
+            </article>
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Israel and Gaza
+              </p>
+              <p class="login-intention-card__message">For every family in Tel Aviv and in Rafah sharing a meal under
+                the same stars, united by hope amidst the turmoil.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Samir</strong> · Syria</span>
+                <span class="login-intention-card__tag">Christianity</span>
+              </footer>
+            </article>
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Russia and Ukraine
+              </p>
+              <p class="login-intention-card__message">For every family in Moscow and in Kyiv eating dinner while
+                aircraft pass overhead. Same fear, same sky.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Layla</strong> · Lebanon</span>
+                <span class="login-intention-card__tag">Buddhism</span>
+              </footer>
+            </article>
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Israel and Gaza
+              </p>
+              <p class="login-intention-card__message">Peace grows when we listen before we speak. May every voice on
+                both sides of the wall be heard with care.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Priya</strong> · India</span>
+                <span class="login-intention-card__tag">Hinduism</span>
+              </footer>
+            </article>
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Israel and Gaza
+              </p>
+              <p class="login-intention-card__message">For every parent tucking in a child tonight, may the morning
+                bring one more day of safety and one more chance for peace.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Elena</strong> · Poland</span>
+                <span class="login-intention-card__tag">Islam</span>
+              </footer>
+            </article>
+          </div>
+
+          <div class="login__card-col">
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Israel and Gaza
+              </p>
+              <p class="login-intention-card__message">For every family in Tel Aviv and in Rafah, as they gather around
+                the table, may they find solace in each other and strength.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Zara</strong> · Turkey</span>
+                <span class="login-intention-card__tag">Christianity</span>
+              </footer>
+            </article>
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Russia and Ukraine
+              </p>
+              <p class="login-intention-card__message">For every family in Ukraine and in Russia, sharing a meal while
+                the world outside rages on, may they hold onto the dream of peace.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Khalid</strong> · Gaza</span>
+                <span class="login-intention-card__tag">Hinduism</span>
+              </footer>
+            </article>
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Israel and Gaza
+              </p>
+              <p class="login-intention-card__message">For every family in Tel Aviv and in Rafah, as they share dinner
+                under the same sky, may they find strength in their unity.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Layla</strong> · Lebanon</span>
+                <span class="login-intention-card__tag">Islam</span>
+              </footer>
+            </article>
+            <article class="login-intention-card">
+              <span class="login-intention-card__fold" aria-hidden="true"></span>
+              <p class="login-intention-card__zone">
+                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                Russia and Ukraine
+              </p>
+              <p class="login-intention-card__message">A small message for a larger peace — you are not alone. May
+                neighbours on every border remember their shared humanity.</p>
+              <hr class="login-intention-card__rule">
+              <footer class="login-intention-card__meta">
+                <span class="login-intention-card__byline"><strong>Marcus</strong> · Germany</span>
+                <span class="login-intention-card__tag">Christianity</span>
+              </footer>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar__top">
+        @if (!collapsed) {
+        <a class="sidebar__brand" href="intention-review.html">
+            <span class="sidebar__logo" aria-hidden="true"></span>
+            <span class="sidebar__name">The Intention Wall</span>
+        </a>
+        }
+        <button type="button" class="sidebar__collapse" aria-label="Collapse sidebar" (click)="toggleSidebar()">
+            <span class="material-symbols-outlined" aria-hidden="true">left_panel_close</span>
+        </button>
+    </div>
+
+    <div class="sidebar__nav-wrap">
+        @if (!collapsed) {
+        <p class="sidebar__section">Moderation</p>
+        }
+        <nav class="sidebar__nav" aria-label="Admin modules">
+            <a class="sidebar__link " [routerLink]="['/admin/home/intention-review']" routerLinkActive="is-active"
+                [routerLinkActiveOptions]="{ exact: true }" aria-current="page" data-tooltip="Intention Review">
+                <span class="material-symbols-outlined" aria-hidden="true">forum</span>
+                @if (!collapsed) {
+                <span class="sidebar__label">Intention Review</span>
+                }
+            </a>
+            <a class="sidebar__link" [routerLink]="['/admin/home/published-message']" routerLinkActive="is-active"
+                [routerLinkActiveOptions]="{ exact: true }" data-tooltip="Published Messages">
+                <span class="material-symbols-outlined" aria-hidden="true">format_list_bulleted</span>
+                @if (!collapsed) {
+                <span class="sidebar__label">Published Messages</span>
+                }
+            </a>
+            <a class="sidebar__link" [routerLink]="['/admin/home/audit-logs']" routerLinkActive="is-active"
+                [routerLinkActiveOptions]="{ exact: true }" data-tooltip="Audit logs">
+                <span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>
+                @if (!collapsed) {
+                <span class="sidebar__label">Audit logs</span>
+                }
+            </a>
+            <a class="sidebar__link" [routerLink]="['/admin/home/settings']" data-tooltip="Settings">
+                <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+                @if (!collapsed) {
+                <span class="sidebar__label">Settings</span>
+                }
+            </a>
+        </nav>
+    </div>
+
+    <div class="sidebar__account">
+        <div class="sidebar__avatar" aria-hidden="true" [attr.data-tooltip]="adminEmail()">
+            <span class="sidebar__avatar-initials">{{ (adminEmail() ?? '').slice(0, 1) | uppercase }}</span>
+        </div>
+        @if (!collapsed) {
+        <div class="sidebar__who">
+            <strong [attr.title]="adminEmail()">{{adminEmail()}}</strong>
+            <span>Admin</span>
+        </div>
+        }
+        <button type="button" class="sidebar__logout" aria-label="Log out" data-tooltip="Log out" (click)="logout()">
+            <span class="material-symbols-outlined msi-md" aria-hidden="true">logout</span>
+        </button>
+    </div>
+</aside>

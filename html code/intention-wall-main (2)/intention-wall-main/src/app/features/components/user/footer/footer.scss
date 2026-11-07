@@ -1,0 +1,156 @@
+/* ===== FOOTER ===== */
+.footer {
+    padding: 64px var(--page-margin) 40px;
+    background: #100c17;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 48px;
+    flex-wrap: wrap;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-brand {
+    max-width: 340px;
+}
+
+.footer-logo-square {
+    width: 48px;
+    height: 48px;
+    background: var(--intention-accent-gold);
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.footer-brand-name {
+    font-family: var(--font-fraunces);
+    font-size: 32px;
+    color: var(--intention-text-primary);
+    white-space: nowrap;
+}
+
+.footer-tagline {
+    font-family: var(--font-roboto);
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--intention-text-secondary);
+    margin-top: 4px;
+}
+
+.footer-links {
+    gap: 16px;
+    padding-top: 4px;
+}
+
+.footer-col-label {
+    font-family: var(--font-roboto);
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    color: var(--intention-accent-gold);
+    margin-bottom: 4px;
+}
+
+.footer-links a {
+    font-family: var(--font-roboto);
+    font-size: 18px;
+    color: var(--intention-text-primary);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: var(--intention-accent-gold);
+}
+
+.footer-partners {
+    max-width: 480px;
+    gap: 16px;
+}
+
+.footer-partner-logos {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer-partner-logo {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-partner-divider {
+    width: 1px;
+    height: 28px;
+    background: var(--intention-border);
+}
+
+.footer-partner-text {
+    font-family: var(--font-roboto);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--intention-text-secondary);
+}
+
+.footer-divider {
+    border-top: 1px solid var(--intention-border);
+    margin: 40px 0 24px;
+}
+
+.footer-bottom {
+    display: flex;
+}
+
+.footer-copyright {
+    font-family: var(--font-roboto);
+    font-size: 16px;
+    color: var(--intention-text-secondary);
+}
+
+@media (max-width: 900px) {
+    .footer-top {
+        flex-direction: column;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 767px) {
+
+    /* Overrides the base flex-wrap: wrap so all three logos stay on one
+     row here; the shrunk height below is sized for that, tested against
+     the 375px/24px-page-margin worst case (327px available). */
+    .footer-partner-logos {
+        flex-wrap: nowrap;
+        gap: 12px;
+    }
+
+    .footer-partner-logo {
+        height: 22px;
+    }
+
+    .footer-partner-divider {
+        height: 22px;
+    }
+}
+
+/* Below 384px the 32px name no longer fits next to the 48px square and 12px
+   gap, so the name shrinks with the viewport (24px at 320px) instead of
+   wrapping, and the square shrinks with it, keeping the 48:32 (1.5) ratio
+   (36px at 320px). */
+@media (max-width: 383px) {
+    .footer-logo-square {
+        height: clamp(36px, calc(18.75vw - 24px), 48px);
+        width: clamp(36px, calc(18.75vw - 24px), 48px);
+    }
+
+    .footer-brand-name {
+        font-size: clamp(24px, calc(12.5vw - 16px), 32px);
+    }
+}

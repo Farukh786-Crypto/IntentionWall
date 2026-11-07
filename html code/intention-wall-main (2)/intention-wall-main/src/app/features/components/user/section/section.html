@@ -1,0 +1,44 @@
+<section id="hero" class="hero">
+    <div class="hero__content">
+        <h1 class="hero__title">
+            What unites us is greater than
+            <span>what divides us.</span>
+        </h1>
+        <p class="hero__subtitle">
+            Write one intention and aim it at a place in the world that is hurting. It is
+            read with care, then takes its place on a wall rooted in a real city — light in
+            the cracks of the stone, alongside thousands of others.
+        </p>
+        <div class="hero__actions">
+            <a href="#intention" (click)="scrollToSection($event, 'intention')" class="btn-gold">
+                <span class="btn-gold__label">Post Your Intention</span>
+                <span class="material-symbols-outlined btn-gold__icon" aria-hidden="true">arrow_forward</span>
+            </a>
+            <a href="#wall" (click)="scrollToSection($event, 'wall')" class="btn-ghost">See the Wall</a>
+        </div>
+    </div>
+
+    <div class="hero__media" aria-hidden="true">
+        <img class="hero__image" src="/images/hero-bg.png" alt="">
+        <div class="hero__wash"></div>
+        <div class="hero__gradient"></div>
+    </div>
+
+    <!-- Stacked layout only (≤1023px): a plain, independently-sized image
+         block below the text, hidden at 1024px+ where .hero__media (the
+         absolute full-bleed background above) is used instead.
+         See .hero__image-mobile. -->
+    <img class="hero__image-mobile" src="/images/hero-bg-mobile.png" alt="" aria-hidden="true">
+</section>
+<section class="film-credit" aria-label="Film credit">
+    <div class="film-credit__row">
+        <div class="film-credit__left">
+            <span class="material-symbols-outlined film-credit__icon" aria-hidden="true">menu_book</span>
+            <p class="film-credit__copy">
+                Born from the film <span>Shalom Salam</span>
+            </p>
+        </div>
+        <span class="film-credit__divider" aria-hidden="true"></span>
+        <p class="film-credit__right">Peace in Hebrew, Peace in Arabic</p>
+    </div>
+</section>

@@ -1,0 +1,53 @@
+<header class="site-header">
+    <div class="site-header__inner">
+        <div class="site-header__brand">
+            <!-- TEMP: placeholder logo box, replace with real logo asset once provided -->
+            <div class="site-header__logo" aria-hidden="true"></div>
+            <span class="site-header__name">The Intention Wall</span>
+        </div>
+
+        <div class="site-header__right">
+            <nav class="site-header__nav" aria-label="Primary">
+                <a href="#wall" (click)="scrollToSection($event, 'wall')">
+                    The Wall
+                </a>
+                <!-- TODO: wire once section exists -->
+                <!-- (click)="$event.preventDefault()" -->
+                <a href="#walls-of-the-world" (click)="scrollToSection($event, 'walls-of-the-world')">Walls of the
+                    World</a>
+                <a href="#how-it-works" (click)="scrollToSection($event, 'how-it-works')">
+                    How it Works
+                </a>
+                <!-- TODO: wire once section exists -->
+                <!-- (click)="$event.preventDefault()" -->
+                <a href="#film" (click)="scrollToSection($event, 'film')">The Film</a>
+                <!-- <a href=" find-intentions.html" class="is-active" aria-current="page">Find Intentions</a> -->
+            </nav>
+
+            <a href="#intention" id="post-intention-btn" (click)="scrollToSection($event, 'intention')">
+                <IntentionWall-button class="site-header__cta" label="Post Your Intention" icon="pi pi-arrow-up"
+                    iconPos="right" variant="gold">
+                </IntentionWall-button>
+            </a>
+            <!-- Menu icon -->
+            <button type="button" class="site-header__menu-btn" aria-label="Toggle menu"
+                [attr.aria-expanded]="isMenuExpanded()" (click)="toggleMobileMenu()">
+                <span class="material-symbols-outlined site-header__menu-icon" aria-hidden="true">menu</span>
+            </button>
+        </div>
+    </div>
+    <nav class="site-header__mobile-nav" [class.is-open]="isMenuExpanded()" aria-label="Mobile">
+        <a href="#wall" (click)="scrollToSection($event, 'wall')">The Wall</a>
+        <!-- TODO: wire once section exists -->
+        <a href="#walls-of-the-world" (click)="scrollToSection($event, 'walls-of-the-world')">Walls of the World</a>
+        <a href="#how-it-works" (click)="scrollToSection($event, 'how-it-works')">How it Works</a>
+        <!-- TODO: wire once section exists -->
+        <a href="#film" (click)="scrollToSection($event, 'film')">The Film</a>
+        <!-- <a href="#find-intentions.html" (click)="scrollToSection($event, 'film')" class="is-active"
+            aria-current="page">Find Intentions</a> -->
+        <a href="#intention" class="site-header__mobile-cta" (click)="scrollToSection($event, 'intention')">
+            <IntentionWall-button label="Post Your Intention" icon="pi pi-arrow-up" iconPos="right" variant="gold">
+            </IntentionWall-button>
+        </a>
+    </nav>
+</header>
